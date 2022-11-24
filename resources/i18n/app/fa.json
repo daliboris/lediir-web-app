@@ -1,0 +1,521 @@
+{
+    "lediir": {
+        "title": "[Electronic Lexical Database of Indo-Iranian Languages]"
+    },
+    "menu": {
+        "search": "[Search]",
+        "about": "[About]",
+        "browse": "[Browse]",
+        "contents": "[Contents]"
+    },
+    "headings": {
+        "dictionaries": "[Dictionaries]",
+        "settings": "[Settings]",
+        "howToCite": "[How to cite]",
+        "help": "[Help]",
+        "news": "[News]",
+        "aboutLanguage": "[About Langauge]",
+        "FACS": "[Persian-Czech Dictionary]"
+    },
+    "settings": {
+        "abbreviations": "[abbreviations\/full text]",
+        "collapse": "[collapse\/expand entries]",
+        "expand-quotes": "[expand quotes]",
+        "search-sections": "[Search sections]",
+        "search-headings": "[Search headings]",
+        "search-entries": "[Search entries]"
+    },
+    "search": {
+        "headings": {
+            "simple": "[Simple]",
+            "advanced": "[Advanced]",
+            "domains": "[Semantic domains]"
+        },
+        "labels": {
+            "field": "[Search for]",
+            "condition": "[Condition]",
+            "query": "[Query]",
+            "exactly": "[exactly]",
+            "start": "[start]",
+            "end": "[end]",
+            "everywhere": "[everywhere]",
+            "area": "[Area]"
+        },
+        "buttons": {
+            "search": "[Search]"
+        },
+        "fields": {
+            "lemma": "[Headrwod]",
+            "partOfSpeech": "[Part-of-speech]",
+            "pronunciation": "[Pronunciation]",
+            "domain": "[Domain]",
+            "reversal": "[Reversal]",
+            "anything": "[Anything]",
+            "and": "[AND]",
+            "andNot": "[AND NOT CONTAINS]",
+            "or": "[OR]"
+        },
+        "areas": {
+            "lemma": "[Headword]",
+            "text": "[Text]"
+        }
+    },
+    "app": {
+        "facets": {
+            "partOfSpeech": "[Part-of-speech]",
+            "domain": "[Domain]",
+            "domainHierarchy": "[Parent domain]",
+            "style": "[Stylistic qualifier]",
+            "object-language": "[Object language]",
+            "target-language": "[Target language]",
+            "polysemy": "[Polysemy]",
+            "frequency": "[Frequency]",
+            "complexFormType": "[Complex form]",
+            "dictionary": "[Dictionary]",
+            "show-all": "[Show all]"
+        },
+        "languages": {
+            "cs": "[Czech]",
+            "cs-CZ": "[Czech]",
+            "en": "[English]",
+            "fa": "[Persian]",
+            "tg": "[Tajic]"
+        },
+        "messages": {
+            "restricted": "[You need to be logged in to see this content.]"
+        }
+    },
+    "buttons": {
+        "comments": "[Comments]"
+    },
+    "dropdown": {
+        "label": "label-fa",
+        "default": "default-fa"
+    },
+    "dictionary": {
+        "pos": {
+            "adv": {
+                "abbr": "قید",
+                "expand": "قید",
+                "tooltip": ""
+            },
+            "subst": {
+                "abbr": "اسم",
+                "expand": "اسم",
+                "tooltip": ""
+            },
+            "pl": {
+                "abbr": "جمع",
+                "expand": "جمع",
+                "tooltip": ""
+            },
+            "sg": {
+                "abbr": "مفرد",
+                "expand": "مفرد",
+                "tooltip": ""
+            },
+            "enclit": {
+                "abbr": "و.بست",
+                "expand": "واژه‌بَست",
+                "tooltip": ""
+            },
+            "pro-form": {
+                "abbr": "تابع",
+                "expand": "شکل تابع",
+                "tooltip": ""
+            },
+            "pro": {
+                "abbr": "ضمیر",
+                "expand": "ضمیر",
+                "tooltip": ""
+            },
+            "pro-adv": {
+                "abbr": "ق.ضم.",
+                "expand": "قید ضمیری",
+                "tooltip": ""
+            },
+            "v": {
+                "abbr": "فعل",
+                "expand": "فعل",
+                "tooltip": ""
+            },
+            "vi": {
+                "abbr": "ف.لا.",
+                "expand": "فعل لازم",
+                "tooltip": ""
+            },
+            "cop": {
+                "abbr": "ف.ربطی",
+                "expand": "فعل ربطی",
+                "tooltip": ""
+            },
+            "vt": {
+                "abbr": "ف.متع",
+                "expand": "فعل متعدی",
+                "tooltip": ""
+            },
+            "pas": {
+                "abbr": "مجهول",
+                "expand": "فعل مجهول",
+                "tooltip": ""
+            },
+            "lv": {
+                "abbr": "همکرد",
+                "expand": "فعل سبک | همکرد",
+                "tooltip": ""
+            },
+            "adj": {
+                "abbr": "صفت",
+                "expand": "صفت",
+                "tooltip": ""
+            },
+            "interj": {
+                "abbr": "ندا",
+                "expand": "حرف ندا",
+                "tooltip": ""
+            },
+            "conn": {
+                "abbr": "ح.ربط",
+                "expand": "حرف ربط",
+                "tooltip": ""
+            },
+            "prt": {
+                "abbr": "حرف ",
+                "expand": "حرف ",
+                "tooltip": ""
+            },
+            "prep": {
+                "abbr": "ح.اض.",
+                "expand": "حرف اضافه",
+                "tooltip": ""
+            },
+            "post": {
+                "abbr": "ح.نش. مف.",
+                "expand": "حرف نشانه مفعول",
+                "tooltip": ""
+            },
+            "quant": {
+                "abbr": "ح.اند",
+                "expand": "حرف اندازه",
+                "tooltip": ""
+            },
+            "num": {
+                "abbr": "عدد",
+                "expand": "عدد",
+                "tooltip": ""
+            },
+            "clf": {
+                "abbr": "واحد ش.",
+                "expand": "واحد شمارش",
+                "tooltip": ""
+            },
+            "det": {
+                "abbr": "وا.اسم",
+                "expand": "وابستۀ اسمی",
+                "tooltip": ""
+            },
+            "prefix": {
+                "abbr": "پیشو.",
+                "expand": "پیشوند",
+                "tooltip": ""
+            },
+            "suffix": {
+                "abbr": "پسو.",
+                "expand": "پسوند",
+                "tooltip": ""
+            },
+            "abbrev": {
+                "abbr": "مخفف",
+                "expand": "مخفف",
+                "tooltip": ""
+            }
+        },
+        "meaningType": {},
+        "textType": {
+            "ar": {
+                "abbr": "عر.",
+                "expand": "عربی",
+                "tooltip": ""
+            },
+            "anml": {
+                "abbr": "جانو.",
+                "expand": "جانور",
+                "tooltip": ""
+            },
+            "hum": {
+                "abbr": "انس.",
+                "expand": "انسان",
+                "tooltip": ""
+            },
+            "f": {
+                "abbr": "مو.",
+                "expand": "مونث",
+                "tooltip": ""
+            },
+            "m": {
+                "abbr": "مذ.",
+                "expand": "مذکر",
+                "tooltip": ""
+            },
+            "sib": {
+                "abbr": "همانند.",
+                "expand": "جنس همانند",
+                "tooltip": ""
+            },
+            "inform": {
+                "abbr": "غی.رسم.",
+                "expand": "غیررسمی",
+                "tooltip": ""
+            },
+            "non-std": {
+                "abbr": "نا.هنج.",
+                "expand": "ناهنجار",
+                "tooltip": ""
+            },
+            "oldfash": {
+                "abbr": "غیر. مد.",
+                "expand": "غیر مدرن",
+                "tooltip": ""
+            },
+            "reg": {
+                "abbr": "ثبت.کر.",
+                "expand": "ثبت کردن",
+                "tooltip": ""
+            },
+            "bas-reg": {
+                "abbr": "ثبت.پای.",
+                "expand": "پایه",
+                "tooltip": ""
+            },
+            "hi-reg": {
+                "abbr": "ثبت.بال.",
+                "expand": "بالا",
+                "tooltip": ""
+            },
+            "low-reg": {
+                "abbr": "ثبت.پایی.",
+                "expand": "پایین",
+                "tooltip": ""
+            },
+            "arch": {
+                "abbr": "قد.",
+                "expand": "قدیمی و باستانی",
+                "tooltip": ""
+            },
+            "mid-reg": {
+                "abbr": "ثبت.متو.",
+                "expand": "متوسط",
+                "tooltip": ""
+            },
+            "slg": {
+                "abbr": "اصط.عام.",
+                "expand": "اصطلاح عامیانه",
+                "tooltip": ""
+            },
+            "trad": {
+                "abbr": "سنت.",
+                "expand": "سنتی",
+                "tooltip": ""
+            },
+            "off": {
+                "abbr": "توه.آمیز",
+                "expand": "توهین‌آمیز",
+                "tooltip": ""
+            },
+            "col": {
+                "abbr": "محا.",
+                "expand": "محاوره‌ای",
+                "tooltip": ""
+            },
+            "rel": {
+                "abbr": "دینی",
+                "expand": "دینی",
+                "tooltip": ""
+            },
+            "isl": {
+                "abbr": "اسلام",
+                "expand": "اسلام",
+                "tooltip": ""
+            },
+            "rest": {
+                "abbr": "مح.کنند.",
+                "expand": "محدود کننده",
+                "tooltip": ""
+            },
+            "dari": {
+                "abbr": "دری",
+                "expand": "دری",
+                "tooltip": ""
+            },
+            "ideol": {
+                "abbr": "گرا.",
+                "expand": "گرایشی",
+                "tooltip": ""
+            },
+            "obsc": {
+                "abbr": "زش.",
+                "expand": "زشت",
+                "tooltip": ""
+            },
+            "tab": {
+                "abbr": "ممنو.",
+                "expand": "ممنوع",
+                "tooltip": ""
+            },
+            "lit": {
+                "abbr": "کت.",
+                "expand": "کتابی",
+                "tooltip": ""
+            },
+            "obso": {
+                "abbr": "منس.",
+                "expand": "منسوخ",
+                "tooltip": ""
+            },
+            "hist": {
+                "abbr": "تاریخ.",
+                "expand": "تاریخی",
+                "tooltip": ""
+            },
+            "poems": {
+                "abbr": "شعر",
+                "expand": "شعر",
+                "tooltip": ""
+            },
+            "pol": {
+                "abbr": "با اد.",
+                "expand": "با ادب",
+                "tooltip": ""
+            },
+            "form": {
+                "abbr": "تعارف",
+                "expand": "تعارف",
+                "tooltip": ""
+            },
+            "hon": {
+                "abbr": "تجلیل.",
+                "expand": "تجلیلی",
+                "tooltip": ""
+            },
+            "rare": {
+                "abbr": "کمیا.",
+                "expand": "کمیاب",
+                "tooltip": ""
+            }
+        },
+        "variantType": {
+            "irreg.-infl": {
+                "abbr": "irreg. infl.",
+                "expand": "Irregularly Form",
+                "tooltip": "An Irregularly Inflected Form is an inflected form of the lexeme that is different from what you would expect from the normal rules of the grammar."
+            },
+            "dial.-var": {
+                "abbr": "dial. var.",
+                "expand": "Dialectal Variant",
+                "tooltip": "A variant of a lexeme, characteristically used by a specific demographic subset of the language."
+            },
+            "alv": {
+                "abbr": "alv",
+                "expand": "Alternative light verb",
+                "tooltip": "Complex predicate with alternative light verb."
+            },
+            "sp.-var": {
+                "abbr": "sp. var.",
+                "expand": "Spelling Variant",
+                "tooltip": "A variant spelling of a lexeme."
+            },
+            "pl-ar": {
+                "abbr": "pl ar",
+                "expand": "Arabic plural",
+                "tooltip": ""
+            },
+            "comp": {
+                "abbr": "comp.",
+                "expand": "Compound",
+                "tooltip": "A stem that is made up of more than one root."
+            },
+            "ar.-comp": {
+                "abbr": "ar. comp.",
+                "expand": "Arabic compound",
+                "tooltip": ""
+            },
+            "p": {
+                "abbr": "p",
+                "expand": "Present",
+                "tooltip": ""
+            },
+            "colloc": {
+                "abbr": "colloc.",
+                "expand": "Collocate",
+                "tooltip": "In corpus linguistics, a collocation is a series of words or terms that co-occur more often than would be expected by chance. (Collocation in Wikipedia n.d.)"
+            },
+            "ph.-v": {
+                "abbr": "ph. v.",
+                "expand": "Phrasal Verb",
+                "tooltip": "A combination of a lexical verb and a verbal particle that forms a single semantic and syntactic unit."
+            },
+            "unspec.-var": {
+                "abbr": "unspec. var.",
+                "expand": "Unspecified Variant",
+                "tooltip": "A variant form that hasn't been labeled as a specific kind of variant. If two forms are free variants, the same speaker might use either one in the same setting. The more frequent form would be considered the basic form."
+            },
+            "ap": {
+                "abbr": "ap",
+                "expand": "Alternative Preposition",
+                "tooltip": "Alternative preposition."
+            },
+            "fr.-var": {
+                "abbr": "fr. var.",
+                "expand": "Free Variant",
+                "tooltip": "If two forms are free variants, the same speaker might use either one in the same setting. The more frequent form would be considered the basic form."
+            },
+            "contr": {
+                "abbr": "contr.",
+                "expand": "Contraction",
+                "tooltip": "A combination of two lexemes that are phonologically reduced."
+            },
+            "pst": {
+                "abbr": "pst.",
+                "expand": "Past",
+                "tooltip": "The past tense form of a verb that does not take the regular inflectional affix for past tense."
+            },
+            "compar-super": {
+                "abbr": "compar super",
+                "expand": "Arabic Comparative; Superlative",
+                "tooltip": ""
+            },
+            "say": {
+                "abbr": "say.",
+                "expand": "Saying",
+                "tooltip": "Any pithy phrasal expression of wisdom or truth; esp., an adage, proverb, or maxim."
+            },
+            "der": {
+                "abbr": "der.",
+                "expand": "Derivative",
+                "tooltip": "A stem that is made up of a root plus an affix that adds a non-inflectional component of meaning."
+            },
+            "id": {
+                "abbr": "id.",
+                "expand": "Idiom",
+                "tooltip": "An idiom is a phrase or expression that typically presents a figurative, non-literal meaning attached to the phrase; but some phrases become figurative idioms while retaining the literal meaning of the phrase. Categorized as formulaic language, an idiom's figurative meaning is different from the literal meaning. (Idiom in Wikipedia n.d.)"
+            },
+            "Coll": {
+                "abbr": "Coll",
+                "expand": "Colloquial",
+                "tooltip": ""
+            },
+            "cp": {
+                "abbr": "cp",
+                "expand": "Complex predicate \/ Compound Verb",
+                "tooltip": "Complex predicate \/ Compound verb. A multi-word compound that functions as a single verb. One component of the compound is a light verb or vector, which carries any inflections, indicating tense, mood, or aspect. The other, \"primary\", component is a noun which carries most of the semantics of the compound. (Compound verb in Wikipedia n.d.)"
+            },
+            "unspec": {
+                "abbr": "unspec.",
+                "expand": "Unspecified Complex Form",
+                "tooltip": "A complex form that hasn't been labeled as a specific kind of complex form."
+            }
+        },
+        "socioCultural": {},
+        "complexFormType": {}
+    }
+}

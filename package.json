@@ -1,0 +1,8 @@
+{
+  "name" : "lediir",
+  "version" : "1.0.0",
+  "description" : "Elektronická lexikální databáze indoíránských jazyků",
+  "dependencies" : {
+    "@daliboris/pb-components" : "git+https://github.com/daliboris/tei-publisher-components/#target/lediir"
+  }
+}

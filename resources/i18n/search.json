@@ -1,0 +1,15 @@
+{
+ "forms": {
+  "advanced": {
+  "label" : "field",
+   "fields": {
+    "partOfSpeech" : "part-of-speech",
+    "lemma" : "lemma",
+    "pronunciation" : "pronunciation",
+    "domain" : "domain",
+    "reversal" : "reversal",
+    "anything" : "anything"
+   }
+  }
+ }
+}

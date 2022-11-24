@@ -1,0 +1,110 @@
+<meta xmlns="http://exist-db.org/xquery/repo">
+    <description>Elektronická lexikální databáze indoíránských jazyků</description>
+    <author>Boris Lehečka</author>
+    <website>https://eldi.soc.cas.cz/</website>
+    <status>beta</status>
+    <license>GNU-LGPL</license>
+    <copyright>true</copyright>
+    <type>application</type>
+    <prepare>pre-install.xql</prepare>
+    <finish>post-install.xql</finish>
+    <target>lediir</target>
+    <permissions user="redaktor" group="tei" mode="rw-r--r--" />
+    <deployed />
+    <changelog>
+        <change version="0.7.13">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>zobrazení popisku před variantními podobami</li>
+                <li>skrytí vygenerovaných variant heslových slov</li>
+                <li>změna obsahu nabídky <i>O projektu</i></li>
+                <li>po najetí myší nad bibliografický odkaz (v tabulkách a poznámkách pod čarou) se zobrazí kompletní bibliografický údaj</li>
+                <li>odstranění mezer za hypertextovými odkazy před interpunkcí v doprovodných textech</li>
+            </ul>
+        </change>
+        <change version="0.7.12">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>zobrazení variantních podob</li>
+                <li>skrytí vygenerovaných variant heslových slov</li>
+                <li>vylepšení generování indexu (hierarchické sémantické okruhy)</li>
+            </ul>
+        </change>
+        <change version="0.7.11">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>oprava indexu stylotvorných kvalifikátorů (více hodnot pro hledání, jedna pro fasetu)</li>
+                <li>oprava instalačního skriptu (pro nasazení konfiguračního souboru)</li>
+            </ul>
+        </change>
+        <change version="0.7.10">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>zobrazování variantních podob heslového slova (oprava: skrytí vygenerovaných podob bez pázdné mezery)</li>
+                <li>zobrazování údajů se stylovým příznakem</li>
+                <li>hledání s půlmezerou, mezerou, popř. bez mezery</li>
+                <li>popisek <i>Zobrazit vše</i> u faset (místo <i>Zobrazit prvních 50</i>)</li>
+                <li>funkční prokliky v dobrovodných textech</li>
+                <li>zobrazení obsahu pro dobrovodné texty</li>
+            </ul>
+        </change>
+        <change version="0.7.9">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>zobrazování variantních podob heslového slova</li>
+                <li>správné zobrazení poznámky k významu i v případě, že jsou v češtině</li>
+            </ul>
+        </change>
+        <change version="0.7.8">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>hledání v jednom i více slovnících</li>
+                <li>procházení po jednotlivých kapitolách (písmenech)</li>
+                <li>zahrnutí slovníku do faset</li>
+            </ul>
+        </change>
+        <change version="0.7.7">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>upravená komponenta pro listování (přechod na předchozí/následující stranu)</li>
+                <li>lepší zobrazení grafu s frekvencí (je vidět celý)</li>
+            </ul>
+        </change>
+        <change version="0.7.6">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>komplexní podřazená hesla se fulltextově neprohledávají</li>
+                <li>komplexní podřazená hesla se zobrazují (včetně rozbalování)</li>
+                <li>frekvence se zobrazuje i v nerozbaleném stavu</li>
+            </ul>
+        </change>
+        <change version="0.7.5">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>fukční odkaz z nabídky O projektu</li>
+                <li>doplnění mezery mezi poznámkou (např. fig.) a významem</li>
+            </ul>
+        </change>
+        <change version="0.7.4">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>filtrování podle faset po kliknutí z názvu slovníku</li>
+            </ul>
+        </change>
+        <change version="0.7.3">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>zobrazení odkazovaných hesel ve vyskakovacím poli</li>
+            </ul>
+        </change>
+        <change version="0.7.2">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>odstranění chyby v zobrazení hesel pro procházení</li>
+                <li>odstranění chyby při hledání, pokud se hledaný výraz nenašel</li>
+            </ul>
+        </change>
+        <change version="0.7.1">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>stejné zobrazení slovníku při procházení i kliknutí z názvu slovníku</li>
+                <li>funkční odkazy na synonyma ap.</li>
+            </ul>
+        </change>
+        <change version="0.7">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>zobrazení slovních druhů včetně bublinkové nápovědy podle nastavení jazyka</li>
+                <li>indexace slovních druhů bez ohledu na nastavený jazyk</li>
+                <li>indexace kapitoly</li>
+                <li>zobrazení autorů v seznamu slovníků (v jednom odstavci)</li>
+            </ul>
+        </change>
+    </changelog>
+</meta>

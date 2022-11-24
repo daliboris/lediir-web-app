@@ -1,0 +1,308 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes"/>
+        <link rel="shortcut icon" type="image/x-icon" href="resources/images/favicon.ico"/>
+        <link rel="shortcut icon" type="image/png" href="resources/images/favicon-16.png" sizes="16x16"/>
+        <link rel="shortcut icon" type="image/png" href="resources/images/favicon-24.png" sizes="24x24"/>
+        <link rel="shortcut icon" type="image/png" href="resources/images/favicon-32.png" sizes="32x32"/>
+        <link rel="shortcut icon" type="image/png" href="resources/images/favicon-64.png" sizes="64x64"/>
+
+        <title data-template="config:app-title"/>
+        <meta name="description" content="Default single text layout"/>
+        <meta name="pb-template" content="view.html"/>
+
+        <link rel="stylesheet" type="text/css" href="resources/fonts/font.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald&amp;display=swap"/>
+        <link rel="stylesheet" href="resources/css/theme.css"/>
+        <link rel="stylesheet" href="transform/LeDIIR.css"/>
+        <script type="module" src="pb-components-bundle.js" data-template="pages:load-components"/>
+        <style>
+            main {/* view */}
+            main {
+                margin: 0 20px 0 20px;
+                flex: 1 100%;
+            }
+            
+            @media (max-width: 1023px) {
+                main {
+                    margin: 0 8px 0 8px;
+                }
+                .doclist {
+                    margin-bottom: 20px;
+                }
+                .documents {
+                    padding-left: 10px;
+                }
+                .documents .label {
+                    display: none;
+                }
+                .toolbar pb-search {
+                    padding-left: 0;
+                }
+                #facets {
+                    display: none;
+                }
+            }
+            @media (min-width: 769px) {
+                .toolbar pb-navigation {
+                    display: none;
+                }
+            }
+
+            .content-body {
+                position: relative;
+                display: flex;
+                justify-content: center;
+            }
+
+            .content-body pb-navigation {
+                position: fixed;
+                /* bottom: 45%; */
+                --paper-fab-background: #35424b;
+                color: white;
+            }
+
+            .content-body pb-navigation[direction=backward] {
+                left: 20px;
+            }
+
+            .content-body pb-navigation[direction=forward] {
+                right: 20px;
+            }
+
+            @media (max-width: 769px) {
+                .content-body pb-navigation {
+                    display: none;
+                }
+            }
+
+            /*
+            @media (min-width: 1024px) {
+                .toolbar {
+                    display: none;
+                }
+                .panels {
+                    display: flex;
+                    flex-direction: row;
+                }
+                .panels .doclist {
+                    flex: 2 auto;
+                    margin-right: 20px;
+                }
+            }
+            */
+
+            .tp-title {
+                font-family: "Oswald", Verdana, "Helvetica", sans-serif;
+                font-size: 36px;
+                font-weight: 400;
+            }
+
+            .panels {
+                margin-bottom: 40px;
+            }
+            
+            .panels .doclist {
+                --paper-tabs-selection-bar-color: #607D8B;
+                --paper-tab-content: {
+                    font-family: "Oswald", Verdana, "Helvetica", sans-serif;
+                    font-weight: 400;
+                }
+                ;
+                --paper-card-header: {
+                    background-color: #d1dae0;
+                }
+                ;
+                --paper-card-header-text: {
+                    font-family: "Oswald", Verdana, "Helvetica", sans-serif;
+                    font-size: 16px;
+                    font-weight: 400;
+                }
+                ;
+            }
+            
+            .panels .doclist .card-content {
+                padding: 0;
+            }
+            
+            .panels .doclist .browse {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 0;
+            }
+
+            #document-list {
+                flex: 2;
+                margin-right: 20px;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-family: "Oswald", Verdana, "Helvetica", sans-serif;
+                font-weight: 400 !important;
+                line-height: 1.2;
+            }
+            
+            h5 {
+                font-size: 16px;
+                margin: 0;
+            }
+            
+            #facets {
+                flex: 0;
+                min-width: 220px;
+                margin-right: 20px;
+                background-color: #F0F0F0;
+                padding: 0 10px;
+            }
+            
+            #facets h3 {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+            
+            #facets h3 paper-checkbox {
+                margin-left: 16px;
+                font-size: 11px;
+            }
+            
+            #facets table {
+                font-size: 14px;
+            }
+            
+            #facets table table {
+                padding-left: 16px;
+                width: 100%;
+            }
+            
+            #facets table td {
+                padding: 4px 0;
+            }
+            
+            #facets table td:nth-child(2) {
+                color: #808080;
+                text-align: right;
+                padding-left: 1em;
+                vertical-align: middle;
+            }
+            #document-list {
+                width: 70%;
+            }
+        </style>
+    </head>
+
+    <body>
+    
+     <pb-page data-template="pages:pb-page" unresolved="unresolved" locales="resources/i18n/{{ns}}/{{lng}}.json">
+            <pb-document id="document1" data-template="pages:pb-document" view="div"/>
+            <app-drawer-layout force-narrow="force-narrow">
+                <app-drawer data-template="lib:include" data-template-path="templates/drawer.html"/>
+                <app-header-layout>
+                    <app-header slot="header" reveals="reveals" fixed="fixed" effects="waterfall">
+                        <app-toolbar data-template="lib:include" data-template-path="templates/menu.html"/>
+                        <app-toolbar data-template="lib:include" data-template-path="templates/lex-toolbar.html"/>
+                    </app-header>
+                    
+                    <!--  <pb-restricted login="login" group="tei"> -->
+
+                    <pb-drawer toggle="tocToggle" class="toc" emit="toc" subscribe="transcription">
+                        <div class="drawer-content">
+                            <h3>
+                                <pb-i18n key="document.contents">Contents</pb-i18n>
+                            </h3>
+                            <pb-load id="toc" url="api/document/{doc}/contents?target=transcription&amp;icons=true" expand="expand" src="document1" subscribe="toc" load-once="load-once"><pb-i18n key="dialogs.loading">Loading</pb-i18n></pb-load>
+                        </div>
+                    </pb-drawer>
+                    
+                    <section class="breadcrumbs">
+                        <pb-view id="title-view1" src="document1" xpath="//teiHeader/fileDesc/titleStmt/title" view="single">
+                            <pb-param name="header" value="short"/>
+                        </pb-view>
+                    </section>
+                
+                    <main class="content-body">
+                        <!-- <section>
+                         <h1 class="tp-title">
+                            <pb-i18n key="lediir.title">Electronic Lexical Database of Indo-Iranian Languages</pb-i18n>
+                        </h1>
+                        </section>
+                        -->
+                    
+                        <pb-navigation direction="backward" unit="page" emit="transcription" subscribe="transcription">
+                            <paper-fab icon="icons:chevron-left"/>
+                        </pb-navigation>
+                        <pb-view id="view1" src="document1" column-separator=".tei-cb" append-footnotes="append-footnotes" subscribe="transcription" emit="transcription"/>
+                        <pb-navigation direction="forward" unit="page" emit="transcription" subscribe="transcription">
+                            <paper-fab icon="icons:chevron-right"/>
+                        </pb-navigation>
+                    
+
+                    <!--
+                    <section class="panels">
+                        <pb-navigation direction="backward" unit="page" emit="transcription" subscribe="transcription">
+                            <paper-fab icon="icons:chevron-left"/>
+                        </pb-navigation>
+                        
+                        <pb-view id="view1" src="document1" column-separator=".tei-cb" append-footnotes="append-footnotes" subscribe="transcription" emit="transcription" view="div"/> 
+                        
+                        <pb-browse-docs id="document-list" class="noscroll" url="api/lex/dictionaries/{id}/entries" expand="expand"
+                         auto="auto" history="history" login="login" emit="docs" subscribe="docs"
+                         sort-options="[]" filter-options="[]">
+                            <pb-paginate slot="header" id="paginate" per-page="10" page-count="20" range="10" show-previous-next="show-previous-next" emit="docs" subscribe="docs"/>
+                            <pb-restricted login="login" slot="toolbar">
+                            </pb-restricted>
+                        </pb-browse-docs>
+                    
+                        
+                        <pb-navigation direction="forward" unit="page" emit="transcription" subscribe="transcription">
+                            <paper-fab icon="icons:chevron-right"/>
+                        </pb-navigation>
+                        
+                          <pb-custom-form id="facets" url="api/search/facets" emit="docs" subscribe="docs" event="pb-results-received"  /> 
+                    </section>
+                -->
+                    </main>
+                <!-- 
+                    <div slot="fallback">
+                        <div class="restricted" >
+                            <p><pb-i18n key="app.messages.restricted">You need to be logged in to see this content.</pb-i18n></p>
+                        </div>
+                    </div>
+                    </pb-restricted>
+                -->
+                 <app-toolbar data-template="lib:include" data-template-path="templates/footer.html"/>
+                </app-header-layout>
+            </app-drawer-layout>
+        
+        </pb-page>
+        <div class="splash"/>
+        <script>
+        const facets = document.getElementById('facets');
+        if (facets) {
+            facets.addEventListener('pb-custom-form-loaded', function(ev) {
+                const elems = ev.detail.querySelectorAll('.facet');
+                elems.forEach(facet =&gt; {
+                    facet.addEventListener('change', () =&gt; {
+                        const table = facet.closest('table');
+                        if (table) {
+                            const nested = table.querySelectorAll('.nested .facet').forEach(nested =&gt; {
+                                if (nested != facet) {
+                                    nested.checked = false;
+                                }
+                            });
+                        }
+                        facets._submit();
+                    });
+                });
+            });
+        }
+    </script>
+    </body>
+</html>

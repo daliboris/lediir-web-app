@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="40px" class="frequency-chart"><style>
+           .frequency-chart {
+           position: relative;
+           }
+           .frequency-bar-1 {
+           fill: #537614;
+           }
+           .frequency-bar-2 {
+           fill: #789E35;
+           }
+           .frequency-bar-3 {
+           fill: #A2C563;
+           }
+           .frequency-bar-4 {
+           fill: #137177;
+           }
+           .frequency-text {
+           font-family: Arial, sans-serif;
+           font-size: 0.5em;
+           font-weight: bold;
+           }
+          </style><g><text x="0" y="12" class="frequency-text">T: <title>Talkbank/Araneum</title></text><rect class="frequency-bar-1" width="1.5px" height="7" y="7" x="10"><title>TC</title></rect><rect class="frequency-bar-1" width="4.5px" height="7" y="7" x="13.5"><title>TC</title></rect><rect class="frequency-bar-1" width="6px" height="7" y="7" x="20"><title>TC</title></rect><rect class="frequency-bar-1" width="6px" height="7" y="7" x="28"><title>TC</title></rect><text x="0" y="22.5" class="frequency-text">L: <title>Korpus převážně psaného jazyka</title></text><rect class="frequency-bar-2" width="1.5px" height="7" y="17.5" x="10"><title>LC</title></rect><rect class="frequency-bar-2" width="4.5px" height="7" y="17.5" x="13.5"><title>LC</title></rect><rect class="frequency-bar-2" width="6px" height="7" y="17.5" x="20"><title>LC</title></rect><rect class="frequency-bar-2" width="6px" height="7" y="17.5" x="28"><title>LC</title></rect><text x="0" y="33" class="frequency-text">V: <title>Korpus mluveného jazyka</title></text><rect class="frequency-bar-3" width="1.5px" height="7" y="28" x="10"><title>VB</title></rect><rect class="frequency-bar-3" width="4.5px" height="7" y="28" x="13.5"><title>VB</title></rect><rect class="frequency-bar-3" width="6px" height="7" y="28" x="20"><title>VB</title></rect><rect class="frequency-bar-3" width="6px" height="7" y="28" x="28"><title>VB</title></rect><rect class="frequency-bar-3" width="6px" height="7" y="28" x="36"><title>VB</title></rect></g></svg>

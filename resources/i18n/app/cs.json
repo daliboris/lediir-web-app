@@ -1,0 +1,524 @@
+{
+    "lediir": {
+        "title": "Elektronická lexikální databáze indoíránských jazyků"
+    },
+    "menu": {
+        "search": "Hledání",
+        "about": "O projektu",
+        "browse": "Procházení",
+        "contents": "Obsah"
+    },
+    "headings": {
+        "dictionaries": "Slovníky",
+        "settings": "Nastavení",
+        "howToCite": "Jak citovat",
+        "help": "Nápověda",
+        "news": "Aktuality",
+        "aboutLanguage": "O jazyce",
+        "FACS": "Persko-český slovník"
+    },
+    "settings": {
+        "abbreviations": "zkratky\/plný text",
+        "collapse": "sbalit\/rozbalit hesla",
+        "expand-quotes": "automaticky rozbalit doklady",
+        "search-sections": "v textu",
+        "search-headings": "v nadpisech",
+        "search-entries": "v heslech"
+    },
+    "search": {
+        "headings": {
+            "simple": "Jednoduché",
+            "advanced": "Pokročilé",
+            "domains": "Sémantické okruhy"
+        },
+        "labels": {
+            "field": "Prohledat",
+            "condition": "Podmínka",
+            "query": "Dotaz",
+            "exactly": "přesně",
+            "start": "na začátku",
+            "end": "na konci",
+            "everywhere": "kdekoli",
+            "area": "oblast"
+        },
+        "buttons": {
+            "search": "Hledat"
+        },
+        "fields": {
+            "lemma": "heslo",
+            "partOfSpeech": "slovní druh",
+            "pronunciation": "výslovnost",
+            "domain": "sémantický okruh",
+            "reversal": "zpětný odkaz",
+            "anything": "cokoli",
+            "and": "A",
+            "andNot": "A NEOBSAHUJE",
+            "or": "NEBO"
+        },
+        "areas": {
+            "lemma": "heslo",
+            "text": "text"
+        }
+    },
+    "app": {
+        "facets": {
+            "partOfSpeech": "Slovní druh",
+            "domain": "Sémantický okruh",
+            "domainHierarchy": "Nadřazený sémantický okruh",
+            "style": "Stylistický kvalifikátor",
+            "object-language": "Výchozí jazyk",
+            "target-language": "Cílový jazyk",
+            "polysemy": "Polysémie",
+            "frequency": "Frekvence",
+            "complexFormType": "Komplexní forma",
+            "dictionary": "Slovník",
+            "show-all": "Zobrazit vše"
+        },
+        "languages": {
+            "cs": "čeština",
+            "cs-CZ": "čeština",
+            "en": "angličtina",
+            "fa": "perština",
+            "tg": "tádžičtina"
+        },
+        "messages": {
+            "restricted": "Pro zobrazení tohoto obsahu se musíte přihlásit."
+        }
+    },
+    "buttons": {
+        "comments": "Připomínky"
+    },
+    "dropdown": {
+        "label": "label-cz",
+        "default": "default-cz"
+    },
+    "dictionary": {
+        "pos": {
+            "adv": {
+                "abbr": "adv",
+                "expand": "adverbium",
+                "tooltip": "Adverbium (příslovce). Jelikož i zde slovní druh charakterizuje významovou funkci českého ekvivalentu, řadíme do této kategorie i adverbializované skupiny tvořené pomocí předložek, příslovečné spřežky, např. [be-sádegí] (snadno), [baráje abad] (navěky), [az (rú-je) ettefágh] (náhodou), [tá hálá] (doposud). Jinak jsou typickými slovotvornými příponami adverbií např. z arabštiny přejatá přípona [-an], resp. přípona [-áne], která vzniklé odvozenině dává současně význam adverbia pro neživotné subjekty.  O tvorbě adverbií v perštině viz t. Jahanshiri (2004–2022c). <https:\/\/www.jahanshiri.ir\/fa\/en\/adverb-formation>"
+            },
+            "subst": {
+                "abbr": "subst",
+                "expand": "substantivum",
+                "tooltip": "Substantiva (podstatná jména). Na rozdíl od češtiny jsou v perštině neohebná a genderově neutrální, více např. Jahanshiri (2004–2022b)<https:\/\/www.jahanshiri.ir\/fa\/en\/toc-grammar>. V této databázi jsme se rozhodli přiřazovat kategorii substantiv i významům některých víceslovných hesel s funkcí nominální skupiny, neboť jednotlivá slova a skupiny se v obou jazycích nemusí nutně překrývat. Rovněž u některých infinitivů sloves jsou jako zvláštní význam oddělena i z nich odvozená podstatná jména slovesná."
+            },
+            "pl": {
+                "abbr": "pl",
+                "expand": "plurál",
+                "tooltip": "Plurál (množné číslo). Více o plurálech substantiv v perštině Jahanshiri (2004–2022b).<https:\/\/www.jahanshiri.ir\/fa\/en\/toc-grammar> Kde se u výpůjček z arabštiny v perštině užívají i arabské plurály nebo duály, jsou v databázi uvedeny jako samostatná hesla – varianty. V některých případech jsou jako samostatná hesla uvedeny i pravidelné perské plurály, zvláště nabývají-li nový význam. "
+            },
+            "sg": {
+                "abbr": "sg",
+                "expand": "singulár",
+                "tooltip": "Singulár (jednotné číslo). Tato kategorie je v databázi využita jen výjimečně, např. pokud je plurál substantiva užíván častěji než singulár, a tedy podrobněji popsán; singulár je pak k tomuto heslu přiřazen jako varianta. Jinak jsou tvary jednotného čísla vesměs zařazeny do kategorie substantivum."
+            },
+            "clit": {
+                "abbr": "clit",
+                "expand": "klitika",
+                "tooltip": "Klitika. Termín se v české lingvistice objevuje ve dvou podobách: vedle sg. klitikon, pl. klitika, taky v podobě sg. klitika, pl. klitiky; pochází z řec. klitikos ‚ohebný, opírající se‘. Podle definice z 19. stol., historicky nejčastěji spojované s indoevropeistou J. Wackernagelem, standardně tradované v průběhu 20. stol., jsou k. slova, která se „vyskytují vždy pouze v podobě nepřízvučné“, a proto tvoří jedno fonetické slovo neboli jeden přízvukový celek buď s přízvučným slovem bezprostředně předcházejícím (tzv. enklitika, příklonky), anebo s přízvučným slovem následujícím. (Uhlířová, Kosta & Veselovská 2017)<https:\/\/www.czechency.org\/slovnik\/KLITIKON>."
+            },
+            "enclit": {
+                "abbr": "enklit",
+                "expand": "příklonka",
+                "tooltip": "Enklitická částice (příklonka). Krátké nepřízvučné slovo, které tvoří jeden fonetický celek se slovem předcházejícím (Uhlířová, Kosta & Veselovská 2017<https:\/\/www.czechency.org\/slovnik\/KLITIKON>, Nekula 2017b<https:\/\/www.czechency.org\/slovnik\/ENKLITICK%C3%81%20%C4%8C%C3%81STICE>). V přehledu enklitických částic v perštině publikovaném autory Shafiei & Kazemi (2020)<http:\/\/www.academypublication.com\/issues2\/tpls\/vol10\/10\/17.pdf> jsou jako enklitické částice charakterizovány: A) Jednoduchá klitika: 1) [-am] jako zkrácená forma příslovce ham (rovněž), 2) [-ó] jako zkrácená forma postpozice [rá], 3) [-o] jako zkrácená forma spojky [va] (a), 4) enklitická slovesa jako zkrácené formy slovesa [búdan] (být), B) Speciální klitika 1) přivlasťňovací zájmena a zájmena ve funkci akuzativu, C) Závislá klitika A) [-í] vyjadřující neurčitost, 2) [-í]  - enklitická částice uvozující vztažné věty, 3) kasra, či nověji znak [je], vyjadřující genitivní částici (ezáfet), 4) enklitická částice [-á] (ó, hej) u vokativu.  "
+            },
+            "pro-form": {
+                "abbr": "pro-form",
+                "expand": "proforma",
+                "tooltip": ""
+            },
+            "pro": {
+                "abbr": "pro",
+                "expand": "zájmeno",
+                "tooltip": "Zájmeno (pronomen). Slovo bez popisného (pojmového) významu, tj. které objekt přímo nepojmenovává, nýbrž označuje ho „jazykovým ukázáním“ (Karlík & Osolsobě 2017).<https:\/\/www.czechency.org\/slovnik\/Z%C3%81JMENO>  V perštině je genderově neutrální, k vyjádření úcty lze osobní zájmena opsat řadou frází, přivlastňovací zájmena či zájmena v akuzativu mohou nabývat formu příklonky (Shafiei & Kazemi 2020).<http:\/\/www.academypublication.com\/issues2\/tpls\/vol10\/10\/17.pdf> Více o perských zájmenech viz The University of Texas at Austin (n.d.).<https:\/\/sites.la.utexas.edu\/persian_online_resources\/pronouns\/>"
+            },
+            "pro-adv": {
+                "abbr": "pro-adv",
+                "expand": "pronominální adverbium",
+                "tooltip": "Zájmenné příslovce (pronominální adverbium). Zájmenná příslovce mohou být ukazovací (např. tady(hle), onde), tázací (dokdy, jak), vztažná, neurčitá (jakkoli), totalitní (vždy) (Osolsobě 2017a).<https:\/\/www.czechency.org\/slovnik\/Z%C3%81JMENN%C3%89%20P%C5%98%C3%8DSLOVCE> Jelikož přiřazení tohoto slovního druhu se řídí identifikovanou významovou funkcí českého ekvivalentu, i do této kategorie se dostala řada hesel, která jsou v perštině tvořena více samostatnými slovy, zatímco v češtině již často splynula v jedno slovo, např. [az án taraf] (odtamtud), nebo vedle sebe existují kolokace a kompozitum téměř rovnocenně, n. [án-tour \/án tour] (tak, takhle)."
+            },
+            "v": {
+                "abbr": "v",
+                "expand": "sloveso",
+                "tooltip": "Sloveso (verbum). Označení dynamických (v čase probíhajících) příznaků (Osolsobě 2017d)<https:\/\/www.czechency.org\/slovnik\/SLOVESO>. V perštině, zvláště v moderním jazyce, je drtivá většina lexikálních jednotek s funkcí slovesa tvořena jmennou částí a sémanticky vyprázdněným kategoriálním či sponovým slovesem. Někteří autoři je interpretují jako „složená slovesa“ (compound verbs) (Dabir-Moghaddam 1977<https:\/\/core.ac.uk\/download\/pdf\/4820825.pdf>, The University of Texas at Austin n.d.<https:\/\/sites.la.utexas.edu\/persian_online_resources\/verbs\/>), v jiných pracech jsou popisovány jako „komplexní predikáty“ (complex predicates) (Samvelian & Faghiri 2014<https:\/\/halshs.archives-ouvertes.fr\/halshs-01136825\/document>, Ershadi 2011<https:\/\/www.swarthmore.edu\/sites\/default\/files\/assets\/documents\/linguistics\/2011_Ershadi.pdf>). Jedná se o lexikální jednotky odpovídající analytickým predikátům s kategoriálním či sponovým slovesem, jak je popisuje Radimský (2017a)<https:\/\/www.czechency.org\/slovnik\/%20ANALYTICK%C3%9D%20PREDIK%C3%81T%20S%20KATEGORI%C3%81LN%C3%8DM%20SLOVESEM>. U nepravidelných jednoduchých sloves je formou varianty vyznačen přítomný kmen (např. [chástan \/ cháh] (chtít)). K morfologii perských sloves viz např. Jahanshiri (2004–2022a)<https:\/\/www.jahanshiri.ir\/pvc\/en\/>."
+            },
+            "vi": {
+                "abbr": "vi",
+                "expand": "intranzitivum",
+                "tooltip": "intranzitivum (intranzitivní sloveso)"
+            },
+            "cop": {
+                "abbr": "cop",
+                "expand": "spona",
+                "tooltip": "Spona (copula, kopula). (Karlík 2017b)<https:\/\/www.czechency.org\/slovnik\/SPONA>.  V perštině může být sponové sloveso [búdan] (být) součástí analytických predikátů s významem pasiva."
+            },
+            "vt": {
+                "abbr": "vt",
+                "expand": "tranzitivum",
+                "tooltip": "Přechodové (tranzitivní) sloveso (tranzitivum) je sloveso, které se váže s přímým předmětem, tedy sloveso s akuzativní vazbou (Dvořák 2017)<https:\/\/www.czechency.org\/slovnik\/TRANZITIVN%C3%8D%20SLOVESO>. V perštině je přímý předmět vyjádřen pomocí postpozice [rá] anebo – zejména v hovorovém jazyce – příklonkou ve tvaru přivlastňovacího zájmena."
+            },
+            "pas": {
+                "abbr": "pas",
+                "expand": "pasivum",
+                "tooltip": "Pasivum (sloveso rodu trpného). Tuto kategorii v naší databázi využíváme k popisu sloves a analytických predikátů, jimž lze jako české ekvivalenty přiřadit slovesa rodu trpného či zvratná slovesa. Více k pasivu viz Karlík (2017d)<https:\/\/www.czechency.org\/slovnik\/PASIVUM>."
+            },
+            "lv": {
+                "abbr": "kat",
+                "expand": "kategoriální sloveso",
+                "tooltip": "Kategoriální (funkční, podpůrné) sloveso je sémanticky oslabené sloveso, které je komponentou složených sloves, resp. analytických predikátů, tvořících většinu verbálních výrazů moderní perštiny (Samvelian & Faghiri 2014<https:\/\/halshs.archives-ouvertes.fr\/halshs-01136825\/document>, Dabir-Moghaddam 1997<https:\/\/core.ac.uk\/download\/pdf\/4820825.pdf>). V nich je nositelem gramatických kategorií (zejména způsob, čas, aspektové kategorie) a zpravidla má i svůj rodový protějšek, pomocí něhož jsou tvořena složená slovesa opačného rodu, např. [kardan-šodan, zadan-chordan, ávardan-ámadan, bordan-raftan]. K definici v české ligvistice viz Radimský (2017b)<https:\/\/www.czechency.org\/slovnik\/KATEGORI%C3%81LN%C3%8D%20SLOVESO>. "
+            },
+            "adj": {
+                "abbr": "adj",
+                "expand": "adjektivum",
+                "tooltip": "Přídavné jméno (adjektivum). Jelikož přiřazený slovní druh odpovídá významové funkci českého ekvivalentu, mezi adjektiva jsou zde řazena i perská sousloví, v nichž je existence či absence určité vlastnosti vyjádřena pomocí předložek [bá] (s, se), [bí] (bez), [zír-e], [taht-e] (pod (vlivem), pomocných adjektiv [ghábel-e] (schopný, možný) [por (az)] (plný) nebo gramatických tvarů kategoriálních sloves [-šode] (kdo, co se stane nějakým), [-konande] (kdo je aktérem něčeho), [-kardaní] (-itelný). Podobně nabývají v řadě kompozit funkci slovotvorných přípon tvary přítomného slovesného kmene typu [-ávar] (přinášející) [-pazír] (přijímající) [-dár] (mající). Více k perským adjektivům viz např. The University of Texas at Austin (n.d.).<https:\/\/sites.la.utexas.edu\/persian_online_resources\/adjectives\/>"
+            },
+            "interj": {
+                "abbr": "interj",
+                "expand": "citoslovce",
+                "tooltip": "Citoslovce (interjekce) tvoří samostatné rudimentální výpovědi nevětné povahy, tzv. větné ekvivalenty (Osolsobě 2017c).<https:\/\/www.czechency.org\/slovnik\/CITOSLOVCE> I zde ke klasifikaci přistupujeme z hlediska významové funkce a mezi citoslovce tak řadíme i některá sousloví, která v perštině nesplynula v jednoslovný výraz, např. [panáh bar chodá], [to rá (be) chodá] (proboha!)."
+            },
+            "ii": {
+                "abbr": "ii",
+                "expand": "NEURČENO",
+                "tooltip": "Neurčené slovní druhy. Takto označené významy nebudou zpřístupněny na webu a v mobilní aplikaci"
+            },
+            "conn": {
+                "abbr": "konj",
+                "expand": "spojka",
+                "tooltip": "Spojka (někdy t. konjunkce). Slovní druh spojující slova, syntaktické slovní skupiny a věty. Jelikož přiřazení slovního druhu se řídí významovou funkcí českého ekvivalentu, mezi spojky je tu zařazena i řada slovních hesel, která mají v perštině tvar kolokací, např. [az án-džá(jí-)ke] (jelikož), [(va) ín-gúne búd ke] (a tak), [bá vodžúd-e ín-ke] (přestože)."
+            },
+            "prt": {
+                "abbr": "prt",
+                "expand": "částice",
+                "tooltip": "Částice (partikule). Neplnovýznamová neohebná funkční slova bez větněčlenské platnosti. V zahraniční lingvistice lze pod ně zahrnout i spojky, předložky, citoslovce a spojovací adverbia, k rozlišení v češtině viz Nekula 2017a,<https:\/\/www.czechency.org\/slovnik\/%C4%8C%C3%81STICE>Vondráček 1998<http:\/\/nase-rec.ujc.cas.cz\/archiv.php?art=7419>, Vondráček 1999<http:\/\/nase-rec.ujc.cas.cz\/archiv.php?art=7499>. Vyjadřují převážně postoj mluvčího (epistémické\/modální, intenzifikační, odpověďové, negační…) Epistémické částice jsou v perštině vyjádřeny např. tvary 3. osoby sg. modálních sloves nebo bohatou škálou kolokací."
+            },
+            "xxx": {
+                "abbr": "xxx",
+                "expand": "kompozita, neurčené formy",
+                "tooltip": ""
+            },
+            "adp": {
+                "abbr": "adp",
+                "expand": "Adpozice",
+                "tooltip": ""
+            },
+            "prep": {
+                "abbr": "prep",
+                "expand": "předložka",
+                "tooltip": "Předložka (prepozice). Takto charakterizujeme jak jednoslovné perské předložky, např. [az] (z, ze), tak i sousloví, jejichž český ekvivalent významově odpovídá předložkám, např. [az bejn-e] (mezi), [az bará-je] (kvůli), [be džá-je] (namísto), [pas az] (po)."
+            },
+            "post": {
+                "abbr": "post",
+                "expand": "postpozice",
+                "tooltip": "Postpozice [rá] charakterizuje v perštině akuzativ, v němž má zároveň funkci členu určitého. V hovorovém jazyce se vyslovuje [ró], případně může být nahrazena příklonkou [-ó], např. [Áre, (án) fílm-rá (\/film-ó) díde-am] (Ano, viděl jsem ten film). U neurčitých předmětů chybí nebo je nahrazena příklonkou [-í] s funkcí neurčitého členu. [Achíran fílm-e chúb-í dídíd?] (Viděli jste v poslední době nějaký pěkný film?). K obecné definici postpozice viz Uhlířová (2017).<https:\/\/www.czechency.org\/slovnik\/ANTEPOZICE#postpozice>"
+            },
+            "num": {
+                "abbr": "num",
+                "expand": "číslovka",
+                "tooltip": "Číslovky (numerale). Množina výrazů, které spojuje to, že lexikálně vyjadřují kvantitativnost (Karlík 2017c)<https:\/\/www.czechency.org\/slovnik\/%C4%8C%C3%8DSLOVKA>. Více o perských číslovkách  The University of Texas at Austin (n.d.).<https:\/\/sites.la.utexas.edu\/persian_online_resources\/numbers-1\/>"
+            },
+            "clf": {
+                "abbr": "jedn",
+                "expand": "klasifikátor",
+                "tooltip": "Jahanshiri (2004–2022d)<https:\/\/www.jahanshiri.ir\/fa\/en\/noun-classifier>"
+            },
+            "det": {
+                "abbr": "det",
+                "expand": "determinátor",
+                "tooltip": "Determinátor. V perštině se stejně jako v češtině nevyskytují člen určitý a neurčitý jako samostatné kategorie, funkci neurčitého členu má však často enklitická částice [-í] nebo číslovka [jek] (jeden). Určitý člen může být nahrazen ukazovacími zájmeny [ín] (tenhle), [án] (tamten), [hamín] (týž), v hovorovém jazyce t. příklonkou [-e], např. [pesar-e emrúz úmad chúne-je má] (Ten chlapec dnes přišel k nám). V akuzativu se vyjadřuje též postpozicí [rá] nebo jejími hovorovými tvary [ró, -ó]. Tvary s příklonkou [-í], jsou v této databázi často skryty na pozadí tak, aby uživatel našel příslušný lexém i v případě, že jej zadá do vyhledávače i v takto rozšířeném tvaru."
+            },
+            "Affix": {
+                "abbr": "afix",
+                "expand": "afix",
+                "tooltip": "Afix. Typ morfu plnící různé funkce (slovotvorné, tvarotvorné); připojuje se ke kořenovému morfu, n. ke kmeni (Osolsobě 2017d)<https:\/\/www.czechency.org\/slovnik\/AFIX>."
+            },
+            "prefix": {
+                "abbr": "prefix",
+                "expand": "prefix",
+                "tooltip": "Prefix (předpona). Typ afixu, který se ve slově nachází nalevo od kořene (Ziková & Biskup 2017)<https:\/\/www.czechency.org\/slovnik\/PREFIX>. Může být příbuzný s předložkou, v perštině je to často obtížné odlišit. V naší databázi interpretujeme původní předložky, např. [bá] (s, se), [bí] (bez, beze), jako předpony zpravidla tehdy, slouží-li k vytvoření adjektiva přisouzením nějaké vlastnosti. Podobnou funkci mohou mít některá pomocná přídavná jména, např. [ghábel-e] (schopný), [por (az)] (plný). Podobně i předložku [be] v některých adverbiích posuzujeme jako slovotvorný afix."
+            },
+            "suffix": {
+                "abbr": "sufix",
+                "expand": "sufix",
+                "tooltip": "Sufix (přípona). Slovotvorný formant, část odvozeného slova, která následuje za kmenem. Derivační sufix mění význam, flektivní sufix, který je nositelem gramatických rysů, se tradičně nazývá koncovka. (Rusínová, Z. (2017)<https:\/\/www.czechency.org\/slovnik\/SUFIX>). U perských adjektiv interpretujeme jako sufixy i některé slovesné tvary (např. [-dár, -ávar, -pazír]), je-li jejich významová funkce oslabená a slouží-li pouze k přiřazení určité vlastnosti."
+            },
+            "abbrev": {
+                "abbr": "abrev",
+                "expand": "zkratka",
+                "tooltip": "Zkratka (abreviace). Výsledek zkrácení slova nebo víceslovného pojmenování."
+            }
+        },
+        "meaningType": {
+            "fig": {
+                "abbr": "přen.",
+                "expand": "přeneseně",
+                "tooltip": ""
+            }
+        },
+        "textType": {
+            "ar": {
+                "abbr": "ar",
+                "expand": "arabismus",
+                "tooltip": "Arabismus. Výpůjčka z arabštiny užívaná jen ve formálním či odborném jazyce."
+            },
+            "slg": {
+                "abbr": "slg",
+                "expand": "slang",
+                "tooltip": "slangový výraz"
+            },
+            "col": {
+                "abbr": "hov",
+                "expand": "hovorový výraz",
+                "tooltip": "Hovorový styl je styl běžné každodenní komunikace s potřebou se dorozumět. Vyznačuje se běžnou slovní zásobou, jednoduchou větnou stavbou a kompozicí. Podává informace a citové, hodnoticí postoje k nejrůznějším tématům všedního života (Prostěsdělovací styl in Wikipedie n.d.<https:\/\/cs.wikipedia.org\/wiki\/Prost%C4%9Bsd%C4%9Blovac%C3%AD_styl>, Hoffmannová (2017)<https:\/\/www.czechency.org\/slovnik\/PROST%C4%9ASD%C4%9ALOVAC%C3%8D%20STYL>). Takto zde označujeme i výrazy teheránského dialektu (teheránské hovorové perštiny), vice např. Osvald (1972)."
+            },
+            "rel": {
+                "abbr": "náb.",
+                "expand": "náboženství",
+                "tooltip": "Náboženské výrazy obecně."
+            },
+            "isl": {
+                "abbr": "isl.",
+                "expand": "islám",
+                "tooltip": "Specifické islámské výrazy."
+            },
+            "rest": {
+                "abbr": "rest.",
+                "expand": "omezené použití",
+                "tooltip": ""
+            },
+            "dari": {
+                "abbr": "darí",
+                "expand": "darí",
+                "tooltip": "Výraz užívaný jen v afghánské perštině darí."
+            },
+            "ideol": {
+                "abbr": "ideol.",
+                "expand": "ideologický či tendenční výraz",
+                "tooltip": "Jazyk a metafory užívané pouze ve státní ideologii či v tendenčních textech."
+            },
+            "obsc": {
+                "abbr": "vulg.",
+                "expand": "vulgární",
+                "tooltip": "Neslušné, oplzlé a urážlivé výrazy."
+            },
+            "tab": {
+                "abbr": "tabu",
+                "expand": "tabu",
+                "tooltip": "Výraz nepřijatelný v běžném jazyce."
+            },
+            "": {
+                "abbr": "ne o lidech",
+                "expand": "pouze pro věci a děje",
+                "tooltip": "Výrazy, jež se ve funkci adjektiv váží pouze na substantiva vyjadřující děje a věci (nelze je použít pro osoby či zvířata), např. [fazá-je dústáne] (přátelská atmosféra)."
+            },
+            "lit": {
+                "abbr": "spis.",
+                "expand": "spisovný jazyk",
+                "tooltip": "Zde míněn spisovný jazyk používaný v psané formě v literatuře, v češtině má tento termín i význam jazykového standardu užívaného na oficiální úrovni."
+            },
+            "obso": {
+                "abbr": "zast",
+                "expand": "zastaralý",
+                "tooltip": "Zastaralé a staromódní výrazy, v současné perštině užívané zřídka."
+            },
+            "hist": {
+                "abbr": "hist",
+                "expand": "historický výraz",
+                "tooltip": "Historický výraz vyskytující se jen v historických dílech, v současné perštině již vůbec neužívaný."
+            },
+            "poems": {
+                "abbr": "poe",
+                "expand": "poezie",
+                "tooltip": "Poetické a metaforické výrazy užívané převážně v perské poezii."
+            },
+            "pol": {
+                "abbr": "zdv",
+                "expand": "zdvořile",
+                "tooltip": "Běžné zdvořilé výrazy užívané i v kontaktu s blízkými osobami."
+            },
+            "form": {
+                "abbr": "form. zdv.",
+                "expand": "formální zdvořilost",
+                "tooltip": "Ta´árof - zdvořilé formální chování užívané ve styku s cizím či výše postaveným člověkem."
+            },
+            "hon": {
+                "abbr": "tit.",
+                "expand": "čestné tituly",
+                "tooltip": "Čestné tituly vysoce postavených osob."
+            },
+            "cor": {
+                "abbr": "cor",
+                "expand": "korespondence",
+                "tooltip": "Frazémy užívané v korespondenčním styku."
+            },
+            "rare": {
+                "abbr": "rare",
+                "expand": "vzácně",
+                "tooltip": "Vzácně se vyskytující výraz."
+            }
+        },
+        "variantType": {
+            "irreg.-infl": {
+                "abbr": "",
+                "expand": "nepravidelné tvary",
+                "tooltip": "Nepravidelné tvary"
+            },
+            "dial.-var": {
+                "abbr": "nář.",
+                "expand": "nářeční varianta",
+                "tooltip": "Nářeční varianta."
+            },
+            "alv": {
+                "abbr": "alt.",
+                "expand": "alternativní kategoriální sloveso",
+                "tooltip": "Analytický (verbo-nominální) predikát stejného významu s alternativním kategoriálním nebo sponovým slovesem."
+            },
+            "sp.-var": {
+                "abbr": "sp. var.",
+                "expand": "pravopisná varianta",
+                "tooltip": "Pravopisná varianta. (Pozn.: Některé pravopisné varianty, n. tvary zakončené hamzou, genitivní vazbou či u kompozit tvary s jiným typem mezery, se mohou v databázi vyskytovat jen ve skryté formě). "
+            },
+            "pl-ar": {
+                "abbr": "pl ar",
+                "expand": "arabský plurál",
+                "tooltip": "Arabský plurál nebo duál, který je možno v perštině používat souběžně s perskými plurály."
+            },
+            "comp": {
+                "abbr": "komp.",
+                "expand": "kompozitum",
+                "tooltip": "Kompozitum (slovo složené, složenina). V tradiční slovotvorbě slovo tvořené ze dvou (nebo více) slovotvorných základů skládáním (Bozděchová & Wagner 2017). Jako složeniny v perštině charakterizujeme i některé komplexy spojené spojkou [-o-] (a), spojující synonyma, slova podobného významu nebo minulý a přítomný kmen slovesa, ačkoli jsme si vědomi, že hranice mezi kompozity a kolokacemi tu není ostrá. Je-li jedním ze slovotvorných základů slovesný tvar, rozhoduje, zda jde o sloveso plnovýznamové; jedná-li se o významově oslabené sloveso, výsledný komplex interpretujeme jako derivativum. Více k typům perských kompozit viz např. Shaki (1964)."
+            },
+            "ar.-comp": {
+                "abbr": "ar. komp.",
+                "expand": "arabské kompozitum",
+                "tooltip": "Arabské kompozitum. Tvorba kompozit v arabštině se řídí jinými pravidly, než jaká užívá perština. Pro výpůjčky z arabštiny, u nichž se někdy – byť spíše zřídka – mohou i v perštině užívat původní arabské tvary, jsme proto zavedli zvláštní kategorii."
+            },
+            "p": {
+                "abbr": "p",
+                "expand": "prézentní kmen",
+                "tooltip": "Prézentní kmen nepravidelných sloves."
+            },
+            "colloc": {
+                "abbr": "kol.",
+                "expand": "kolokace",
+                "tooltip": "Kolokace. Volné ustálené spojení, které nemá povahu nového slova. Jako kolokace jsou v této databázi charakterizována jednak volná spojení dvou nebo více samostatných lexikálních jednotek vyskytující se s vyšší frekvencí např. v terminologii, zařazeny jsou sem též v perštině hojně se vyskytující složená příslovečná určení (příslovečné spřežky), složené předložky a spojky."
+            },
+            "ph.-v": {
+                "abbr": "",
+                "expand": "NEPOUŽITO",
+                "tooltip": ""
+            },
+            "unspec.-var": {
+                "abbr": "nespec. var.",
+                "expand": "nespecifikovaná varianta",
+                "tooltip": "Nespecifikovaná nebo volná varianta (např. komplex s jednou alternativní komponentou nebo pozměněný gramatický tvar, přezdívky)."
+            },
+            "ap": {
+                "abbr": "ap",
+                "expand": "zaměnitelná předložka",
+                "tooltip": "Komplexní výraz se zaměnitelnou předložkou."
+            },
+            "fr.-var": {
+                "abbr": "",
+                "expand": "NEPOUŹÍVAT - užij nespecifikovaná variant",
+                "tooltip": ""
+            },
+            "contr": {
+                "abbr": "zkrác.",
+                "expand": "zkrácenina",
+                "tooltip": "Zkrácenina."
+            },
+            "pst": {
+                "abbr": "",
+                "expand": "",
+                "tooltip": ""
+            },
+            "compar-super": {
+                "abbr": "compar super",
+                "expand": "arabský komparativ, superlativ",
+                "tooltip": "Arabské tvary komparativů a superlativů používané vedle pravidelných perských tvarů, někdy s posunutým významem."
+            },
+            "say": {
+                "abbr": "rč.",
+                "expand": "rčení a přísloví",
+                "tooltip": "Rčení je relativně ustálené slovní spojení, které vystihuje nějakou typickou situaci a přiléhavě ji komentuje. Přísloví je žánr lidové slovesnosti v podobě krátkého mravního ponaučení vyjádřeného přirovnáním či metaforou. "
+            },
+            "der": {
+                "abbr": "der.",
+                "expand": "derivace",
+                "tooltip": "Derivace (odvozenina). Jako odvozeniny jsou klasifikovány lexémy odvozené slovotvornými příponami nebo předponami a gramatické tvary sloves. V komplexech s významem adjektiv jsme se jako předpony rozhodli interpretovat i původem předložky typu [bá-] (s, se), [bí-] (bez, beze), jejichž funkcí je přiřadit určitou vlastnost. Podobně nahlížíme jako na slovotvorné přípony na řadu slovesných tvarů s obdobnou funkcí, např. [-dár] (mající), [-ávar] (přinášející), [-pazír] (přijímající), [-šode], [-šavande] (stávající se nějakým), apod. Podobně za odvozeniny považujeme komplexní adverbia tvořená pomocí „gramatické” předložky [be] (Jahanshiri 2004–2022c)."
+            },
+            "id": {
+                "abbr": "id.",
+                "expand": "idiom",
+                "tooltip": "Idiom. Lexikalizovaný komplex, který má jako celek znatelně posunutý význam vůči komponentám, z nichž je složen."
+            },
+            "Coll": {
+                "abbr": "hov.",
+                "expand": "hovorová varianta",
+                "tooltip": "Hovorová, často pouze fonetická varianta užívaná v mluveném jazyce."
+            },
+            "cp": {
+                "abbr": "ap",
+                "expand": "analytický predikát",
+                "tooltip": "Analytický (verbonominální) predikát s kategoriálním či sponovým slovesem (complex predicate), jinde nazývaný složené sloveso (compound verb, [fe´l-e morakkab]), tvoří drtivou většinu lexémů s funkcí slovesa v moderní perštině. Skládá se ze dvou základních složek, jimiž jsou jmenná část nesoucí význam a sémanticky vyprázdněné kategoriální či sponové sloveso, které je nositelem gramatických funkcí (způsob, čas, aspektové kategorie) a jehož volba navíc zpravidla rozhoduje o slovesném rodu. Více viz např. Samvelian & Faghiri (2014), Ershadi (2011), Megerdoomian (2012), Dabir-Moghaddam (1997), The University of Texas at Austin (n.d.). K definicím v české lingvistice viz Karlík (2017a) a Radimský (2017a). "
+            },
+            "unspec": {
+                "abbr": "nespec.",
+                "expand": "nespecifikovaný komplexní tvar",
+                "tooltip": ""
+            }
+        },
+        "socioCultural": {
+            "form": {
+                "abbr": "kniž.",
+                "expand": "knižní, knižně",
+                "tooltip": ""
+            }
+        },
+        "complexFormType": {
+            "analytický-predikát": {
+                "abbr": "analytický predikát",
+                "expand": "analytický predikát",
+                "tooltip": ""
+            },
+            "arabské-kompozitum": {
+                "abbr": "arabské kompozitumt",
+                "expand": "arabské kompozitum",
+                "tooltip": ""
+            },
+            "derivace": {
+                "abbr": "derivace",
+                "expand": "derivace",
+                "tooltip": ""
+            },
+            "idiom": {
+                "abbr": "idiom",
+                "expand": "idiom",
+                "tooltip": ""
+            },
+            "kolokace": {
+                "abbr": "kolokace",
+                "expand": "kolokace",
+                "tooltip": ""
+            },
+            "kompozitum": {
+                "abbr": "kompozitum",
+                "expand": "kompozitum",
+                "tooltip": ""
+            },
+            "nespecifikovaný-komplexní-tvar": {
+                "abbr": "nespecifikovaný komplexní tvar",
+                "expand": "nespecifikovaný komplexní tvar",
+                "tooltip": ""
+            },
+            "rčení-a-přísloví": {
+                "abbr": "rčení a přísloví",
+                "expand": "rčení a přísloví",
+                "tooltip": ""
+            }
+        }
+    }
+}

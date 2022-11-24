@@ -1,0 +1,253 @@
+body {
+    --pb-view-max-width: 920px;
+    --pb-footnote-padding: 0 0 0 0;
+}
+
+#hesla {
+ width: 120%;
+}
+#hesla article
+{
+      display:unset;
+}
+article {
+ line-height: 1.5em;
+}
+
+summary:focus {
+	outline-style: none;
+}
+
+section > details > summary {
+ 	display: list-item;
+}
+
+article > details > summary {
+	/*font-size: 28px;*/
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+	cursor: pointer;
+	display: list-item;
+}
+article > details > summary  * { display: inline; }
+
+section > details > summary  * { display: inline; }
+
+details > p {
+	margin-left: 24px;
+}
+details details {
+	margin-left: 36px;
+}
+
+article > details > details > summary  * { display: inline; cursor: pointer; }
+
+summary > input {
+ margin-left: 0.5em;
+ margin-right:1em;
+}
+
+details > div {
+ margin-left: 1.5em;
+}
+
+[lang='fa'] { direction: rtl; margin-right: 0.5em; }
+
+section > h1 {
+    margin-top: .5em;
+    margin-bottom: -0.5em;
+}
+
+.summary {display: inline; font-weight: 100; }
+
+details[open] > summary .summary {display: none;}
+
+.tei-entry, .tei-sense, .tei-note, .tei-etym { display: block; }
+
+.tei-entry {margin: 2em;}
+.tei-sense, .tei-etym { margin-top: 0.5em; margin-bottom: 1em; margin-left: 1.5em;}
+.tei-def {font-style: italic; font-size: larger; font-weight: bold; }
+
+.tei-cit-example {  display: table-row; }
+
+.tei-orth {display: table-cell; padding-left: 0.25em; }
+.tei-pron {display: table-cell; padding-left: 0.5em; padding-right: 0.25em; }
+
+.summary {display: table-cell;; font-weight: 100; padding-left: 0.5em; }
+
+.summary .tei-def {font-weight: normal;}
+
+details[open] > summary .summary {display: none;}
+
+
+details > summary .tei-frequency 
+{
+    display: inline;
+    border-radius: 5px;
+    border: 1px solid #495C2D;
+    padding-inline-start: 0.3em;
+    margin-inline-start: 1em;
+    vertical-align: middle;
+}
+details:not([open]) > summary .tei-frequency 
+{
+    display: inline; /* none ? */
+}
+
+details[open] > .lediir-comment {text-align: right; padding-bottom: 0.5em;}
+
+.tei-lemma {
+    padding-right:0.5em;
+}
+
+.tei-sense-num {
+    border-radius: 50%;
+    width: 1.2em;
+    height: 1.2em;
+    text-align: center;
+    background-color: deepskyblue;
+    border:1px solid deepskyblue;
+    padding: 2px;
+}
+.tei-pron {color: orange; margin-left: 1em;}
+
+.tei-orth { font-size: 2em; }
+
+.tei-form-inflected .tei-orth {font-size: 1.5em; }
+
+.tei-variant {font-size: 150%; color: grey;}
+
+.tei-pron {color: orange; margin-left: 1em;}
+.tei-pron::before { content: " ["  }
+.tei-pron::after { content: "] "  }
+
+.tei-quote {font-size: 120%; display: table-cell; padding-right: 0.5em;}
+.tei-quote[lang='fa'] {direction: rtl;}
+.quote-index {display: table-cell; }
+.tei-translation {display: table-cell; padding-left: 0.5em;}
+.translation-index {display: table-cell; padding-left: 0.5em; }
+
+.tei-catDesc[lang='fa'], .tei-gloss[lang='fa'] { font-size: 120%; margin-left: 1em; direction: rtl;}
+
+.collocate {font-size: 80%;}
+.meaningType {font-size: 80%;}
+
+.tei-ref-sense-number { vertical-align: super; font-size: .65em; }
+
+
+/* 
+.tei-frequency {color: blue; }
+.tei-frequency::before { content: " /frekvence: "  }
+.tei-frequency::after { content: "/"  }
+ */
+
+/* Umístění SVG na řádku */
+.frequency-chart {
+ position: relative;
+ top: 0.8em;
+ border-radius: 5px;
+ border: 1px solid #495C2D;
+ padding-left: 5px;
+ margin-left: 1em;
+}
+
+.tei-usg-domain a {
+ background-image:url(../images/external-link-ltr-icon.svg);
+  background-position:center right;
+  background-repeat:no-repeat;
+  padding-right:13px;
+}
+
+/* Modified styles */
+
+.menubar pb-lang {
+     max-width: 120px;
+}
+
+section > h1 {
+    margin-top: .5em;
+    margin-bottom: 1.5em;
+    /*background-color: darkgrey;*/
+}
+
+pb-view {
+    max-width: var(--pb-view-max-width);
+    min-width: var(--pb-view-max-width);
+    width: var(--pb-view-max-width);
+}
+
+article[class='entry'] {
+    border-bottom: thick solid gainsboro;
+}
+
+.toc {
+    font-size: 1.5em; 
+}
+
+.buttons {
+ display:block;
+}
+.buttons button {
+ margin: 1em;
+}
+
+.document-buttons > .parent-link {
+    display: inline;
+}
+
+.tei-ref-internal {
+    display: list-item;
+}
+
+.tei-xr-block {
+    margin-top: 0.5em;
+}
+
+.tei-lbl-variant::before { content: " "  }
+
+article[class='entry']> details > article[class='entry']  {
+    border-bottom: thin dotted;
+    margin-top: 0em;
+    width: 80%;
+}
+.superscript {
+    font-size: 75%;
+    vertical-align: super;
+}
+a.tei-note {
+    display: inline; 
+}
+
+table.tei-table {
+    background-color: unset;
+    font-size: unset;
+}
+
+table.tei-table, table.tei-table th, table.tei-table td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+table.tei-table td {
+    vertical-align: top;
+    padding: 0.5em;
+}
+
+table.facets-table {
+    width: 100%;
+}
+
+div[slot=fallback] {
+    padding: 1em;
+}
+div.restricted {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    margin-top: 1rem;
+}

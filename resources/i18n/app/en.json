@@ -1,0 +1,619 @@
+{
+    "lediir": {
+        "title": "Electronic Lexical Database of Indo-Iranian Languages"
+    },
+    "menu": {
+        "search": "Search",
+        "about": "About",
+        "browse": "Browse",
+        "contents": "Contents"
+    },
+    "headings": {
+        "dictionaries": "Dictionaries",
+        "settings": "Settings",
+        "howToCite": "How to cite",
+        "help": "Help",
+        "news": "News",
+        "aboutLanguage": "About Langauge",
+        "FACS": "Persian-Czech Dictionary"
+    },
+    "settings": {
+        "abbreviations": "abbreviations\/full text",
+        "collapse": "collapse\/expand entries",
+        "expand-quotes": "expand quotes",
+        "search-sections": "Search sections",
+        "search-headings": "Search headings",
+        "search-entries": "Search entries"
+    },
+    "search": {
+        "headings": {
+            "simple": "Simple",
+            "advanced": "Advanced",
+            "domains": "Semantic domains"
+        },
+        "labels": {
+            "field": "Search for",
+            "condition": "Condition",
+            "query": "Query",
+            "exactly": "exactly",
+            "start": "start",
+            "end": "end",
+            "everywhere": "everywhere",
+            "area": "Area"
+        },
+        "buttons": {
+            "search": "Search"
+        },
+        "fields": {
+            "lemma": "Headrwod",
+            "partOfSpeech": "Part-of-speech",
+            "pronunciation": "Pronunciation",
+            "domain": "Domain",
+            "reversal": "Reversal",
+            "anything": "Anything",
+            "and": "AND",
+            "andNot": "AND NOT CONTAINS",
+            "or": "OR"
+        },
+        "areas": {
+            "lemma": "Headword",
+            "text": "Text"
+        }
+    },
+    "app": {
+        "facets": {
+            "partOfSpeech": "Part-of-speech",
+            "domain": "Domain",
+            "domainHierarchy": "Parent domain",
+            "style": "Stylistic qualifier",
+            "object-language": "Object language",
+            "target-language": "Target language",
+            "polysemy": "Polysemy",
+            "frequency": "Frequency",
+            "complexFormType": "Complex form",
+            "dictionary": "Dictionary",
+            "show-all": "Show all"
+        },
+        "languages": {
+            "cs": "Czech",
+            "cs-CZ": "Czech",
+            "en": "English",
+            "fa": "Persian",
+            "tg": "[Tajic]"
+        },
+        "messages": {
+            "restricted": "You need to be logged in to see this content."
+        }
+    },
+    "buttons": {
+        "comments": "Comments"
+    },
+    "dropdown": {
+        "label": "Select an option",
+        "default": "Default option"
+    },
+    "dictionary": {
+        "pos": {
+            "adv": {
+                "abbr": "adv",
+                "expand": "Adverb",
+                "tooltip": "An adverb, narrowly defined, is a part of speech whose members modify verbs for such categories as time, manner, place, or direction. An adverb, broadly defined, is a part of speech whose members modify any constituent class of words other than nouns, such as verbs, adjectives, adverbs, phrases, clauses, or sentences. Under this definition, the possible type of modification depends on the class of the constituent being modified."
+            },
+            "subst": {
+                "abbr": "subst",
+                "expand": "Noun",
+                "tooltip": "A noun is a broad classification of parts of speech which include substantives and nominals."
+            },
+            "pl": {
+                "abbr": "pl",
+                "expand": "Plural",
+                "tooltip": ""
+            },
+            "sg": {
+                "abbr": "sg",
+                "expand": "Singular",
+                "tooltip": ""
+            },
+            "clit": {
+                "abbr": "clit",
+                "expand": "Clitic",
+                "tooltip": ""
+            },
+            "enclit": {
+                "abbr": "enclit",
+                "expand": "Enclitics",
+                "tooltip": ""
+            },
+            "pro-form": {
+                "abbr": "pro-form",
+                "expand": "Pro-form",
+                "tooltip": "A pro-form is a part of speech whose members usually substitute for other constituents, including phrases, clauses, or sentences, and whose meaning is recoverable from the linguistic or extralinguistic context."
+            },
+            "pro": {
+                "abbr": "pro",
+                "expand": "Pronoun",
+                "tooltip": "A pronoun is a pro-form which functions like a noun and substitutes for a noun or noun phrase."
+            },
+            "pro-adv": {
+                "abbr": "pro-adv",
+                "expand": "Pronominal adverb",
+                "tooltip": "A pro-adverb is a pro-form that substitutes for an adverb or other expression having an adverbial function."
+            },
+            "v": {
+                "abbr": "v",
+                "expand": "Verb",
+                "tooltip": "A verb is a part of speech whose members typically signal events and actions; constitute, singly or in a phrase, a minimal predicate in a clause; govern the number and types of other constituents which may occur in the clause; and, in inflectional languages, may be inflected for tense, aspect, voice, modality, or agreement with other constituents in person, number, or grammatical gender."
+            },
+            "vi": {
+                "abbr": "vi",
+                "expand": "Intransitive verb",
+                "tooltip": ""
+            },
+            "cop": {
+                "abbr": "cop",
+                "expand": "Copulative verb",
+                "tooltip": ""
+            },
+            "vt": {
+                "abbr": "vt",
+                "expand": "Transitive verb",
+                "tooltip": "A transitive verb is a verb that takes a direct object, and describes a relation between two participants. "
+            },
+            "pas": {
+                "abbr": "pas",
+                "expand": "Pasive voice",
+                "tooltip": "In a clause with passive voice, the grammatical subject expresses the theme or patient of the main verb – that is, the person or thing that undergoes the action or has its state changed. (Wikipedia n.d.)<https:\/\/en.wikipedia.org\/wiki\/Passive_voice>"
+            },
+            "lv": {
+                "abbr": "lv",
+                "expand": "Light Verb \/ Vector",
+                "tooltip": "Light verb is a verb that has little semantic content of its own and forms a predicate with some additional expression, which is usually a noun. Wikipedia. (n.d.)<https:\/\/en.wikipedia.org\/wiki\/Light_verb>"
+            },
+            "adj": {
+                "abbr": "adj",
+                "expand": "Adjective",
+                "tooltip": "An adjective is a part of speech whose members modify nouns. An adjective specifies the attributes of a noun referent. Note: this is one case among many. Adjectives are a class of modifiers."
+            },
+            "interj": {
+                "abbr": "interj",
+                "expand": "Interjection",
+                "tooltip": "An interjection is a part of speech, typically brief in form, such as one syllable or word, whose members are used most often as exclamations or parts of an exclamation. An interjection, typically expressing an emotional reaction, often with respect to an accompanying sentence, is not syntactically related to other accompanying expressions, and may include a combination of sounds not otherwise found in the language."
+            },
+            "ii": {
+                "abbr": "ii",
+                "expand": "NOT IDENTIFIED",
+                "tooltip": ""
+            },
+            "conn": {
+                "abbr": "conn",
+                "expand": "Connective",
+                "tooltip": "Also known as a conjunction, a connective is a class of parts of speech whose members syntactically link words or larger constituents, and expresses a semantic relationship between them. A conjunction is positionally fixed relative to one or more of the elements related by it, thus distinguishing it from constituents such as English conjunctive adverbs."
+            },
+            "prt": {
+                "abbr": "prt",
+                "expand": "Particle",
+                "tooltip": "A particle is a part of speech whose members do not belong to one of the main classes of words, is invariable, and typically has grammatical or pragmatic meaning."
+            },
+            "xxx": {
+                "abbr": "xxx",
+                "expand": "Unspecified complex forms",
+                "tooltip": ""
+            },
+            "adp": {
+                "abbr": "adp",
+                "expand": "Adposition",
+                "tooltip": "An adposition is a part of speech whose members are of a closed set and occur before or after a complement composed of a noun phrase, noun, pronoun, or clause that functions as a noun phrase and forms a single structure with the complement to express its grammatical and semantic relation to another unit within a clause."
+            },
+            "prep": {
+                "abbr": "prep",
+                "expand": "Preposition",
+                "tooltip": "A preposition is an adposition that occurs before its complement."
+            },
+            "post": {
+                "abbr": "post",
+                "expand": "Postposition",
+                "tooltip": "A postposition is an adposition that occurs after its complement."
+            },
+            "quant": {
+                "abbr": "quant",
+                "expand": "Quantifier",
+                "tooltip": "A quantifier is a determiner that expresses a referent's definite or indefinite number or amount. A quantifier functions as a modifier of a noun, or a pronoun."
+            },
+            "num": {
+                "abbr": "num",
+                "expand": "Numeral",
+                "tooltip": "A numeral is a part of speech whose members function most typically as adjectives or pronouns and express a number, or relation to the number, such as one of the following: quantity, sequence, frequency, fraction. More about Persian Numerals The University of Texas at Austin. (n.d.)."
+            },
+            "clf": {
+                "abbr": "clf",
+                "expand": "Classifier",
+                "tooltip": "A (numeral) classifier (a Measure Word) is a part of speech whose members express the classification of a noun."
+            },
+            "det": {
+                "abbr": "det",
+                "expand": "Determiner",
+                "tooltip": "A determiner is a part of speech whose members belong to a class of noun modifiers and express the reference, including quantity, of a noun."
+            },
+            "Affix": {
+                "abbr": "Affix",
+                "expand": "Affix",
+                "tooltip": ""
+            },
+            "prefix": {
+                "abbr": "prefix",
+                "expand": "Prefix",
+                "tooltip": ""
+            },
+            "suffix": {
+                "abbr": "suffix",
+                "expand": "Suffix",
+                "tooltip": ""
+            },
+            "abbrev": {
+                "abbr": "abbrev",
+                "expand": "Abrevviation",
+                "tooltip": ""
+            }
+        },
+        "meaningType": {
+            "fig": {
+                "abbr": "fig",
+                "expand": "figurative",
+                "tooltip": ""
+            },
+            "prim": {
+                "abbr": "prim",
+                "expand": "primary",
+                "tooltip": ""
+            }
+        },
+        "textType": {
+            "ar": {
+                "abbr": "ar",
+                "expand": "arabic",
+                "tooltip": ""
+            },
+            "anml": {
+                "abbr": "anml",
+                "expand": "animal",
+                "tooltip": ""
+            },
+            "hum": {
+                "abbr": "hum",
+                "expand": "human",
+                "tooltip": ""
+            },
+            "f": {
+                "abbr": "f",
+                "expand": "female",
+                "tooltip": ""
+            },
+            "m": {
+                "abbr": "m",
+                "expand": "male",
+                "tooltip": ""
+            },
+            "sib": {
+                "abbr": "sib",
+                "expand": "same sex sibling",
+                "tooltip": ""
+            },
+            "inform": {
+                "abbr": "inform",
+                "expand": "informal",
+                "tooltip": ""
+            },
+            "non-std": {
+                "abbr": "non std",
+                "expand": "non-standard",
+                "tooltip": ""
+            },
+            "oldfash": {
+                "abbr": "oldfash",
+                "expand": "old-fashioned",
+                "tooltip": ""
+            },
+            "reg": {
+                "abbr": "reg",
+                "expand": "register",
+                "tooltip": ""
+            },
+            "bas-reg": {
+                "abbr": "bas reg",
+                "expand": "basic",
+                "tooltip": ""
+            },
+            "hi-reg": {
+                "abbr": "hi reg",
+                "expand": "high",
+                "tooltip": ""
+            },
+            "low-reg": {
+                "abbr": "low reg",
+                "expand": "low",
+                "tooltip": ""
+            },
+            "arch": {
+                "abbr": "arch",
+                "expand": "archaic",
+                "tooltip": ""
+            },
+            "mid-reg": {
+                "abbr": "mid reg",
+                "expand": "mid",
+                "tooltip": ""
+            },
+            "slg": {
+                "abbr": "slg",
+                "expand": "slang",
+                "tooltip": ""
+            },
+            "trad": {
+                "abbr": "trad",
+                "expand": "traditional",
+                "tooltip": ""
+            },
+            "off": {
+                "abbr": "off",
+                "expand": "offensive",
+                "tooltip": ""
+            },
+            "col": {
+                "abbr": "col",
+                "expand": "colloquial",
+                "tooltip": ""
+            },
+            "rel": {
+                "abbr": "rel",
+                "expand": "religious",
+                "tooltip": ""
+            },
+            "isl": {
+                "abbr": "isl",
+                "expand": "islamic",
+                "tooltip": ""
+            },
+            "rest": {
+                "abbr": "rest",
+                "expand": "restrictive",
+                "tooltip": ""
+            },
+            "dari": {
+                "abbr": "dari",
+                "expand": "dari",
+                "tooltip": ""
+            },
+            "ideol": {
+                "abbr": "ideol",
+                "expand": "ideological",
+                "tooltip": ""
+            },
+            "obsc": {
+                "abbr": "obsc",
+                "expand": "obscene",
+                "tooltip": ""
+            },
+            "tab": {
+                "abbr": "tab",
+                "expand": "taboo",
+                "tooltip": ""
+            },
+            "": {
+                "abbr": "",
+                "expand": "",
+                "tooltip": ""
+            },
+            "lit": {
+                "abbr": "lit",
+                "expand": "literary",
+                "tooltip": ""
+            },
+            "obso": {
+                "abbr": "obso",
+                "expand": "obsolete",
+                "tooltip": ""
+            },
+            "hist": {
+                "abbr": "hist",
+                "expand": "historical",
+                "tooltip": ""
+            },
+            "poems": {
+                "abbr": "poems",
+                "expand": "poems",
+                "tooltip": ""
+            },
+            "pol": {
+                "abbr": "pol",
+                "expand": "polite",
+                "tooltip": ""
+            },
+            "form": {
+                "abbr": "form",
+                "expand": "formal",
+                "tooltip": ""
+            },
+            "hon": {
+                "abbr": "hon",
+                "expand": "honorific",
+                "tooltip": ""
+            },
+            "cor": {
+                "abbr": "cor",
+                "expand": "correspondence",
+                "tooltip": ""
+            },
+            "rare": {
+                "abbr": "rare",
+                "expand": "rare",
+                "tooltip": ""
+            }
+        },
+        "variantType": {
+            "irreg.-infl": {
+                "abbr": "irreg. infl.",
+                "expand": "Irregularly Form",
+                "tooltip": "An Irregularly Inflected Form is an inflected form of the lexeme that is different from what you would expect from the normal rules of the grammar."
+            },
+            "dial.-var": {
+                "abbr": "dial. var.",
+                "expand": "Dialectal Variant",
+                "tooltip": "A variant of a lexeme, characteristically used by a specific demographic subset of the language."
+            },
+            "alv": {
+                "abbr": "alv",
+                "expand": "Alternative light verb",
+                "tooltip": "Complex predicate with alternative light verb."
+            },
+            "sp.-var": {
+                "abbr": "sp. var.",
+                "expand": "Spelling Variant",
+                "tooltip": "A variant spelling of a lexeme."
+            },
+            "pl-ar": {
+                "abbr": "pl ar",
+                "expand": "Arabic plural",
+                "tooltip": ""
+            },
+            "comp": {
+                "abbr": "comp.",
+                "expand": "Compound",
+                "tooltip": "A stem that is made up of more than one root."
+            },
+            "ar.-comp": {
+                "abbr": "ar. comp.",
+                "expand": "Arabic compound",
+                "tooltip": ""
+            },
+            "p": {
+                "abbr": "p",
+                "expand": "Present",
+                "tooltip": ""
+            },
+            "colloc": {
+                "abbr": "colloc.",
+                "expand": "Collocate",
+                "tooltip": "In corpus linguistics, a collocation is a series of words or terms that co-occur more often than would be expected by chance. (Collocation in Wikipedia n.d.)"
+            },
+            "ph.-v": {
+                "abbr": "ph. v.",
+                "expand": "Phrasal Verb",
+                "tooltip": "A combination of a lexical verb and a verbal particle that forms a single semantic and syntactic unit."
+            },
+            "unspec.-var": {
+                "abbr": "unspec. var.",
+                "expand": "Unspecified Variant",
+                "tooltip": "A variant form that hasn't been labeled as a specific kind of variant. If two forms are free variants, the same speaker might use either one in the same setting. The more frequent form would be considered the basic form."
+            },
+            "ap": {
+                "abbr": "ap",
+                "expand": "Alternative Preposition",
+                "tooltip": "Alternative preposition."
+            },
+            "fr.-var": {
+                "abbr": "fr. var.",
+                "expand": "Free Variant",
+                "tooltip": "If two forms are free variants, the same speaker might use either one in the same setting. The more frequent form would be considered the basic form."
+            },
+            "contr": {
+                "abbr": "contr.",
+                "expand": "Contraction",
+                "tooltip": "A combination of two lexemes that are phonologically reduced."
+            },
+            "pst": {
+                "abbr": "pst.",
+                "expand": "Past",
+                "tooltip": "The past tense form of a verb that does not take the regular inflectional affix for past tense."
+            },
+            "compar-super": {
+                "abbr": "compar super",
+                "expand": "Arabic Comparative; Superlative",
+                "tooltip": ""
+            },
+            "say": {
+                "abbr": "say.",
+                "expand": "Saying",
+                "tooltip": "Any pithy phrasal expression of wisdom or truth; esp., an adage, proverb, or maxim."
+            },
+            "der": {
+                "abbr": "der.",
+                "expand": "Derivative",
+                "tooltip": "A stem that is made up of a root plus an affix that adds a non-inflectional component of meaning."
+            },
+            "id": {
+                "abbr": "id.",
+                "expand": "Idiom",
+                "tooltip": "An idiom is a phrase or expression that typically presents a figurative, non-literal meaning attached to the phrase; but some phrases become figurative idioms while retaining the literal meaning of the phrase. Categorized as formulaic language, an idiom's figurative meaning is different from the literal meaning. (Idiom in Wikipedia n.d.)"
+            },
+            "Coll": {
+                "abbr": "Coll",
+                "expand": "Colloquial",
+                "tooltip": ""
+            },
+            "cp": {
+                "abbr": "cp",
+                "expand": "Complex predicate \/ Compound Verb",
+                "tooltip": "Complex predicate \/ Compound verb. A multi-word compound that functions as a single verb. One component of the compound is a light verb or vector, which carries any inflections, indicating tense, mood, or aspect. The other, \"primary\", component is a noun which carries most of the semantics of the compound. (Compound verb in Wikipedia n.d.)"
+            },
+            "unspec": {
+                "abbr": "unspec.",
+                "expand": "Unspecified Complex Form",
+                "tooltip": "A complex form that hasn't been labeled as a specific kind of complex form."
+            }
+        },
+        "socioCultural": {
+            "form": {
+                "abbr": "form",
+                "expand": "formal",
+                "tooltip": ""
+            },
+            "hov": {
+                "abbr": "hov.",
+                "expand": "hovorový, hovorově",
+                "tooltip": ""
+            }
+        },
+        "complexFormType": {
+            "analytický-predikát": {
+                "abbr": "analytický predikát",
+                "expand": "analytický predikát",
+                "tooltip": ""
+            },
+            "arabské-kompozitum": {
+                "abbr": "arabské kompozitum",
+                "expand": "arabské kompozitum",
+                "tooltip": ""
+            },
+            "derivace": {
+                "abbr": "derivace",
+                "expand": "derivace",
+                "tooltip": ""
+            },
+            "idiom": {
+                "abbr": "idiom",
+                "expand": "idiom",
+                "tooltip": ""
+            },
+            "kolokace": {
+                "abbr": "kolokace",
+                "expand": "kolokace",
+                "tooltip": ""
+            },
+            "kompozitum": {
+                "abbr": "kompozitum",
+                "expand": "kompozitum",
+                "tooltip": ""
+            },
+            "nespecifikovaný-komplexní-tvar": {
+                "abbr": "nespecifikovaný komplexní tvar",
+                "expand": "nespecifikovaný komplexní tvar",
+                "tooltip": ""
+            },
+            "rčení-a-přísloví": {
+                "abbr": "rčení a přísloví",
+                "expand": "rčení a přísloví",
+                "tooltip": ""
+            }
+        }
+    }
+}
