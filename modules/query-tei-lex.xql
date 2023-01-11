@@ -302,9 +302,9 @@ declare function lapi:browse($request as map(*)) {
             let $hits := if ($max-hits > 0 and $hitCount > $max-hits) then subsequence($hitsAll, 1, $max-hits) else $hitsAll
             
             
-            return if($format = "html") then 
-                lapi:show-hits-html($request, $hits, $dictId)
-            else lapi:show-hits-xml($request, $hits, $dictId)
+            return if($format = "xml") then 
+                lapi:show-hits-xml($request, $hits, $dictId, "div", "http://www.tei-c.org/ns/1.0")
+            else lapi:show-hits-html($request, $hits, $dictId)
                 (:lapi:show-hits($request, $hits, $request?parameters?doc):) 
             
 };
@@ -331,8 +331,10 @@ declare function lapi:search($request as map(*)) {
         let $hits := if ($max-hits > 0 and $hitCount > $max-hits) then subsequence($hitsAll, 1, $max-hits) else $hitsAll
 
         (:lapi:show-hits($request, session:get-attribute($config:session-prefix || ".hits"), session:get-attribute($config:session-prefix || ".docs")):)
-        return lapi:show-hits-html($request, $hits, 
-        session:get-attribute($config:session-prefix || ".docs"))
+        return if($request?parameters?format = "xml") then
+                lapi:show-hits-xml($request, $hits, session:get-attribute($config:session-prefix || ".docs"), "div", "http://www.tei-c.org/ns/1.0")
+            else
+             lapi:show-hits-html($request, $hits, session:get-attribute($config:session-prefix || ".docs"))
     else
         (:Otherwise, perform the query.:)
         (: Here the actual query commences. This is split into two parts, the first for a Lucene query and the second for an ngram query. :)
@@ -360,9 +362,10 @@ declare function lapi:search($request as map(*)) {
         )
         let $hits := if ($max-hits > 0 and $hitCount > $max-hits) then 
             subsequence($hitsAll, 1, $max-hits) else $hitsAll
-        return
-            (:lapi:show-hits($request, $hits, $request?parameters?doc):)
-            lapi:show-hits-html($request, $hits, $request?parameters?ids)
+        return if($request?parameters?format = "xml") then
+                lapi:show-hits-xml($request, $hits, $request?parameters?ids, "div", "http://www.tei-c.org/ns/1.0")
+            else
+                lapi:show-hits-html($request, $hits, $request?parameters?ids)
 
 };
 
@@ -422,6 +425,15 @@ declare %private function lapi:show-hits-xml($request as map(*), $hits as item()
     response:set-header( "Content-Type", "application/xml" ),
     let $config := ()
     return subsequence($hits, $request?parameters?start, $request?parameters?per-page)
+};
+
+declare %private function lapi:show-hits-xml($request as map(*), $hits as item()*, $docs as xs:string*, $containter as xs:string, $namespace as xs:string) {
+    response:set-header("pb-total", xs:string(count($hits))),
+    response:set-header("pb-start", xs:string($request?parameters?start)),
+    response:set-header("pb-docs", string-join($docs, ';')),
+    response:set-header( "Content-Type", "application/xml" ),
+    let $config := ()
+    return element {QName($namespace, $containter)} {subsequence($hits, $request?parameters?start, $request?parameters?per-page)}
 };
 
 declare %private function lapi:get-chapter-id($dictId as xs:string, $chapter) {
