@@ -56,8 +56,8 @@
             "or": "OR"
         },
         "areas": {
-            "lemma": "Headword",
-            "text": "Text"
+            "basic-fileds": "Basic fields",
+            "whole-text": "Whole text"
         }
     },
     "app": {

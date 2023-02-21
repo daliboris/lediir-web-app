@@ -50,14 +50,14 @@
             "pronunciation": "výslovnost",
             "domain": "sémantický okruh",
             "reversal": "zpětný odkaz",
-            "anything": "cokoli",
+            "anything": "vše",
             "and": "A",
             "andNot": "A NEOBSAHUJE",
             "or": "NEBO"
         },
         "areas": {
-            "lemma": "heslo",
-            "text": "text"
+            "basic-fileds": "základní pole",
+            "whole-text": "celý text"
         }
     },
     "app": {
