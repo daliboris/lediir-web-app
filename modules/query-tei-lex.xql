@@ -62,7 +62,7 @@ declare function lapi:domains($request as map(*)) {
             "list-categories" : count($categories),
             "limit" : $limit,
             "categories":
-                if (count($categories) < $limit) then
+                if (count($categories) lt $limit) then
                     []
                 else array {
                     for $index in 1 to string-length('123456789')
@@ -897,4 +897,3 @@ declare function lapi:dictionary-contents($request as map(*)) {
     
     return $result
 };
-
