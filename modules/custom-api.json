@@ -1067,6 +1067,14 @@
             }
           },
           {
+            "name": "parameters",
+            "in": "query",
+            "description": "Parameters from advanced query form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "start",
             "in": "query",
             "description": "Start offset of the first item to show from the result set",
@@ -3920,6 +3928,195 @@
           }
         }
       }
+    },
+    "/test/parameters": {
+      "get": {
+        "summary": "Test for send parameters",
+        "operationId": "tapi:get-parameters",
+        "tags": [
+          "test"
+        ],
+        "parameters": [
+          {
+            "name": "params",
+            "in": "query",
+            "description": "Values of multiple parameters in one string",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results returned",
+            "content": {
+              "text/xml": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "source": {
+                            "title": "ErrorSource",
+                            "required": [
+                              "location",
+                              "name"
+                            ],
+                            "properties": {
+                              "location": {
+                                "type": "string",
+                                "enum": [
+                                  "path",
+                                  "query",
+                                  "body",
+                                  "header"
+                                ]
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "The name of the property or parameter causing the error"
+                              },
+                              "path": {
+                                "type": "string",
+                                "description": "JSON path targeting the source of error (only used when location is `body`)"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "MissingTokenError": {
+                    "summary": "No Api-Key header",
+                    "description": "The header may be missing or its name contains a typo error",
+                    "value": {
+                      "errors": [
+                        {
+                          "code": "required",
+                          "location": "header",
+                          "name": "Api-Key",
+                          "message": "Missing Api-Key header"
+                        }
+                      ]
+                    }
+                  },
+                  "InvalidTokenError": {
+                    "summary": "Invalid key in Api-Key header",
+                    "value": {
+                      "errors": [
+                        {
+                          "code": "invalid",
+                          "location": "header",
+                          "name": "Api-Key",
+                          "message": "Invalid Api-Key header"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error. Consumer may try to send the request again.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "source": {
+                            "title": "ErrorSource",
+                            "required": [
+                              "location",
+                              "name"
+                            ],
+                            "properties": {
+                              "location": {
+                                "type": "string",
+                                "enum": [
+                                  "path",
+                                  "query",
+                                  "body",
+                                  "header"
+                                ]
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "The name of the property or parameter causing the error"
+                              },
+                              "path": {
+                                "type": "string",
+                                "description": "JSON path targeting the source of error (only used when location is `body`)"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "UnexpectedError": {
+                    "summary": "An unexpected error",
+                    "value": {
+                      "errors": [
+                        {
+                          "code": "unexpected",
+                          "message": "An expected error occurred, you may try again later"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -4271,6 +4468,14 @@
           ],
           "default": "exactly",
           "description": "The position of the text in searched query. Default is `exactly`."
+        }
+      },
+      "ParametersParameter": {
+        "name": "parameters",
+        "in": "query",
+        "description": "Parameters from advanced query form",
+        "schema": {
+          "type": "string"
         }
       },
       "StartPageParameter": {
