@@ -103,6 +103,15 @@
                 vertical-align: middle;
             }
 
+
+            .search-buttons {
+                text-align: end;
+            }
+
+            #search-search-button {
+                background-color: var(--pb-color-inverse);
+            }
+
             /*
             #pagination {
                 background-color: white;
@@ -145,7 +154,11 @@
                                      <paper-checkbox name="field" value="head"><pb-i18n key="settings.search-headings">Search headings</pb-i18n></paper-checkbox>
                                      <paper-checkbox name="field" value="entry"><pb-i18n key="settings.search-entries">Search entries</pb-i18n></paper-checkbox> -->
                                     </div>
-                                    <pb-custom-form id="facets" url="api/lex/search/facets" subscribe="results" event="pb-results-received" emit="search"/>
+                                    <pb-custom-form id="facets" url="api/lex/search/facets" subscribe="results" event="pb-results-received" emit="search" />
+                                    <div class="search-buttons">
+                                        <paper-button id="search-reset-button" slot="resetButton"><pb-i18n key="search.reset"></pb-i18n></paper-button>
+                                        <paper-button id="search-search-button" slot="searchButton"><pb-i18n key="search.search"></pb-i18n></paper-button>
+                                    </div>                                       
                                 </pb-search>
                             </div>
                         </paper-card>
@@ -165,24 +178,37 @@
         <div class="splash"/>
         <script>
             const facets = document.getElementById('facets');
-            if (facets) {
+            const reset = document.getElementById('search-reset-button');
+            if (facets) { 
                 facets.addEventListener('pb-custom-form-loaded', function(ev) {
                     const elems = ev.detail.querySelectorAll('.facet');
                     elems.forEach(facet =&gt; {
                         facet.addEventListener('change', () =&gt; {
+                            const heading = facet.closest('h3');
+                            if (heading) {
+                                facets._submit();
+                            }
+                        });
+                    });
+                });
+                if(reset) {
+                    reset.addEventListener('click', () =&gt; {
+                        const elems = facets.querySelectorAll('.facet');
+                        elems.forEach(facet =&gt; { 
                             const table = facet.closest('table');
-                            if (table) {
+                            if (table) { 
+                                facet.checked = false;
                                 const nested = table.querySelectorAll('.nested .facet').forEach(nested =&gt; {
                                     if (nested != facet) {
                                         nested.checked = false;
                                     }
-                                });
-                            }
-                            facets._submit();
-                        });
+                            });
+                        }
                     });
+                    facets._submit();
                 });
             }
+        }
         </script>
     </body>
 </html>
