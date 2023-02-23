@@ -61,9 +61,9 @@
 
     <!-- Search input -->
     <pb-search action="${app}/search.html" data-template="lib:parse-params" value="${query}" 
-        autocomplete-url="api/lex/search/autocomplete"
+        source="api/lex/search/autocomplete"
         redirect="redirect">
-        <input type="hidden" name="field" value="lemma" data-template="lib:parse-params" />
+        <input type="hidden" name="field" value="headword" data-template="lib:parse-params" />
     </pb-search>
     <pb-media-query query="min-width: 1024px">
      
