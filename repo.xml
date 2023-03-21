@@ -12,6 +12,18 @@
     <permissions user="redaktor" group="tei" mode="rw-r--r--" />
     <deployed />
     <changelog>
+        <change version="0.7.14">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>pokročilé vyhledávání (kombinace 3 podmínek)</li>
+                <li>kombinace několika faset před jejich aplikováním</li>
+                <li>našeptávač vybírá z odpovídající části heslové stati (u jednoduchého i prkročilého vyhledávání)</li>
+                <li>zobrazení max. 20 stránek při listování</li>
+                <li>zpracování parametrů z REST API a URL a jejich zkombinování</li>
+                <li>nový způsob dotazování na fasety v URL (místo <i>facet-usage=</i> se používá <i>facet[usage]=</i>)</li>
+                <li>pro oddělení více hodnot v jednom parametru lze použít svislici (|)</li>
+                <li>aktualizace webových kompoment <i>tei-publisher-components</i> na verzi 2.2.0</li>
+            </ul>
+        </change>
         <change version="0.7.13">
             <ul xmlns="http://www.w3.org/1999/xhtml">
                 <li>zobrazení popisku před variantními podobami</li>
