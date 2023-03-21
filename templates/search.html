@@ -130,7 +130,7 @@
                     <app-toolbar data-template="lib:include" data-template-path="templates/menu.html"/>
                     <!--  <pb-restricted login="login" group="tei"> -->
                     <app-toolbar id="pagination">
-                        <pb-paginate per-page="10" range="10" subscribe="results"  id="${ids}" show-previous-next="show-previous-next" data-template="lib:parse-params"/>
+                        <pb-paginate class="pb-paginate" per-page="20" range="20" subscribe="results" emit="search"  show-previous-next="show-previous-next" data-template="lib:parse-params"/>
                         <pb-progress indeterminate="indeterminate" bottom-item="bottom-item"/>
                     </app-toolbar>
                     <!-- </pb-restricted> -->
@@ -144,22 +144,36 @@
                             <div class="card-content">
                                 <pb-search id="search-form" subscribe="search" data-template="lib:parse-params" 
                                     value="${query}" 
-                                    autocomplete-url="api/lex/search/autocomplete"
+                                    source="api/lex/search/autocomplete"
                                     submit-on-load="submit-on-load">
                                     <input type="hidden" name="ids" value="${ids}" data-template="lib:parse-params" />
                                     <input type="hidden" name="field" value="${field}" data-template="lib:parse-params" />
                                     <input type="hidden" name="position" value="${position}" data-template="lib:parse-params" />
+                                    <input type="hidden" name="field[1]" value="${field[1]}" data-template="lib:parse-params" />
+                                    <input type="hidden" name="position[1]" value="${position[1]}" data-template="lib:parse-params" />
+                                    <input type="hidden" name="query-advanced[1]" value="${query-advanced[1]}" data-template="lib:parse-params" />
+                                    <input type="hidden" name="condition[1]" value="${condition[1]}" data-template="lib:parse-params" />
+                                    <input type="hidden" name="field[2]" value="${field[2]}" data-template="lib:parse-params" />
+                                    <input type="hidden" name="position[2]" value="${position[2]}" data-template="lib:parse-params" />
+                                    <input type="hidden" name="query-advanced[2]" value="${query-advanced[2]}" data-template="lib:parse-params" />
+                                    <input type="hidden" name="condition[2]" value="${condition[2]}" data-template="lib:parse-params" />
+                                    <input type="hidden" name="field[3]" value="${field[3]}" data-template="lib:parse-params" />
+                                    <input type="hidden" name="position[3]" value="${position[3]}" data-template="lib:parse-params" />
+                                    <input type="hidden" name="query-advanced[3]" value="${query-advanced[3]}" data-template="lib:parse-params" />
+                                    <input type="hidden" name="condition[3]" value="${condition[3]}" data-template="lib:parse-params" />
+                                    <!--
                                     <div class="targets">
-                                     <!-- <paper-checkbox name="field" value="text"><pb-i18n key="settings.search-sections">Search sections</pb-i18n></paper-checkbox>
-                                     <paper-checkbox name="field" value="head"><pb-i18n key="settings.search-headings">Search headings</pb-i18n></paper-checkbox>
-                                     <paper-checkbox name="field" value="entry"><pb-i18n key="settings.search-entries">Search entries</pb-i18n></paper-checkbox> -->
+                                     <paper-checkbox name="level" value="entry"><pb-i18n key="settings.search-level.entry">Within entry</pb-i18n></paper-checkbox>
+                                     <paper-checkbox name="level" value="sense"><pb-i18n key="settings.search-level.sense">Within sense</pb-i18n></paper-checkbox>
                                     </div>
+                                    -->
                                     <pb-custom-form id="facets" url="api/lex/search/facets" subscribe="results" event="pb-results-received" emit="search" />
                                     <div class="search-buttons">
                                         <paper-button id="search-reset-button" slot="resetButton"><pb-i18n key="search.reset"></pb-i18n></paper-button>
                                         <paper-button id="search-search-button" slot="searchButton"><pb-i18n key="search.search"></pb-i18n></paper-button>
                                     </div>                                       
                                 </pb-search>
+                            
                             </div>
                         </paper-card>
                     </div>
@@ -202,13 +216,13 @@
                                     if (nested != facet) {
                                         nested.checked = false;
                                     }
-                            });
-                        }
+                                });
+                            }
+                        });
+                        facets._submit();
                     });
-                    facets._submit();
-                });
+                }
             }
-        }
         </script>
     </body>
 </html>
