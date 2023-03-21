@@ -713,6 +713,19 @@
         ],
         "parameters": [
           {
+            "name": "id",
+            "in": "query",
+            "description": "Identifier for a dictionary. Value of an `@xml:id` attribute of the `<TEI>` element.",
+            "schema": {
+              "description": "A unique and human readable id",
+              "type": "string",
+              "pattern": "[a-zA-Z0-9-.]*",
+              "minLength": 4,
+              "maxLength": 80
+            },
+            "example": "FACS"
+          },
+          {
             "name": "chapter",
             "in": "query",
             "description": "Chapter of the dictionary containing entries. Usual a div with one leter. Use value of `@n` attribute of div or textual content of `<head>` element to identify chapter",
@@ -751,19 +764,6 @@
               "type": "integer",
               "default": 10
             }
-          },
-          {
-            "name": "id",
-            "in": "query",
-            "description": "Identifier for a dictionary. Value of an `@xml:id` attribute of the `<TEI>` element.",
-            "schema": {
-              "description": "A unique and human readable id",
-              "type": "string",
-              "pattern": "[a-zA-Z0-9-.]*",
-              "minLength": 4,
-              "maxLength": 80
-            },
-            "example": "FACS"
           }
         ],
         "responses": {
@@ -1034,6 +1034,222 @@
         ],
         "parameters": [
           {
+            "name": "ids",
+            "in": "query",
+            "description": "Array of identifiers for a dictionary. Value of an `@xml:id` attribute of the `<TEI>` element.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true
+            }
+          },
+          {
+            "name": "field[1]",
+            "in": "query",
+            "description": "The field to query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pronunciation",
+                "partOfSpeechAll",
+                "domain",
+                "lemma",
+                "reversal",
+                "all"
+              ],
+              "description": "Parts of the entry to be returned."
+            }
+          },
+          {
+            "name": "field[2]",
+            "in": "query",
+            "description": "The field to query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pronunciation",
+                "partOfSpeechAll",
+                "domain",
+                "lemma",
+                "reversal",
+                "all"
+              ],
+              "description": "Parts of the entry to be returned."
+            }
+          },
+          {
+            "name": "field[3]",
+            "in": "query",
+            "description": "The field to query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pronunciation",
+                "partOfSpeechAll",
+                "domain",
+                "lemma",
+                "reversal",
+                "all"
+              ],
+              "description": "Parts of the entry to be returned."
+            }
+          },
+          {
+            "name": "query-advanced[1]",
+            "in": "query",
+            "description": "The query itself",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "query-advanced[2]",
+            "in": "query",
+            "description": "The query itself",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "query-advanced[3]",
+            "in": "query",
+            "description": "The query itself",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "position[1]",
+            "in": "query",
+            "description": "The position of the text within the query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "exactly",
+                "start",
+                "end",
+                "everywhere"
+              ],
+              "description": "The position of the text in searched query. Default is `exactly`."
+            }
+          },
+          {
+            "name": "position[2]",
+            "in": "query",
+            "description": "The position of the text within the query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "exactly",
+                "start",
+                "end",
+                "everywhere"
+              ],
+              "description": "The position of the text in searched query. Default is `exactly`."
+            }
+          },
+          {
+            "name": "position[3]",
+            "in": "query",
+            "description": "The position of the text within the query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "exactly",
+                "start",
+                "end",
+                "everywhere"
+              ],
+              "description": "The position of the text in searched query. Default is `exactly`."
+            }
+          },
+          {
+            "name": "condition[1]",
+            "in": "query",
+            "description": "The condition between two filters",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "and",
+                "not",
+                "andNot"
+              ],
+              "description": "The condition between two parts of the query. Default is `and`."
+            }
+          },
+          {
+            "name": "condition[2]",
+            "in": "query",
+            "description": "The condition between two filters",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "and",
+                "not",
+                "andNot"
+              ],
+              "description": "The condition between two parts of the query. Default is `and`."
+            }
+          },
+          {
+            "name": "condition[3]",
+            "in": "query",
+            "description": "The condition between two filters",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "and",
+                "not",
+                "andNot"
+              ],
+              "description": "The condition between two parts of the query. Default is `and`."
+            }
+          },
+          {
+            "name": "facet",
+            "in": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "dictionary": {
+                  "type": "string"
+                },
+                "objectLanguage": {
+                  "type": "string"
+                },
+                "targetLanguage": {
+                  "type": "string"
+                },
+                "partOfSpeech": {
+                  "type": "string"
+                },
+                "domain": {
+                  "type": "string"
+                },
+                "domainHierarchy": {
+                  "type": "string"
+                },
+                "style": {
+                  "type": "string"
+                },
+                "polysemy": {
+                  "type": "string"
+                },
+                "frequency": {
+                  "type": "string"
+                },
+                "complexFormType": {
+                  "type": "string"
+                }
+              }
+            },
+            "style": "deepObject",
+            "explode": true,
+            "required": false
+          },
+          {
             "name": "query",
             "in": "query",
             "description": "Query string",
@@ -1047,7 +1263,12 @@
             "description": "The field to query",
             "schema": {
               "type": "string",
-              "default": "entry"
+              "enum": [
+                "headword",
+                "entry"
+              ],
+              "default": "headword",
+              "description": "Parts of the entry to be returned."
             }
           },
           {
@@ -1062,16 +1283,7 @@
                 "end",
                 "everywhere"
               ],
-              "default": "exactly",
               "description": "The position of the text in searched query. Default is `exactly`."
-            }
-          },
-          {
-            "name": "parameters",
-            "in": "query",
-            "description": "Parameters from advanced query form",
-            "schema": {
-              "type": "string"
             }
           },
           {
@@ -1090,18 +1302,6 @@
             "schema": {
               "type": "integer",
               "default": 10
-            }
-          },
-          {
-            "name": "ids",
-            "in": "query",
-            "description": "Array of identifiers for a dictionary. Value of an `@xml:id` attribute of the `<TEI>` element.",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "nullable": true
             }
           },
           {
@@ -1306,6 +1506,244 @@
         ],
         "parameters": [
           {
+            "name": "ids",
+            "in": "query",
+            "description": "Array of identifiers for a dictionary. Value of an `@xml:id` attribute of the `<TEI>` element.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true
+            }
+          },
+          {
+            "name": "field[1]",
+            "in": "query",
+            "description": "The field to query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pronunciation",
+                "partOfSpeechAll",
+                "domain",
+                "lemma",
+                "reversal",
+                "all"
+              ],
+              "description": "Parts of the entry to be returned."
+            }
+          },
+          {
+            "name": "field[2]",
+            "in": "query",
+            "description": "The field to query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pronunciation",
+                "partOfSpeechAll",
+                "domain",
+                "lemma",
+                "reversal",
+                "all"
+              ],
+              "description": "Parts of the entry to be returned."
+            }
+          },
+          {
+            "name": "field[3]",
+            "in": "query",
+            "description": "The field to query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pronunciation",
+                "partOfSpeechAll",
+                "domain",
+                "lemma",
+                "reversal",
+                "all"
+              ],
+              "description": "Parts of the entry to be returned."
+            }
+          },
+          {
+            "name": "query-advanced[1]",
+            "in": "query",
+            "description": "The query itself",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "query-advanced[2]",
+            "in": "query",
+            "description": "The query itself",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "query-advanced[3]",
+            "in": "query",
+            "description": "The query itself",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "position[1]",
+            "in": "query",
+            "description": "The position of the text within the query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "exactly",
+                "start",
+                "end",
+                "everywhere"
+              ],
+              "description": "The position of the text in searched query. Default is `exactly`."
+            }
+          },
+          {
+            "name": "position[2]",
+            "in": "query",
+            "description": "The position of the text within the query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "exactly",
+                "start",
+                "end",
+                "everywhere"
+              ],
+              "description": "The position of the text in searched query. Default is `exactly`."
+            }
+          },
+          {
+            "name": "position[3]",
+            "in": "query",
+            "description": "The position of the text within the query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "exactly",
+                "start",
+                "end",
+                "everywhere"
+              ],
+              "description": "The position of the text in searched query. Default is `exactly`."
+            }
+          },
+          {
+            "name": "condition[1]",
+            "in": "query",
+            "description": "The condition between two filters",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "and",
+                "not",
+                "andNot"
+              ],
+              "description": "The condition between two parts of the query. Default is `and`."
+            }
+          },
+          {
+            "name": "condition[2]",
+            "in": "query",
+            "description": "The condition between two filters",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "and",
+                "not",
+                "andNot"
+              ],
+              "description": "The condition between two parts of the query. Default is `and`."
+            }
+          },
+          {
+            "name": "condition[3]",
+            "in": "query",
+            "description": "The condition between two filters",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "and",
+                "not",
+                "andNot"
+              ],
+              "description": "The condition between two parts of the query. Default is `and`."
+            }
+          },
+          {
+            "name": "facet",
+            "in": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "dictionary": {
+                  "type": "string"
+                },
+                "objectLanguage": {
+                  "type": "string"
+                },
+                "targetLanguage": {
+                  "type": "string"
+                },
+                "partOfSpeech": {
+                  "type": "string"
+                },
+                "domain": {
+                  "type": "string"
+                },
+                "domainHierarchy": {
+                  "type": "string"
+                },
+                "style": {
+                  "type": "string"
+                },
+                "polysemy": {
+                  "type": "string"
+                },
+                "frequency": {
+                  "type": "string"
+                },
+                "complexFormType": {
+                  "type": "string"
+                }
+              }
+            },
+            "style": "deepObject",
+            "explode": true,
+            "required": false
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Query string",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "field",
+            "in": "query",
+            "description": "The field to query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "headword",
+                "entry"
+              ],
+              "default": "headword",
+              "description": "Parts of the entry to be returned."
+            }
+          },
+          {
             "name": "format",
             "in": "query",
             "description": "The format to return: either `html`, or `xml`. Default is `html`.",
@@ -1507,6 +1945,18 @@
         ],
         "parameters": [
           {
+            "name": "ids",
+            "in": "query",
+            "description": "Array of identifiers for a dictionary. Value of an `@xml:id` attribute of the `<TEI>` element.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true
+            }
+          },
+          {
             "name": "query",
             "in": "query",
             "description": "The prefix to expand",
@@ -1521,19 +1971,15 @@
             "description": "The field to query",
             "schema": {
               "type": "string",
-              "default": "entry"
-            }
-          },
-          {
-            "name": "ids",
-            "in": "query",
-            "description": "Array of identifiers for a dictionary. Value of an `@xml:id` attribute of the `<TEI>` element.",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "nullable": true
+              "enum": [
+                "pronunciation",
+                "partOfSpeechAll",
+                "domain",
+                "lemma",
+                "reversal",
+                "all"
+              ],
+              "description": "Parts of the entry to be returned."
             }
           }
         ],
@@ -3471,13 +3917,10 @@
             "schema": {
               "type": "string",
               "enum": [
-                "lemma",
-                "part-of-speech",
-                "pronunciation",
-                "domain",
-                "anything"
+                "headword",
+                "entry"
               ],
-              "default": "lemma",
+              "default": "headword",
               "description": "Parts of the entry to be returned."
             }
           },
@@ -3505,6 +3948,418 @@
                 "type": "string"
               },
               "nullable": true
+            },
+            "style": "pipeDelimited"
+          },
+          {
+            "name": "facet",
+            "in": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "dictionary": {
+                  "type": "string"
+                },
+                "objectLanguage": {
+                  "type": "string"
+                },
+                "targetLanguage": {
+                  "type": "string"
+                },
+                "partOfSpeech": {
+                  "type": "string"
+                },
+                "domain": {
+                  "type": "string"
+                },
+                "domainHierarchy": {
+                  "type": "string"
+                },
+                "style": {
+                  "type": "string"
+                },
+                "polysemy": {
+                  "type": "string"
+                },
+                "frequency": {
+                  "type": "string"
+                },
+                "complexFormType": {
+                  "type": "string"
+                }
+              }
+            },
+            "style": "deepObject",
+            "explode": true,
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results returned",
+            "content": {
+              "text/xml": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "source": {
+                            "title": "ErrorSource",
+                            "required": [
+                              "location",
+                              "name"
+                            ],
+                            "properties": {
+                              "location": {
+                                "type": "string",
+                                "enum": [
+                                  "path",
+                                  "query",
+                                  "body",
+                                  "header"
+                                ]
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "The name of the property or parameter causing the error"
+                              },
+                              "path": {
+                                "type": "string",
+                                "description": "JSON path targeting the source of error (only used when location is `body`)"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "MissingTokenError": {
+                    "summary": "No Api-Key header",
+                    "description": "The header may be missing or its name contains a typo error",
+                    "value": {
+                      "errors": [
+                        {
+                          "code": "required",
+                          "location": "header",
+                          "name": "Api-Key",
+                          "message": "Missing Api-Key header"
+                        }
+                      ]
+                    }
+                  },
+                  "InvalidTokenError": {
+                    "summary": "Invalid key in Api-Key header",
+                    "value": {
+                      "errors": [
+                        {
+                          "code": "invalid",
+                          "location": "header",
+                          "name": "Api-Key",
+                          "message": "Invalid Api-Key header"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error. Consumer may try to send the request again.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "source": {
+                            "title": "ErrorSource",
+                            "required": [
+                              "location",
+                              "name"
+                            ],
+                            "properties": {
+                              "location": {
+                                "type": "string",
+                                "enum": [
+                                  "path",
+                                  "query",
+                                  "body",
+                                  "header"
+                                ]
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "The name of the property or parameter causing the error"
+                              },
+                              "path": {
+                                "type": "string",
+                                "description": "JSON path targeting the source of error (only used when location is `body`)"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "UnexpectedError": {
+                    "summary": "An unexpected error",
+                    "value": {
+                      "errors": [
+                        {
+                          "code": "unexpected",
+                          "message": "An expected error occurred, you may try again later"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/test/advanced-query": {
+      "get": {
+        "summary": "Test building query element from search input",
+        "operationId": "tapi:advanced-query",
+        "tags": [
+          "test"
+        ],
+        "parameters": [
+          {
+            "name": "format",
+            "in": "query",
+            "description": "The format to return: either `html`, or `xml`. Default is `html`.",
+            "schema": {
+              "default": "html",
+              "type": "string",
+              "enum": [
+                "html",
+                "xml"
+              ],
+              "description": "The format to return: either `html`, or `xml`. Default is `html`."
+            }
+          },
+          {
+            "name": "field[1]",
+            "in": "query",
+            "description": "The field to query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pronunciation",
+                "partOfSpeechAll",
+                "domain",
+                "lemma",
+                "reversal",
+                "all"
+              ],
+              "description": "Parts of the entry to be returned."
+            }
+          },
+          {
+            "name": "field[2]",
+            "in": "query",
+            "description": "The field to query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pronunciation",
+                "partOfSpeechAll",
+                "domain",
+                "lemma",
+                "reversal",
+                "all"
+              ],
+              "description": "Parts of the entry to be returned."
+            }
+          },
+          {
+            "name": "field[3]",
+            "in": "query",
+            "description": "The field to query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pronunciation",
+                "partOfSpeechAll",
+                "domain",
+                "lemma",
+                "reversal",
+                "all"
+              ],
+              "description": "Parts of the entry to be returned."
+            }
+          },
+          {
+            "name": "query-advanced[1]",
+            "in": "query",
+            "description": "The query itself",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "query-advanced[2]",
+            "in": "query",
+            "description": "The query itself",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "query-advanced[3]",
+            "in": "query",
+            "description": "The query itself",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "position[1]",
+            "in": "query",
+            "description": "The position of the text within the query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "exactly",
+                "start",
+                "end",
+                "everywhere"
+              ],
+              "description": "The position of the text in searched query. Default is `exactly`."
+            }
+          },
+          {
+            "name": "position[2]",
+            "in": "query",
+            "description": "The position of the text within the query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "exactly",
+                "start",
+                "end",
+                "everywhere"
+              ],
+              "description": "The position of the text in searched query. Default is `exactly`."
+            }
+          },
+          {
+            "name": "position[3]",
+            "in": "query",
+            "description": "The position of the text within the query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "exactly",
+                "start",
+                "end",
+                "everywhere"
+              ],
+              "description": "The position of the text in searched query. Default is `exactly`."
+            }
+          },
+          {
+            "name": "condition[1]",
+            "in": "query",
+            "description": "The condition between two filters",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "and",
+                "not",
+                "andNot"
+              ],
+              "description": "The condition between two parts of the query. Default is `and`."
+            }
+          },
+          {
+            "name": "condition[2]",
+            "in": "query",
+            "description": "The condition between two filters",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "and",
+                "not",
+                "andNot"
+              ],
+              "description": "The condition between two parts of the query. Default is `and`."
+            }
+          },
+          {
+            "name": "condition[3]",
+            "in": "query",
+            "description": "The condition between two filters",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "and",
+                "not",
+                "andNot"
+              ],
+              "description": "The condition between two parts of the query. Default is `and`."
             }
           }
         ],
@@ -3929,23 +4784,23 @@
         }
       }
     },
-    "/test/parameters": {
-      "get": {
-        "summary": "Test for send parameters",
-        "operationId": "tapi:get-parameters",
+    "/test/fulltex-search": {
+      "post": {
+        "summary": "Test searching via Lucence queries and option",
+        "operationId": "tapi:fulltext-search",
         "tags": [
           "test"
         ],
-        "parameters": [
-          {
-            "name": "params",
-            "in": "query",
-            "description": "Values of multiple parameters in one string",
-            "schema": {
-              "type": "string"
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "type": "string"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Search results returned",
@@ -4225,17 +5080,59 @@
         "default": "header",
         "description": "Parts of the dictionary to be returned. Order of the parts in the source document is preserved."
       },
-      "EntryParts": {
+      "DictionaryPartsArray": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "enum": [
+            "header",
+            "text",
+            "front",
+            "body",
+            "back"
+          ],
+          "default": "header",
+          "description": "Parts of the dictionary to be returned. Order of the parts in the source document is preserved."
+        }
+      },
+      "SimpleSearchField": {
         "type": "string",
         "enum": [
-          "lemma",
-          "part-of-speech",
-          "pronunciation",
-          "domain",
-          "anything"
+          "headword",
+          "entry"
         ],
-        "default": "lemma",
+        "default": "headword",
         "description": "Parts of the entry to be returned."
+      },
+      "AdvancedSearchField": {
+        "type": "string",
+        "enum": [
+          "pronunciation",
+          "partOfSpeechAll",
+          "domain",
+          "lemma",
+          "reversal",
+          "all"
+        ],
+        "description": "Parts of the entry to be returned."
+      },
+      "AdvancedSearchFieldArray": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "pronunciation",
+            "partOfSpeechAll",
+            "domain",
+            "lemma",
+            "reversal",
+            "all"
+          ],
+          "description": "Parts of the entry to be returned."
+        }
       },
       "QueryPosition": {
         "type": "string",
@@ -4245,8 +5142,102 @@
           "end",
           "everywhere"
         ],
-        "default": "exactly",
         "description": "The position of the text in searched query. Default is `exactly`."
+      },
+      "QueryPositionArray": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "exactly",
+            "start",
+            "end",
+            "everywhere"
+          ],
+          "description": "The position of the text in searched query. Default is `exactly`."
+        }
+      },
+      "QueryCondition": {
+        "type": "string",
+        "enum": [
+          "and",
+          "not",
+          "andNot"
+        ],
+        "description": "The condition between two parts of the query. Default is `and`."
+      },
+      "FacetObject": {
+        "type": "object",
+        "properties": {
+          "dictionary": {
+            "type": "string"
+          },
+          "objectLanguage": {
+            "type": "string"
+          },
+          "targetLanguage": {
+            "type": "string"
+          },
+          "partOfSpeech": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "domainHierarchy": {
+            "type": "string"
+          },
+          "style": {
+            "type": "string"
+          },
+          "polysemy": {
+            "type": "string"
+          },
+          "frequency": {
+            "type": "string"
+          },
+          "complexFormType": {
+            "type": "string"
+          }
+        }
+      },
+      "FacetObjectArray": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "dictionary": {
+              "type": "string"
+            },
+            "objectLanguage": {
+              "type": "string"
+            },
+            "targetLanguage": {
+              "type": "string"
+            },
+            "partOfSpeech": {
+              "type": "string"
+            },
+            "domain": {
+              "type": "string"
+            },
+            "domainHierarchy": {
+              "type": "string"
+            },
+            "style": {
+              "type": "string"
+            },
+            "polysemy": {
+              "type": "string"
+            },
+            "frequency": {
+              "type": "string"
+            },
+            "complexFormType": {
+              "type": "string"
+            }
+          }
+        }
       },
       "OutputFormat": {
         "type": "string",
@@ -4436,6 +5427,34 @@
           "type": "string"
         }
       },
+      "LanguageParameter": {
+        "name": "language",
+        "in": "query",
+        "description": "Query string",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "QueryAdvancedParameter": {
+        "name": "query-advanced",
+        "in": "query",
+        "description": "Query string",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "QueryAdvancedParameterArray": {
+        "name": "query-advanced",
+        "in": "query",
+        "description": "Query string",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "nullable": true
+        }
+      },
       "QueryPrefixParameter": {
         "name": "query",
         "in": "query",
@@ -4445,13 +5464,55 @@
         },
         "required": true
       },
-      "FieldParameter": {
+      "SimpleSearchFieldParameter": {
         "name": "field",
         "in": "query",
         "description": "The field to query",
         "schema": {
           "type": "string",
-          "default": "entry"
+          "enum": [
+            "headword",
+            "entry"
+          ],
+          "default": "headword",
+          "description": "Parts of the entry to be returned."
+        }
+      },
+      "AdvancedSearchFieldParameter": {
+        "name": "field",
+        "in": "query",
+        "description": "The field to query",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "pronunciation",
+            "partOfSpeechAll",
+            "domain",
+            "lemma",
+            "reversal",
+            "all"
+          ],
+          "description": "Parts of the entry to be returned."
+        }
+      },
+      "FieldParameterArray": {
+        "name": "field",
+        "in": "query",
+        "description": "The field to query",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "pronunciation",
+              "partOfSpeechAll",
+              "domain",
+              "lemma",
+              "reversal",
+              "all"
+            ],
+            "description": "Parts of the entry to be returned."
+          }
         }
       },
       "PositionParameter": {
@@ -4466,7 +5527,6 @@
             "end",
             "everywhere"
           ],
-          "default": "exactly",
           "description": "The position of the text in searched query. Default is `exactly`."
         }
       },
