@@ -53,7 +53,7 @@ declare function lfacets:print-table($config as map(*), $nodes as element()+, $v
                     map:for-each($entry, function($label, $freq) {
                         <tr>
                             <td>
-                                <paper-checkbox class="facet" name="facet-{$config?dimension}" value="{$label}">
+                                <paper-checkbox class="facet" name="facet[{$config?dimension}]" value="{$label}">
                                     { if ($label = $params) then attribute checked { "checked" } else () }
                                     {
                                         if (exists($config?output)) then
@@ -87,7 +87,8 @@ declare function lfacets:print-table($config as map(*), $nodes as element()+, $v
 };
 
 declare function lfacets:display($config as map(*), $nodes as element()+) {
-    let $params := request:get-parameter("facet-" || $config?dimension, ())
+    (:let $params := request:get-parameter("facet-" || $config?dimension, ()) :)
+    let $params := request:get-parameter("facet[" || $config?dimension || "]", ())
     let $table := lfacets:print-table($config, $nodes, (), $params)
     where $table
     return
