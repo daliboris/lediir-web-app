@@ -9,7 +9,6 @@ declare namespace functx = "http://www.functx.com";
 
 import module namespace config="http://www.tei-c.org/tei-simple/config" at "config.xqm";
 import module namespace query="http://www.tei-c.org/tei-simple/query" at "query.xql";
-import module namespace lapi="http://www.tei-c.org/tei-simple/query/tei-lex" at "query-tei-lex.xql";
 import module namespace qrp="https://www.daliboris.cz/ns/xquery/query-parser/1.0"  at "query-parser.xql";
 import module namespace edq = "http://www.daliboris.cz/schema/ns/xquery" at "exist-db-query-parser.xql"; 
 import module namespace rq="http://www.daliboris.cz/ns/xquery/request" at "request.xql";
