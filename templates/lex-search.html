@@ -106,14 +106,16 @@
    display:inline-block;
   }
   
-  #search-simple, #search-advanced {
+  #search-simple /*, #search-advanced */ {
   display:inline-block;
   width: 40%;
   }
 
-  #area, #field, #condition {
-      display: inline-block;
-      width: 20%;
+  #area,  #field, #condition {
+    display: inline-block;
+  }
+ #field, #condition {
+      width: 40%;
   }
   
   pb-search > button[type=submit] {
@@ -126,8 +128,8 @@
 
   #search-simple-container {
     display: grid;
-    grid-template-columns: 3fr 2fr;
-    width: 75%;
+    column-gap: 1em;
+    grid-template-columns: 2fr 4fr 3fr;
   }
 
   #search-simple-container-search {
@@ -136,10 +138,12 @@
     align-self: center;
     justify-content: space-between;
     row-gap: 10px;
+    padding-top: 16px;
   }
 
   div.search-advanced-container {
     display: grid;
+    column-gap: 1em;
     grid-template-columns: 2fr 4fr 3fr;
   }
 
@@ -149,9 +153,16 @@
     align-self: center;
     justify-content: space-between;
     row-gap: 10px;
+    padding-top: 16px;
   }
-  
   </style>
+  <style is="custom-style">
+  :root {
+    /* --paper-tabs-selection-bar-color: var(--paper-light-blue-900); */
+    /* --paper-tabs-selection-bar-color: var(var(--pb-menubar-background-color); */
+    --paper-tabs-selection-bar-color: #35424B;
+  }
+</style>
  </head>
  <body>
   <pb-page data-template="pages:pb-page" unresolved="unresolved" locales="resources/i18n/{{ns}}/{{lng}}.json">
@@ -174,169 +185,70 @@
        
        <div slot="page">
         <div id="search-simple-container">
+        <pb-custom-form id="area" name="area">
+            <pb-select data-i18n="[label]search.labels.field" name="field" value="headword">
+                <paper-item value="headword"><pb-i18n key="search.areas.basic-fileds">basic fileds</pb-i18n></paper-item>
+                <paper-item value="entry"><pb-i18n key="search.areas.whole-text">whole text</pb-i18n></paper-item>
+            </pb-select>
+        </pb-custom-form>
             <div id="search-simple-container-search">
-                <pb-search id="search-simple" action="${app}/search.html" 
-                    autocomplete-url="api/lex/search/autocomplete"
-                    data-template="lib:parse-params" value="${query}" 
-                    redirect="redirect" subforms="#positions-simple, #area">
-                    </pb-search>
-            <pb-custom-form id="positions-simple">
-                <div>
-                    <label for="positionChoiceExactly">
-                        <input type="radio" id="positionChoiceExactly" name="position" value="exactly" checked="checked" />
-                        <pb-i18n key="search.labels.exactly">exactly</pb-i18n>
-                    </label>
-                
-                    <label for="contactChoiceStart">
-                        <input type="radio" id="contactChoiceStart" name="position" value="start" />
-                            <pb-i18n key="search.labels.start">start</pb-i18n>
-                        </label>
-                
-                    <label for="contactChoiceEnd">
-                        <input type="radio" id="contactChoiceEnd" name="position" value="end" />
-                        <pb-i18n key="search.labels.end">end</pb-i18n>
-                    </label>
-                
-                    <label for="contactChoiceEverywhere">
-                        <input type="radio" id="contactChoiceEverywhere" name="position" value="everywhere" />
-                        <pb-i18n key="search.labels.everywhere">everywhere</pb-i18n>
-                    </label>
+             <pb-search id="search-simple" action="${app}/search.html" 
+              source="api/lex/search/autocomplete"
+              data-template="lib:parse-params" value="${query}" 
+              redirect="redirect" subforms="#positions-simple, #area">
+             </pb-search>
+             <pb-custom-form id="positions-simple">
+              <div>
+               <label for="positionChoiceExactly">
+                <input type="radio" id="positionChoiceExactly" name="position" value="exactly" checked="checked" />
+                <pb-i18n key="search.labels.exactly">exactly</pb-i18n>
+               </label>
+               
+               <label for="contactChoiceStart">
+                <input type="radio" id="contactChoiceStart" name="position" value="start" />
+                <pb-i18n key="search.labels.start">start</pb-i18n>
+               </label>
+               
+               <label for="contactChoiceEnd">
+                <input type="radio" id="contactChoiceEnd" name="position" value="end" />
+                <pb-i18n key="search.labels.end">end</pb-i18n>
+               </label>
+               
+               <label for="contactChoiceEverywhere">
+                <input type="radio" id="contactChoiceEverywhere" name="position" value="everywhere" />
+                <pb-i18n key="search.labels.everywhere">everywhere</pb-i18n>
+               </label>
 
 
 
 
-                    <label>| </label>
-                    <pb-popover theme="translucent">
-                        <span slot="default"><button>?</button></span>
-                        <template slot="alternate">
-                            <p>Otazník zastupuje 1 znak.<br/>(p?s = pas, pes, prs)</p>
-                        </template>
-                    </pb-popover>
-                    <pb-popover theme="translucent">
-                        <span slot="default"><button>*</button></span>
-                        <template slot="alternate">
-                            <p>Hvězdička zastupuje libovolný počet znaků.<br/>(ps* = psa, psal, psavec…)</p>
-                        </template>
-                    </pb-popover>
-                </div>
-                <!-- <button type="submit">
+               <label>| </label>
+               <pb-popover theme="translucent">
+                <span slot="default"><button>?</button></span>
+                <template slot="alternate">
+                 <p>Otazník zastupuje 1 znak.<br/>(p?s = pas, pes, prs)</p>
+                </template>
+               </pb-popover>
+               <pb-popover theme="translucent">
+                <span slot="default"><button>*</button></span>
+                <template slot="alternate">
+                 <p>Hvězdička zastupuje libovolný počet znaků.<br/>(ps* = psa, psal, psavec…)</p>
+                </template>
+               </pb-popover>
+              </div>
+              <!-- <button type="submit">
                     <paper-button slot="searchButton">
                         <pb-i18n key="search.buttons.search">Search</pb-i18n>
                     </paper-button>
                     </button> -->
-            </pb-custom-form>
-        
+             </pb-custom-form>
         </div>
         
-        <pb-custom-form id="area" name="area">
-            <pb-select data-i18n="[label]search.labels.field" name="field" value="headword">
-                <paper-item value="headword"><pb-i18n key="search.areas.lemma">lemma</pb-i18n></paper-item>
-                <paper-item value="entry"><pb-i18n key="search.areas.text">text</pb-i18n></paper-item>
-            </pb-select>
-        </pb-custom-form>
 
         </div>
        </div>
        <div slot="page">
-        <paper-card>
-         <div class="card-content">
-          <iron-form id="form">
-           <form action="${app}/search.html" data-template="lib:parse-params" value="${query}" redirect="redirect">
-            <pb-repeat>
-             <template>
-                <div class="search-advanced-container">
-                <pb-custom-form id="area-advanced" name="area-advanced" class="area-advanced">
-                    <pb-select data-i18n="[label]search.labels.field" aria-disabled="false" dir="null">
-                        <paper-item value="pronunciation" data-i18n="[label]search.fields.pronunciation">
-                         <pb-i18n key="search.fields.pronunciation">pronunciation</pb-i18n>
-                        </paper-item>
-                        <paper-item value="partOfSpeech" data-i18n="[label]search.fields.partOfSpeech">
-                         <pb-i18n key="search.fields.partOfSpeech">part-of-speech</pb-i18n>
-                        </paper-item>
-                        <paper-item value="domain">
-                         <pb-i18n key="search.fields.domain">domain</pb-i18n>
-                        </paper-item>
-                        <paper-item value="lemma">
-                         <pb-i18n key="search.fields.lemma">lemma</pb-i18n>
-                        </paper-item>
-                        <paper-item value="reversal">
-                            <pb-i18n key="search.fields.reversal">reversal</pb-i18n>
-                        </paper-item>                
-                        <paper-item value="all">
-                         <pb-i18n key="search.fields.anything">anything</pb-i18n>
-                        </paper-item>
-                      </pb-select>
-                </pb-custom-form>
-              <div class="search-advanced-area-container">
-                <pb-search id="search-advanced" action="${app}/search.html" 
-                    autocomplete-url="api/lex/search/autocomplete"
-                    data-template="lib:parse-params" value="${query}" redirect="redirect" subforms="#positions-advanced, #area-advanced">
-                 </pb-search>
-                <pb-custom-form id="positions-advanced">
-                    <div>
-                        <label for="positionChoiceExactly-advanced">
-                            <input type="radio" id="positionChoiceExactly-advanced" name="position" value="exactly" checked="checked" />
-                            <pb-i18n key="search.labels.exactly">exactly</pb-i18n>
-                        </label>
-                    
-                        <label for="contactChoiceStart-advanced">
-                            <input type="radio" id="contactChoiceStart-advanced" name="position" value="start" />
-                             <pb-i18n key="search.labels.start">start</pb-i18n>
-                            </label>
-                    
-                        <label for="contactChoiceEnd-advanced">
-                            <input type="radio" id="contactChoiceEnd-advanced" name="position" value="end" />
-                            <pb-i18n key="search.labels.end">end</pb-i18n>
-                        </label>
-                    
-                        <label for="contactChoiceEverywhere-advanced">
-                            <input type="radio" id="contactChoiceEverywhere-advanced" name="position" value="everywhere" />
-                            <pb-i18n key="search.labels.everywhere">everywhere</pb-i18n>
-                        </label>
-    
-                        <label>| </label>
-                    <pb-popover theme="translucent">
-                        <span slot="default"><button>?</button></span>
-                        <template slot="alternate">
-                            <p>Otazník zastupuje 1 znak.<br/>(p?s = pas, pes, prs)</p>
-                        </template>
-                    </pb-popover>
-                    <pb-popover theme="translucent">
-                        <span slot="default"><button>*</button></span>
-                        <template slot="alternate">
-                            <p>Hvězdička zastupuje libovolný počet znaků.<br/>(psa* = psa, psal, psavec…)</p>
-                        </template>
-                    </pb-popover>
-                    </div>
-             </pb-custom-form>
-              </div>
-              
-            <pb-select id="condition" data-i18n="[label]search.labels.condition" aria-disabled="false" dir="null">
-                 <paper-item value="and" data-i18n="[label]search.fields.and">
-                  <pb-i18n key="search.fields.and">AND</pb-i18n>
-                 </paper-item>
-                 <paper-item value="or" data-i18n="[label]search.fields.or">
-                  <pb-i18n key="search.fields.or">OR</pb-i18n>
-                 </paper-item>
-                 <paper-item value="andNot" data-i18n="[label]search.fields.andNot">
-                  <pb-i18n key="search.fields.andNot">AND NOT CONTAINS</pb-i18n>
-                 </paper-item>
-               </pb-select>
-
-            </div>
-                       <!-- <paper-input id="text" data-i18n="[label]search.labels.query" type="search" name="query"></paper-input> -->
-             </template>
-            </pb-repeat>
-            <button type="submit">
-             <paper-button>
-              <pb-i18n key="search.buttons.search">Search</pb-i18n>
-             </paper-button>
-            </button>
-           </form>
-          </iron-form>
-          <pre id="output"></pre>
-         </div>
-        </paper-card>
+        <div data-template="lib:include" data-template-path="templates/fragments/search-advanced-form-pb2.html"></div>
        </div>
        
        <div slot="page">
@@ -370,54 +282,7 @@
    </app-header-layout>
    <app-toolbar data-template="lib:include" data-template-path="templates/footer.html"></app-toolbar>
   </pb-page>
-  <script>
-   const facets = document.getElementById('facets');
-   if (facets) {
-    facets.addEventListener('pb-custom-form-loaded', function (ev) {
-     const elems = ev.detail.querySelectorAll('.facet');
-     elems.forEach(facet => {
-      facet.addEventListener('change', () => {
-       const table = facet.closest('table');
-       if (table) {
-        const nested = table.querySelectorAll('.nested .facet').forEach(nested => {
-         if (nested != facet) {
-          nested.checked = false;
-         }
-        });
-       }
-       facets._submit();
-      });
-     });
-    });
-   }
-  window.addEventListener('WebComponentsReady', () => {
-        const form = document.getElementById('search-simple');
-        form.addEventListener('iron-form-presubmit', (ev) => {
-            ev.preventDefault();
-            const data = form.serializeForm();
-            const queryString = Object.keys(data).map((key) => {
-                return key + '=' + data[key]
-            }).join('&amp;');
-            /* document.getElementById('output').innerText = queryString; */
-            alert(queryString);
-        });
-        const searchSimple = document.getElementById('search-simple');
-
-        searchSimple.addEventListener('iron-form-presubmit', function() {
-                this.request.params['field'] = document.getElementById('area').value;
-        });
-
-        var params  = "";
-        if (searchSimple.subforms) {
-            document.querySelectorAll(searchSimple.subforms).forEach((frm) => {
-                if (frm.serializeForm) {
-                    Object.assign(params, frm.serializeForm());
-                }
-            });
-        }
-       // alert("params: " + params);
-    });
-    
+  <script src="templates/fragments/lex-search.js">
   </script>
  </body>
 </html>

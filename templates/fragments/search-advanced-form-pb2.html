@@ -1,0 +1,100 @@
+     <div class="card-content">
+      <iron-form id="form" allow-redirect="allow-redirect">
+       <form id="search-advanced-form" action="${app}/search.html" data-template="lib:parse-params">
+        <pb-repeat>
+         <template>
+            <div class="search-advanced-container">
+             <pb-custom-form id="area-advanced-form">
+              <pb-select data-i18n="[label]search.labels.field" name="field" value="lemma" aria-disabled="false" dir="null">
+                    <paper-item value="pronunciation" data-i18n="[label]search.fields.pronunciation">
+                     <pb-i18n key="search.fields.pronunciation">pronunciation</pb-i18n>
+                    </paper-item>
+                    <paper-item value="partOfSpeechAll" data-i18n="[label]search.fields.partOfSpeech">
+                     <pb-i18n key="search.fields.partOfSpeech">part-of-speech</pb-i18n>
+                    </paper-item>
+                    <paper-item value="domain">
+                     <pb-i18n key="search.fields.domain">domain</pb-i18n>
+                    </paper-item>
+                    <paper-item value="lemma">
+                     <pb-i18n key="search.fields.lemma">lemma</pb-i18n>
+                    </paper-item>
+                    <paper-item value="reversal">
+                        <pb-i18n key="search.fields.reversal">reversal</pb-i18n>
+                    </paper-item>                
+                    <paper-item value="all">
+                     <pb-i18n key="search.fields.anything">anything</pb-i18n>
+                    </paper-item>
+                  </pb-select>
+            </pb-custom-form>
+          <div class="search-advanced-area-container">
+           <!--  <pb-autocomplete id="search-advanced" name="query-advanced" source="api/lex/search/autocomplete">
+
+            </pb-autocomplete> -->
+           <pb-search id="search-advanced" name="query-advanced"
+                source="api/lex/search/autocomplete"
+                data-template="lib:parse-params" subforms="#positions-advanced, #area-advanced-form">
+             </pb-search> 
+            <pb-custom-form id="positions-advanced" name="position">
+                <div>
+                    <label for="positionChoiceExactly-advanced">
+                        <input type="radio" id="positionChoiceExactly-advanced" name="position" value="exactly" checked="checked" />
+                        <pb-i18n key="search.labels.exactly">exactly</pb-i18n>
+                    </label>
+                
+                    <label for="contactChoiceStart-advanced">
+                        <input type="radio" id="contactChoiceStart-advanced" name="position" value="start" />
+                         <pb-i18n key="search.labels.start">start</pb-i18n>
+                        </label>
+                
+                    <label for="contactChoiceEnd-advanced">
+                        <input type="radio" id="contactChoiceEnd-advanced" name="position" value="end" />
+                        <pb-i18n key="search.labels.end">end</pb-i18n>
+                    </label>
+                
+                    <label for="contactChoiceEverywhere-advanced">
+                        <input type="radio" id="contactChoiceEverywhere-advanced" name="position" value="everywhere" />
+                        <pb-i18n key="search.labels.everywhere">everywhere</pb-i18n>
+                    </label>
+
+                    <label>| </label>
+                <pb-popover theme="translucent">
+                    <span slot="default"><button>?</button></span>
+                    <template slot="alternate">
+                        <p>Otazník zastupuje 1 znak.<br/>(p?s = pas, pes, prs)</p>
+                    </template>
+                </pb-popover>
+                <pb-popover theme="translucent">
+                    <span slot="default"><button>*</button></span>
+                    <template slot="alternate">
+                        <p>Hvězdička zastupuje libovolný počet znaků.<br/>(psa* = psa, psal, psavec…)</p>
+                    </template>
+                </pb-popover>
+                </div>
+         </pb-custom-form>
+          </div>
+          
+        <pb-select id="condition" name="condition" data-i18n="[label]search.labels.condition" value="and" aria-disabled="false" dir="null">
+             <paper-item value="and" data-i18n="[label]search.fields.and">
+              <pb-i18n key="search.fields.and">AND</pb-i18n>
+             </paper-item>
+             <paper-item value="or" data-i18n="[label]search.fields.or">
+              <pb-i18n key="search.fields.or">OR</pb-i18n>
+             </paper-item>
+             <paper-item value="andNot" data-i18n="[label]search.fields.andNot">
+              <pb-i18n key="search.fields.andNot">AND NOT CONTAINS</pb-i18n>
+             </paper-item>
+           </pb-select>
+
+        </div>
+                   <!-- <paper-input id="text" data-i18n="[label]search.labels.query" type="search" name="query"></paper-input> -->
+         </template>
+        </pb-repeat>
+        <button type="submit">
+         <paper-button>
+          <pb-i18n key="search.buttons.search">Search</pb-i18n>
+         </paper-button>
+        </button>
+       </form>
+      </iron-form>
+      <div id="output"></div>
+     </div>
