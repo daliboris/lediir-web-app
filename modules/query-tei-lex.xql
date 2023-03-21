@@ -17,6 +17,10 @@ import module namespace router="http://exist-db.org/xquery/router";
 import module namespace capi="http://teipublisher.com/api/collection" at "lib/api/collection.xql";
 (: import module namespace facets="http://teipublisher.com/facets" at "facets.xql"; :)
 import module namespace lfacets="http://www.tei-c.org/tei-simple/query/tei-lex-facets";
+import module namespace rq="http://www.daliboris.cz/ns/xquery/request"  at "request.xql";
+import module namespace qrp="https://www.daliboris.cz/ns/xquery/query-parser/1.0"  at "query-parser.xql";
+import module namespace edq = "http://www.daliboris.cz/schema/ns/xquery" at "exist-db-query-parser.xql"; 
+
 (:
  Semantic categories
 
@@ -312,18 +316,38 @@ declare function lapi:browse($request as map(*)) {
 (: Dictionary entries :)
 declare function lapi:search($request as map(*)) {
 
-(:
-   let $params := lapi:get-parameters($request)
-   return if($params) then ($params, 
-   <modification>
-        {lapi:modify-query($request?parameters?query, $request?parameters?position)}
-    </modification>
+   (: (::)
+   let $param-values := rq:get-request-parameters($request)
+   let $rq-parameters := rq:get-api-parameters($request)
+   let $facets := lapi:get-facets-values($request)
+   let $parameters := rq:get-all-parameters($request)
+   let $qa := empty($request?parameters("query-advanced[1]"))
+   let $q := empty($request?parameters?query)
+
+    let $q := empty($param-values/parameter[@name='query']/value)
+    let $qa := empty($param-values/group[@name='1']/parameter)
+
+   let $empties := empty($request?parameters?query) and empty($request?parameters("query-advanced[1]"))
+   let $lucene := if(not($q)) then
+                    lapi:get-lucene-query($param-values/parameter[@name=('query', 'field', 'position')])
+                else for $group in $parameters/group[parameter[@name='query-advanced'][node()]]
+                    order by $group/@name
+                    return lapi:get-lucene-query($group/parameter)
+    let $combined := qrp:combine-queries($lucene)
+    let $exist-db-query := if (empty($combined)) then () else <exist-db-query>{($combined, $facets)}</exist-db-query>
+   return if($parameters) then (
+        <result>{($rq-parameters, $param-values, <fcs>{$facets}</fcs>, $parameters, $exist-db-query, <empty>{($qa, $q, $empties)}</empty>)}</result>, 
+            if($parameters/parameters/parameter[@name='query']) then
+                <modification>
+                        {lapi:modify-query($request?parameters?query, $request?parameters?position)}
+                </modification>
+            else ()
     )
     else
-    :)
+    :) (::)
     
           (:If there is no query string, fill up the map with existing values:)
-    if (empty($request?parameters?query))
+    if (empty($request?parameters?query) and empty($request?parameters("query-advanced[1]")))
     then
         let $max-hits := $config:maximum-hits-limit
         let $hitsAll := session:get-attribute($config:session-prefix || ".hits")
@@ -340,7 +364,8 @@ declare function lapi:search($request as map(*)) {
         (: Here the actual query commences. This is split into two parts, the first for a Lucene query and the second for an ngram query. :)
         (:The query passed to a Luecene query in ft:query is an XML element <query> containing one or two <bool>. The <bool> contain the original query and the transliterated query, as indicated by the user in $query-scripts.:)
        let $max-hits := $config:maximum-hits-limit
-       let $hitsAll :=
+       let $hitsAll := if(empty($request?parameters("query-advanced[1]"))) then
+
                 (:If the $query-scope is narrow, query the elements immediately below the lowest div in tei:text and the four major element below tei:teiHeader.:)
                 for $hit in lapi:query-default($request?parameters?field, if (empty($request?parameters?query))
              then () else xmldb:decode($request?parameters?query), 
@@ -349,6 +374,22 @@ declare function lapi:search($request as map(*)) {
                 (: sorting by @sortKey attribute using default collation :)
                 order by $hit/@sortKey
                 return $hit
+            else
+                let $parameters := rq:get-all-parameters($request)
+                let $hasQuery := empty($parameters/parameter[@name='query']/value)
+                let $lucene := if(not($hasQuery)) then
+                    lapi:get-lucene-query($parameters/parameter[@name=('query', 'field', 'position')])
+                    else
+                    for $group in $parameters/group[parameter[@name='query-advanced'][node()]]
+                    order by $group/@name
+                    return lapi:get-lucene-query($group/parameter)
+                let $facets := lapi:get-facets-values($request)
+                let $combined := qrp:combine-queries($lucene)
+                let $exist-db-query := if (empty($combined)) then () else <exist-db-query>{($combined, $facets)}</exist-db-query>
+                let $qry := edq:parse-exist-db-query($exist-db-query)
+                let $hits := lapi:execute-query-return-hits($qry?query, $qry?full-options)
+                return $hits
+
         let $hitCount := count($hitsAll)
         (:Store the result in the session.:)
         let $store := (
@@ -362,12 +403,63 @@ declare function lapi:search($request as map(*)) {
         )
         let $hits := if ($max-hits > 0 and $hitCount > $max-hits) then 
             subsequence($hitsAll, 1, $max-hits) else $hitsAll
+        
+        
         return if($request?parameters?format = "xml") then
                 lapi:show-hits-xml($request, $hits, $request?parameters?ids, "div", "http://www.tei-c.org/ns/1.0")
             else
                 lapi:show-hits-html($request, $hits, $request?parameters?ids)
-
+        
 };
+
+
+declare %private function lapi:get-facets-values($request as map(*)) as element(facets)? {
+    let $item-name := "facet"
+    let $items-name := "facets"
+    let $prefix := "facet["
+    let $indexed := "facet\[([^\]]*)\]"
+    let $parameters := rq:get-all-parameters($request)
+    let $items := $parameters/group[@name=$item-name]/parameter
+    let $items := if(empty($items)) then ()
+        else element {$items-name} {
+                for $i in $items return 
+                    element {$item-name} {
+                        $i/@*,
+                        $i/node()
+                    }
+                }
+
+    (: let $items := if ($parameters/parameter[starts-with(@name, $prefix)]) then :)
+    (:
+    let $items := if ($parameters/parameter[matches(@name, $indexed)]) then
+        element {$items-name}
+         {
+            (: for $item in $parameters/parameter[starts-with(@name, $prefix)] :)
+            for $item in $parameters/parameter[matches(@name, $indexed)]
+                return element {$item-name} {
+                    (: attribute {"name"} {substring-after($item/@name, $prefix) => substring-before("]")},:)
+                    attribute {"name"} {analyze-string($item/@name, $indexed)/*/*[1]},
+                    for $item in tokenize($item, ' ') return <value>{$item}</value>
+                }
+            }
+        else ()
+    :)
+    return $items
+};
+
+declare %private function lapi:execute-query-return-hits($query as item(), $options as item()? ) {
+ 
+ let $query-start-time := util:system-time()
+ 
+ let $ft := collection($config:data-root || "/dictionaries/")//tei:entry[ft:query(., $query, $options)]
+ let $result := $ft
+
+ let $query-end-time := util:system-time()
+ let $query-duration := ($query-end-time - $query-start-time) div xs:dayTimeDuration('PT1S')
+ 
+ return
+    $result
+ };
 
 declare %private function lapi:prepare-session($request as map(*), $function as xs:string) {
     let $max-hits := $config:maximum-hits-limit
@@ -600,6 +692,51 @@ declare function lapi:query-default($fields as xs:string+,
     else ()
 };
 
+(: 
+<query-option field="headword">
+        <query>
+            <bool>
+                <term occur="must">fortress</term>
+                <wildcard occur="must">*hrad</wildcard>
+            </bool>
+        </query>
+        <options>
+            <default-operator>and</default-operator>
+            <phrase-slop>1</phrase-slop>
+            <leading-wildcard>yes</leading-wildcard>
+            <filter-rewrite>yes</filter-rewrite>
+        </options>
+    </query-option>
+:)
+declare function lapi:query-advanced(
+    $query-options as element(query-option)+,
+    $target-texts as xs:string*,
+    $sortBy as xs:string*,
+    $position as xs:string?
+    ) {
+
+        let $fields := $query-options/@field
+        for $field in $fields
+        let $query := $query-options[@field = $field]/query
+        return
+            switch ($field)
+            case "lemma" return
+                    if (exists($target-texts)) then
+                        for $text in $target-texts
+                        return
+                            $config:data-root ! doc(. || "/dictionaries/LeDIIR-" || $text || ".xml")//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
+                    else
+                        collection($config:data-root || "/dictionaries/")//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
+            case "part-of-speech" return
+                    collection($config:data-root || "/dictionaries/")//tei:entry[not(@copyOf)]//tei:gram[@type='pos'][ft:query(., $query, query:options($sortBy))]
+            case "pronunciation" return
+                    collection($config:data-root || "/dictionaries/")//tei:entry[not(@copyOf)]//tei:pron[ft:query(., $query, query:options($sortBy))]
+            case "domain" return
+                    collection($config:data-root || "/dictionaries/")//tei:entry[not(@copyOf)]//tei:usg[@type='domain'][ft:query(., $query, query:options($sortBy))]
+            default return
+                    collection($config:data-root || "/dictionaries/")//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
+};
+
 declare function lapi:modify-query($query as xs:string?, $position as xs:string?) as xs:string {
         
     switch ($position)
@@ -624,7 +761,7 @@ declare function lapi:query-metadata($field as xs:string, $query as xs:string, $
 };
 
 declare function lapi:autocomplete($request as map(*)) {
-    (: lapi:get-parameters($request) :)
+    (: rq:get-parameters-advanced($request) :)
 
     let $q := request:get-parameter("query", ())
     let $type := request:get-parameter("field", "entry")
@@ -649,7 +786,7 @@ declare function lapi:facets($request as map(*)) {
     
     (:
     let $f := function($k, $v) {concat('Key: ', $k, ', value: ', $v)}
-    let $params := lapi:get-parameters($request)
+    let $params := rq:get-parameters-advanced($request)
     let $hits := session:get-attribute($config:session-prefix || ".hits")
     let $facet-dimension := for $dim in $config:facets?*
         let $facets-map := ft:facets($hits, $dim?dimension, 5)
@@ -731,6 +868,7 @@ declare function lapi:autocomplete($doc as xs:string?, $fields as xs:string+, $q
             case "partOfSpeechAll"
             case "styleAll"
             case "domain" 
+            case "reversal" 
             case "polysemy"
             case "lemma" return
                 if ($doc) then
@@ -860,13 +998,6 @@ declare function lapi:project-xml() {
     return <project>{$dictionary}</project>
 };
 
-declare function lapi:get-parameters($request as map(*)) {
-
-    let $f := function($k, $v) {<parameter name="{$k}">{$v}</parameter>}
-
-    let $items := map:for-each($request?parameters, $f)
-    return <parameters>{$items}</parameters>
-};
 declare function lapi:contents($request as map(*)) { 
     lapi:dictionary-contents($request)
 };
@@ -896,4 +1027,9 @@ declare function lapi:dictionary-contents($request as map(*)) {
          </li>}</ul>
     
     return $result
+};
+
+
+declare %private function lapi:get-lucene-query($parameter as element(parameter)*) {
+  qrp:get-query-options(($parameter[@name='query-advanced']/. | $parameter[@name='query']/.), $parameter[@name='position']/., $parameter[@name='field']/., $parameter[@name='condition']/.)
 };
