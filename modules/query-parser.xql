@@ -48,8 +48,8 @@ declare variable $qrp:DOUBLE-QUOT := '&#x22;';
 declare function qrp:prepare-query-string($query as xs:string?, $position as xs:string) as xs:string? {
  let $query := if($query) then
   switch($position)
-  case $qrp:POSITION-START return "*" || $query
-  case $qrp:POSITION-END return $query || "*"
+  case $qrp:POSITION-END return "*" || $query
+  case $qrp:POSITION-START return $query || "*"
   case $qrp:POSITION-EVERYWHERE return "*" || $query || "*"
   default return $query
   else
@@ -115,14 +115,14 @@ let $options :=
     <options>
         <default-operator>and</default-operator>
         <phrase-slop>1</phrase-slop>
-        <leading-wildcard>{if($position = $qrp:POSITION-START) then "yes" else "no"}</leading-wildcard>
+        <leading-wildcard>{if($position = $qrp:POSITION-END) then "yes" else "no"}</leading-wildcard>
         <filter-rewrite>yes</filter-rewrite>
     </options>
  return $options
 };
 
-declare function qrp:get-query-options($query as xs:string?, $position as xs:string, $field as xs:string?) as element(query-options) {
-<query-options field="{$field}">
+declare function qrp:get-query-options($query as xs:string?, $position as xs:string, $field as xs:string?, $condition as xs:string?) as element(query-options) {
+<query-options field="{$field}" condition="{$condition}">
   {
    (
     qrp:query-to-element($query, $position),
@@ -134,7 +134,7 @@ declare function qrp:get-query-options($query as xs:string?, $position as xs:str
 
 declare function qrp:get-query-options($query as xs:string?, $position as xs:string) as element(query-options)
 {
-  qrp:get-query-options($query, $position, ())
+  qrp:get-query-options($query, $position, (), ())
 };
 
 (:
@@ -499,3 +499,67 @@ declare %private function qrp:lucene2xml($node as item(), $mode as xs:string) {
         $node
 };
 
+(: 
+<query-options field="headword" condition="and">
+        <query>
+            <term>fortress</term>
+        </query>
+        <options>
+            <default-operator>and</default-operator>
+            <phrase-slop>1</phrase-slop>
+            <leading-wildcard>no</leading-wildcard>
+            <filter-rewrite>yes</filter-rewrite>
+        </options>
+    </query-options>
+:)
+
+declare function qrp:combine-queries($items as element(query-options)*) as element(query-option)* {
+
+  let $result := for $item in $items 
+    let $field := $item/@field
+    group by $field
+    return <query-option field="{$field}">
+     {
+      qrp:merge-lucene-queries($item/query),
+      qrp:merge-lucene-options($item/options)
+     }
+    </query-option>
+  return $result
+};
+
+declare %private function qrp:merge-lucene-queries($items as element(query)*) as element(query) {
+  <query>
+  <bool>
+  {
+    for $item at $i in $items/*
+    return element {node-name($item)} {
+      attribute {"occur"} {"must"},
+      $item/node()
+    }
+  }
+  </bool>
+  </query>
+};
+
+(:
+<options>
+    <default-operator>and</default-operator>
+    <phrase-slop>1</phrase-slop>
+    <leading-wildcard>no</leading-wildcard>
+    <filter-rewrite>yes</filter-rewrite>
+</options>
+:)
+declare %private function qrp:merge-lucene-options($items as element(options)*) as element(options) {
+<options>
+  {
+    for $item in $items[1]/*
+    return element {node-name($item)} {
+      switch (local-name($item))
+        case "default-operator" return if($items[default-operator[. = 'or']]) then 'or' else 'and'
+        case "leading-wildcard" return if($items[leading-wildcard[. = 'yes']]) then 'yes' else 'no'
+        case "filter-rewrite" return   if($items[filter-rewrite[. = 'yes']]) then 'yes' else 'no'
+        default return $item/node()
+    }
+  }
+  </options>
+};
