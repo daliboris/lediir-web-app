@@ -2,7 +2,7 @@
  <title>Elektronická lexikální databáze indoíránských jazyků</title>
  <home>https://eldi.soc.cas.cz/</home>
  <dependency processor="http://exist-db.org" semver-min="5.2.0"/>
- <dependency package="http://exist-db.org/html-templating"/>
+ <dependency package="http://exist-db.org/html-templating" semver="1"/>
  <dependency package="http://existsolutions.com/apps/tei-publisher-lib" semver="2"/>
  <dependency package="http://exist-db.org/open-api/router" semver-min="0.2.0"/>
 </package>
