@@ -59,7 +59,7 @@ declare function idx:get-metadata($root as element(), $field as xs:string) {
               
             case "letter" return $root/ancestor-or-self::tei:div[@type='letter']/tei:head[@type='letter']
             case "chapterId" return $root/ancestor-or-self::tei:div[1]/@xml:id
-            case "chapterN" return $root/ancestor-or-self::tei:div[@type='letter']/@n
+            case "chapter" return $root/ancestor-or-self::tei:div[@type='letter']/@n
             case "lemma" return $root//tei:form[@type=('lemma', 'variant')]/tei:orth
             case "headword" return $root//(tei:form[@type=('lemma', 'variant')]/tei:orth | tei:ref[@type='reversal'] | tei:form[@type=('lemma', 'variant')]/tei:pron)
             case "object-language" return idx:get-object-language($root)
