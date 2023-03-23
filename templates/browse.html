@@ -130,11 +130,12 @@
                 margin: 0;
             }
             
+            /*
             #facets {
                 flex: 0;
                 min-width: 220px;
                 margin-right: 20px;
-                /*background-color: #F0F0F0;*/
+                /\*background-color: #F0F0F0;*\/
                 padding: 0 10px;
             }
             
@@ -162,6 +163,25 @@
                 padding: 4px 0;
             }
             
+            #facets table td:nth-child(2) {
+                color: #808080;
+                text-align: right;
+                padding-left: 1em;
+                vertical-align: middle;
+            }
+            */
+
+            #facets h3 {
+                display: flex;
+                flex-direction: row;
+                align-self: center;
+                justify-content: space-between;
+            }
+
+            #facets h3 paper-checkbox {
+                font-size: 85%;
+            }
+
             #facets table td:nth-child(2) {
                 color: #808080;
                 text-align: right;
@@ -234,6 +254,14 @@
                 color: var(--pb-color-inverse);
             }
 
+            .search-buttons {
+                text-align: end;
+            }
+
+            #search-search-button {
+                background-color: var(--pb-color-inverse);
+            }
+
 
             /*
              #pagination {
@@ -276,10 +304,10 @@
                     </app-toolbar>
                     
                     <app-toolbar>
-                        <pb-load id="chapters" url="api/lex/dictionaries/${id}/contents?chapter=${chapter}" loadOnce="loadOnce" data-template="lib:parse-params" />
+                        <pb-load id="chapters" url="api/lex/dictionaries/${id}/contents" loadOnce="loadOnce" data-template="lib:parse-params" />
                     </app-toolbar>
                     <app-toolbar id="pagination">
-                        <pb-paginate per-page="10" range="10" subscribe="results" show-previous-next="show-previous-next" 
+                        <pb-paginate per-page="20" range="20" subscribe="results" emit="search" show-previous-next="show-previous-next" 
                         id="${id}" chapter="${chapter}" data-template="lib:parse-params"  />
                         <pb-progress indeterminate="indeterminate" bottom-item="bottom-item"/>
                     </app-toolbar>
@@ -287,7 +315,7 @@
                 </app-header>
                 <!-- <pb-restricted login="login" group="tei"> -->
                 <main>
-                    <pb-load id="results" url="api/lex/browse?id=${id}&amp;chapter=${chapter}" emit="results" data-template="lib:parse-params" />
+                    <pb-load id="results" url="api/lex/browse" emit="results" data-template="lib:parse-params" />
                     <div class="search-panel">
                         <paper-card>
                             <div class="card-content">
@@ -295,13 +323,18 @@
                                     value="${query}" hide="hide"
                                     source="api/lex/search/autocomplete"
                                     submit-on-load="submit-on-load">
-                                    <input type="hidden" name="ids" value="${id}" data-template="lib:parse-params" />
+                                    <input type="hidden" name="id" value="${id}" data-template="lib:parse-params" />
+                                    <input type="hidden" name="chapter" value="${chapter}" data-template="lib:parse-params" />
                                     <div class="targets">
                                      <!-- <paper-checkbox name="field" value="text"><pb-i18n key="settings.search-sections">Search sections</pb-i18n></paper-checkbox>
                                      <paper-checkbox name="field" value="head"><pb-i18n key="settings.search-headings">Search headings</pb-i18n></paper-checkbox>
                                      <paper-checkbox name="field" value="entry"><pb-i18n key="settings.search-entries">Search entries</pb-i18n></paper-checkbox> -->
                                     </div>
                                     <pb-custom-form id="facets" url="api/lex/search/facets" subscribe="results" event="pb-results-received" emit="search"/>
+                                    <div class="search-buttons">
+                                        <paper-button id="search-reset-button" slot="resetButton"><pb-i18n key="search.reset"></pb-i18n></paper-button>
+                                        <paper-button id="search-search-button" slot="searchButton"><pb-i18n key="search.search"></pb-i18n></paper-button>
+                                    </div>
                                 </pb-search>
                             </div>
                         </paper-card>
@@ -343,26 +376,50 @@
     </pb-page>
     <div class="splash"/>
     <script>
-        const facets = document.getElementById('facets');
-        if (facets) {
-            facets.addEventListener('pb-custom-form-loaded', function(ev) {
-                const elems = ev.detail.querySelectorAll('.facet');
-                elems.forEach(facet =&gt; {
-                    facet.addEventListener('change', () =&gt; {
-                        const table = facet.closest('table');
-                        if (table) {
-                            const nested = table.querySelectorAll('.nested .facet').forEach(nested =&gt; {
-                                if (nested != facet) {
-                                    nested.checked = false;
-                                }
-                            });
-                        }
-                        facets._submit();
+            const facets = document.getElementById('facets');
+            const reset = document.getElementById('search-reset-button');
+            if (facets) { 
+                facets.addEventListener('pb-custom-form-loaded', function(ev) {
+                    const elems = ev.detail.querySelectorAll('.facet');
+                    elems.forEach(facet =&gt; {
+                        facet.addEventListener('change', () =&gt; {
+                            const heading = facet.closest('h3');
+                            if (heading) {
+                                facets._submit();
+                            }
+                        });
                     });
                 });
-            });
-        }
-    </script>
+                if(reset) {
+                    reset.addEventListener('click', () =&gt; {
+                        const elems = facets.querySelectorAll('.facet');
+                        elems.forEach(facet =&gt; { 
+                            const table = facet.closest('table');
+                            if (table) { 
+                                facet.checked = false;
+                                const nested = table.querySelectorAll('.nested .facet').forEach(nested =&gt; {
+                                    if (nested != facet) {
+                                        nested.checked = false;
+                                    }
+                                });
+                            }
+                        });
+                        /*
+                        TODO: doesn't work yet
+                        const query = document.getElementById('search-form');
+                        if(query &amp;&amp; query.value !== "") {
+                            query.value = "";
+                            query._submit;
+                        }
+                        else {
+                                facets._submit();
+                        }
+                        */
+                        facets._submit();
+                    });
+                }
+            }
+        </script>
 </body>
 
 </html>
