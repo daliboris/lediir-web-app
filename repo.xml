@@ -16,10 +16,13 @@
             <ul xmlns="http://www.w3.org/1999/xhtml">
                 <li>pokročilé vyhledávání (kombinace 3 podmínek)</li>
                 <li>kombinace několika faset před jejich aplikováním</li>
-                <li>našeptávač vybírá z odpovídající části heslové stati (u jednoduchého i prkročilého vyhledávání)</li>
+                <li>našeptávač vybírá z odpovídající části heslové stati (u jednoduchého i pokročilého vyhledávání)</li>
+                <li>jednoduché vyhledávání (včetně pole v záhlaví stránky) prohledává heslová slova, výslovnost a zpětné odkazy</li>
+                <li>listování hesly v rámci jedné kapitoly (včetně filtrování)</li>
                 <li>zobrazení max. 20 stránek při listování</li>
+                <li>zobrazení max. 20 heslových statí na stránku</li>
                 <li>zpracování parametrů z REST API a URL a jejich zkombinování</li>
-                <li>nový způsob dotazování na fasety v URL (místo <i>facet-usage=</i> se používá <i>facet[usage]=</i>)</li>
+                <li>nový způsob dotazování na fasety v URL (místo <i>facet-name=</i> se používá <i>facet[name]=</i>)</li>
                 <li>pro oddělení více hodnot v jednom parametru lze použít svislici (|)</li>
                 <li>aktualizace webových kompoment <i>tei-publisher-components</i> na verzi 2.2.0</li>
             </ul>
