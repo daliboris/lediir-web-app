@@ -4,7 +4,7 @@
     <property name="project.version" value="${package(version)}" />
     <property name="project.app" value="${package(abbrev)}" />
     <property name="build.dir" value="build" />
-    <property name="scripts.dir" value="../../../tei-publisher-components/dist" />
+    <property name="scripts.dir" value="../../tei-publisher-components/dist" />
     <target name="clean">
         <echo message="Deleting ${build} directory" />
         <delete dir="${build}" />
