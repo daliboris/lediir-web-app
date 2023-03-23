@@ -128,15 +128,15 @@
             <app-header-layout>
                 <app-header slot="header" effects="waterfall">
                     <app-toolbar data-template="lib:include" data-template-path="templates/menu.html"/>
-                    <!--  <pb-restricted login="login" group="tei"> -->
+                    <!-- --> <pb-restricted login="login" group="tei"> <!-- -->
                     <app-toolbar id="pagination">
                         <pb-paginate class="pb-paginate" per-page="20" range="20" subscribe="results" emit="search"  show-previous-next="show-previous-next" data-template="lib:parse-params"/>
                         <pb-progress indeterminate="indeterminate" bottom-item="bottom-item"/>
                     </app-toolbar>
-                    <!-- </pb-restricted> -->
+                    <!-- --> </pb-restricted> <!-- -->
                 </app-header>
 
-                <!--  <pb-restricted login="login" group="tei"> -->
+                <!-- -->  <pb-restricted login="login" group="tei"> <!-- -->
                 <main>
                     <pb-load id="results" url="api/lex/search" emit="results"/>
                     <div class="search-panel">
@@ -178,14 +178,14 @@
                         </paper-card>
                     </div>
                 </main>
-                <!-- 
+                <!-- -->
                 <div slot="fallback">
                     <div class="restricted" >
                         <p><pb-i18n key="app.messages.restricted">You need to be logged in to see this content.</pb-i18n></p>
                     </div>
                 </div>
                 </pb-restricted>
-            -->
+                <!-- -->
             </app-header-layout>
             <app-toolbar data-template="lib:include" data-template-path="templates/footer.html"/>
         </pb-page>

@@ -293,7 +293,7 @@
              <app-header-layout>
                 <app-header slot="header" effects="waterfall">
                     <app-toolbar data-template="lib:include" data-template-path="templates/menu.html"/>
-                    <!-- <pb-restricted login="login" group="tei"> -->
+                    <!-- --> <pb-restricted login="login" group="tei"> <!-- -->
                     <app-toolbar>
                         
                          <h1 class="tp-title">
@@ -311,9 +311,9 @@
                         id="${id}" chapter="${chapter}" data-template="lib:parse-params"  />
                         <pb-progress indeterminate="indeterminate" bottom-item="bottom-item"/>
                     </app-toolbar>
-                    <!-- </pb-restricted> -->
+                    <!-- --> </pb-restricted> <!-- -->
                 </app-header>
-                <!-- <pb-restricted login="login" group="tei"> -->
+                <!-- --> <pb-restricted login="login" group="tei"> <!-- -->
                 <main>
                     <pb-load id="results" url="api/lex/browse" emit="results" data-template="lib:parse-params" />
                     <div class="search-panel">
@@ -340,14 +340,14 @@
                         </paper-card>
                     </div>
                 </main>
-                <!--
+                <!-- -->
                 <div slot="fallback">
                     <div class="restricted" >
                         <p><pb-i18n key="app.messages.restricted">You need to be logged in to see this content.</pb-i18n></p>
                     </div>
                 </div>
                 </pb-restricted>
-                -->
+                <!-- -->
                 <footer data-template="lib:include" data-template-path="templates/footer.html"/>
             </app-header-layout>
         </app-drawer-layout>
