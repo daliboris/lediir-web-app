@@ -1060,7 +1060,7 @@ declare function lapi:dictionary-contents($request as map(*)) {
         for $item in $items
         let $count := count($item/tei:entry)
         return <li class="{if($item/@n = $chapter) then 'chapter active' else 'chapter'}">
-         <a title="{$count}" tooltip="{$count}" href="browse.html?id={$dictionaryId}&amp;chapter={$item/@n}">{$item/tei:head[1]}</a>
+         <a title="{$count}" tooltip="{$count}" href="{$config:context-path}/browse.html?id={$dictionaryId}&amp;chapter={$item/@n}">{$item/tei:head[1]}</a>
          </li>}</ul>
     
     return $result
