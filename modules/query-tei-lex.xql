@@ -266,17 +266,32 @@ declare function lapi:browse($request as map(*)) {
     let $dictId := lapi:get-dictionary-id($dictId)
 
     let $chapter := lapi:get-chapter-id($dictId,  $chapter)
-    
-    (: return <request>
-             <parameter name="format" value="{$format}" emtpy="{empty($format)}" />
-             <parameter name="chapter" value="{$chapter}" emtpy="{empty($chapter)}"/>
-             <parameter name="dictId" value="{$dictId}" emtpy="{empty($dictId)}"/>
-             <parameter name="query" value="{$query}" emtpy="{empty($query)}" />
-        </request> :)
-    
-    
+
+
     
     return
+    (: (::)
+    if(true()) then
+
+        let $exist-db-query := lapi:get-exist-db-query-xml($request)
+        let $qry := edq:parse-exist-db-query($exist-db-query)
+
+        <result>{(<request>
+                        <parameter name="format" value="{$format}" emtpy="{empty($format)}" />
+                        <parameter name="chapter" value="{$chapter}" emtpy="{empty($chapter)}"/>
+                        <parameter name="dictId" value="{$dictId}" emtpy="{empty($dictId)}"/>
+                        <parameter name="query" value="{$query}" emtpy="{empty($query)}" />
+                    </request>
+                    , $exist-db-query
+                    , $qry?xml
+                    )}
+        </result>
+        else
+     :)
+    
+     
+    
+    
     if (empty($chapter))
         then
             if($format = "html") then 
@@ -290,7 +305,17 @@ declare function lapi:browse($request as map(*)) {
             (:Otherwise, perform the query.:)
             (: Here the actual query commences. This is split into two parts, the first for a Lucene query and the second for an ngram query. :)
             (:The query passed to a Luecene query in ft:query is an XML element <query> containing one or two <bool>. The <bool> contain the original query and the transliterated query, as indicated by the user in $query-scripts.:)
-            let $hitsAll := lapi:browse-default($chapter, $dictId)
+            let $exist-db-query := lapi:get-exist-db-query-xml($request)
+            let $hitsAll := if(empty($exist-db-query)) then
+                    lapi:browse-default($chapter, $dictId)
+                 else 
+                    let $qry := edq:parse-exist-db-query($exist-db-query)
+                    (: 
+                    let $hits := lapi:browse-default($chapter, $dictId)
+                    return  lapi:execute-query-return-hits($qry?query, $qry?full-options, $hits)
+                     :)
+                     return  lapi:execute-query-return-hits($qry?query, $qry?full-options)
+
             let $hitCount := count($hitsAll)
             (:Store the result in the session.:)
             let $store := (
@@ -449,17 +474,27 @@ declare %private function lapi:get-facets-values($request as map(*)) as element(
 
 declare %private function lapi:execute-query-return-hits($query as item(), $options as item()? ) {
  
- let $query-start-time := util:system-time()
- 
- let $ft := collection($config:data-root || "/dictionaries/")//tei:entry[ft:query(., $query, $options)]
- let $result := $ft
+ lapi:execute-query-return-hits($query, $options, ())
 
- let $query-end-time := util:system-time()
- let $query-duration := ($query-end-time - $query-start-time) div xs:dayTimeDuration('PT1S')
- 
- return
-    $result
  };
+
+declare %private function lapi:execute-query-return-hits($query as item(), $options as item()?,
+    $hits as element(tei:entry)* ) {
+
+    let $query-start-time := util:system-time()
+    let $ft := if(empty($hits)) then
+            collection($config:data-root || "/dictionaries/")//tei:entry[ft:query(., $query, $options)]
+        else 
+            $hits[ft:query(., $query, $options)]
+    let $result := $ft
+
+    let $query-end-time := util:system-time()
+    let $query-duration := ($query-end-time - $query-start-time) div xs:dayTimeDuration('PT1S')
+    
+    return
+        $result
+
+};
 
 declare %private function lapi:prepare-session($request as map(*), $function as xs:string) {
     let $max-hits := $config:maximum-hits-limit
@@ -632,10 +667,10 @@ declare function lapi:get-html($hits as item()*, $request as map(*), $config) {
 };
 
 declare function lapi:browse-default($chapter as xs:string,
-    $text as xs:string) {
+    $text as xs:string?) {
 
     let $query := if(number($chapter) != xs:double('NaN')) then
-         "chapterN:(" || $chapter || ")"
+         "chapter:(" || $chapter || ")"
          else
          "letter:(" || $chapter || ")"
 
@@ -784,23 +819,25 @@ declare function lapi:autocomplete($request as map(*)) {
 
 declare function lapi:facets($request as map(*)) {
     
-    (:
-    let $f := function($k, $v) {concat('Key: ', $k, ', value: ', $v)}
-    let $params := rq:get-parameters-advanced($request)
+    (: (::)
+    response:set-header("Content-Type", "application/xml"),
+    let $f := function($k, $v) {<item value="{$k}" count="{$v}" />}
+    let $params := rq:get-all-parameters($request)
     let $hits := session:get-attribute($config:session-prefix || ".hits")
     let $facet-dimension := for $dim in $config:facets?*
         let $facets-map := ft:facets($hits, $dim?dimension, 5)
-        return <dimension name="{$dim?dimension}" parameter="{request:get-parameter("facet-" || $dim?dimension, ())}">
+        return <dimension name="{$dim?dimension}" parameter="{request:get-parameter("facet[" || $dim?dimension || "]", ())}">
             <facet>{map:for-each($facets-map, $f)}</facet>
         </dimension>
     let $facets := <facets count="{count($config:facets?*)}">
                         <dimensions>{$facet-dimension}</dimensions>
-                    </facets>    
-
-    return ($params, $facets, <hits count="{count($hits)}">{count($hits)}</hits>)
-:)
-
+                    </facets>
     
+
+    return <result>{($params, $facets, <hits count="{count($hits)}">{$hits}</hits>)}</result>
+    :) (::)
+
+     
     let $hits := session:get-attribute($config:session-prefix || ".hits")
     where count($hits) > 0
     return
@@ -1032,4 +1069,38 @@ declare function lapi:dictionary-contents($request as map(*)) {
 
 declare %private function lapi:get-lucene-query($parameter as element(parameter)*) {
   qrp:get-query-options(($parameter[@name='query-advanced']/. | $parameter[@name='query']/.), $parameter[@name='position']/., $parameter[@name='field']/., $parameter[@name='condition']/.)
+};
+
+declare %private function lapi:get-lucene-query-for-chapter($parameter as element(parameter)*) {
+  qrp:get-query-options(
+    <parameter name="query">{$parameter[@name='chapter']/value}</parameter>, 
+    <parameter name="position"><value>exactly</value></parameter>, 
+    <parameter name="field"><value>chapter</value></parameter>,
+    ()
+    )
+};
+
+declare %private function lapi:get-exist-db-query-xml($request as map(*)) as element()* {
+
+    let $parameters := rq:get-all-parameters($request)
+    let $hasQuery := not(empty($parameters/parameter[@name='query']/value[node()]))
+    let $hasChapter := not(empty($parameters/parameter[@name='chapter']/value[node()]))
+    let $lucene := if($hasChapter and $hasQuery) then
+            (
+            lapi:get-lucene-query($parameters/parameter[@name=('query', 'field', 'position')])
+            , lapi:get-lucene-query-for-chapter($parameters/parameter[@name=('chapter')])
+            )
+         else if ($hasChapter) then
+            lapi:get-lucene-query-for-chapter($parameters/parameter[@name=('chapter')])
+        else if($hasQuery) then
+        lapi:get-lucene-query($parameters/parameter[@name=('query', 'field', 'position')])
+        else
+        for $group in $parameters/group[parameter[@name='query-advanced'][node()]]
+        order by $group/@name
+        return lapi:get-lucene-query($group/parameter)
+    let $facets := lapi:get-facets-values($request)
+    let $combined := qrp:combine-queries($lucene)
+    let $exist-db-query := if (empty($combined)) then () else <exist-db-query>{($combined, $facets)}</exist-db-query>
+    (: return  ($parameters, <lucene>{$lucene}</lucene>, $exist-db-query) :)
+    return $exist-db-query
 };
