@@ -734,6 +734,35 @@
             }
           },
           {
+            "name": "field",
+            "in": "query",
+            "description": "The field to query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "headword",
+                "entry"
+              ],
+              "default": "headword",
+              "description": "Parts of the entry to be returned."
+            }
+          },
+          {
+            "name": "position",
+            "in": "query",
+            "description": "Position of the search string in the query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "exactly",
+                "start",
+                "end",
+                "everywhere"
+              ],
+              "description": "The position of the text in searched query. Default is `exactly`."
+            }
+          },
+          {
             "name": "format",
             "in": "query",
             "description": "The format to return: either `html`, or `xml`. Default is `html`.",
@@ -762,7 +791,7 @@
             "description": "Number of items to show on one page",
             "schema": {
               "type": "integer",
-              "default": 10
+              "default": 20
             }
           }
         ],
@@ -1301,7 +1330,7 @@
             "description": "Number of items to show on one page",
             "schema": {
               "type": "integer",
-              "default": 10
+              "default": 20
             }
           },
           {
@@ -2209,7 +2238,7 @@
             "description": "Number of items to show on one page",
             "schema": {
               "type": "integer",
-              "default": 10
+              "default": 20
             }
           },
           {
@@ -2748,7 +2777,7 @@
             "description": "Number of items to show on one page",
             "schema": {
               "type": "integer",
-              "default": 10
+              "default": 20
             }
           }
         ],
@@ -3065,7 +3094,7 @@
             "description": "Number of items to show on one page",
             "schema": {
               "type": "integer",
-              "default": 10
+              "default": 20
             }
           }
         ],
@@ -5553,7 +5582,7 @@
         "description": "Number of items to show on one page",
         "schema": {
           "type": "integer",
-          "default": 10
+          "default": 20
         }
       },
       "ChapterParameter": {
