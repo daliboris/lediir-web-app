@@ -763,20 +763,6 @@
             }
           },
           {
-            "name": "format",
-            "in": "query",
-            "description": "The format to return: either `html`, or `xml`. Default is `html`.",
-            "schema": {
-              "default": "html",
-              "type": "string",
-              "enum": [
-                "html",
-                "xml"
-              ],
-              "description": "The format to return: either `html`, or `xml`. Default is `html`."
-            }
-          },
-          {
             "name": "start",
             "in": "query",
             "description": "Start offset of the first item to show from the result set",
@@ -792,6 +778,29 @@
             "schema": {
               "type": "integer",
               "default": 20
+            }
+          },
+          {
+            "name": "highlight",
+            "in": "query",
+            "description": "If true found text will be highlighted",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "description": "The format to return: either `html`, or `xml`. Default is `html`.",
+            "schema": {
+              "default": "html",
+              "type": "string",
+              "enum": [
+                "html",
+                "xml"
+              ],
+              "description": "The format to return: either `html`, or `xml`. Default is `html`."
             }
           }
         ],
@@ -1331,6 +1340,15 @@
             "schema": {
               "type": "integer",
               "default": 20
+            }
+          },
+          {
+            "name": "highlight",
+            "in": "query",
+            "description": "If true found text will be highlighted",
+            "schema": {
+              "type": "boolean",
+              "default": false
             }
           },
           {
@@ -5583,6 +5601,15 @@
         "schema": {
           "type": "integer",
           "default": 20
+        }
+      },
+      "HighlightParameter": {
+        "name": "highlight",
+        "in": "query",
+        "description": "If true found text will be highlighted",
+        "schema": {
+          "type": "boolean",
+          "default": false
         }
       },
       "ChapterParameter": {
