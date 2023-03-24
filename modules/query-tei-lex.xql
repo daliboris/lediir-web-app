@@ -2,8 +2,10 @@ xquery version "3.1";
 
 module namespace lapi="http://www.tei-c.org/tei-simple/query/tei-lex";
 
+declare namespace output = "http://www.w3.org/2010/xslt-xquery-serialization";
 declare namespace tei="http://www.tei-c.org/ns/1.0";
 declare namespace map = "http://www.w3.org/2005/xpath-functions/map";
+declare namespace exist = "http://exist.sourceforge.net/NS/exist";
 
 import module namespace config="http://www.tei-c.org/tei-simple/config" at "config.xqm";
 (:import module namespace nav="http://www.tei-c.org/tei-simple/navigation/tei-lex" at "navigation-tei-lex.xql";:)
@@ -341,6 +343,7 @@ declare function lapi:browse($request as map(*)) {
 (: Dictionary entries :)
 declare function lapi:search($request as map(*)) {
 
+   let $exist-db-query := lapi:get-exist-db-query-xml($request)
    (: (::)
    let $param-values := rq:get-request-parameters($request)
    let $rq-parameters := rq:get-api-parameters($request)
@@ -372,6 +375,7 @@ declare function lapi:search($request as map(*)) {
     :) (::)
     
           (:If there is no query string, fill up the map with existing values:)
+    return
     if (empty($request?parameters?query) and empty($request?parameters("query-advanced[1]")))
     then
         let $max-hits := $config:maximum-hits-limit
@@ -389,31 +393,9 @@ declare function lapi:search($request as map(*)) {
         (: Here the actual query commences. This is split into two parts, the first for a Lucene query and the second for an ngram query. :)
         (:The query passed to a Luecene query in ft:query is an XML element <query> containing one or two <bool>. The <bool> contain the original query and the transliterated query, as indicated by the user in $query-scripts.:)
        let $max-hits := $config:maximum-hits-limit
-       let $hitsAll := if(empty($request?parameters("query-advanced[1]"))) then
-
-                (:If the $query-scope is narrow, query the elements immediately below the lowest div in tei:text and the four major element below tei:teiHeader.:)
-                for $hit in lapi:query-default($request?parameters?field, if (empty($request?parameters?query))
-             then () else xmldb:decode($request?parameters?query), 
-                tokenize($request?parameters?ids), (), 
-                $request?parameters?position)
-                (: sorting by @sortKey attribute using default collation :)
-                order by $hit/@sortKey
-                return $hit
-            else
-                let $parameters := rq:get-all-parameters($request)
-                let $hasQuery := empty($parameters/parameter[@name='query']/value)
-                let $lucene := if(not($hasQuery)) then
-                    lapi:get-lucene-query($parameters/parameter[@name=('query', 'field', 'position')])
-                    else
-                    for $group in $parameters/group[parameter[@name='query-advanced'][node()]]
-                    order by $group/@name
-                    return lapi:get-lucene-query($group/parameter)
-                let $facets := lapi:get-facets-values($request)
-                let $combined := qrp:combine-queries($lucene)
-                let $exist-db-query := if (empty($combined)) then () else <exist-db-query>{($combined, $facets)}</exist-db-query>
+       let $hitsAll :=
                 let $qry := edq:parse-exist-db-query($exist-db-query)
-                let $hits := lapi:execute-query-return-hits($qry?query, $qry?full-options)
-                return $hits
+                return  lapi:execute-query-return-hits($qry?query, $qry?full-options)
 
         let $hitCount := count($hitsAll)
         (:Store the result in the session.:)
@@ -550,17 +532,20 @@ declare %private function lapi:show-hits-xml($request as map(*), $hits as item()
     response:set-header("pb-start", xs:string($request?parameters?start)),
     response:set-header("pb-docs", string-join($docs, ';')),
     response:set-header( "Content-Type", "application/xml" ),
+    let $highlight := xs:boolean($request?parameters?highlight)
     let $config := ()
-    return subsequence($hits, $request?parameters?start, $request?parameters?per-page)
+    let $result := subsequence($hits, $request?parameters?start, $request?parameters?per-page)
+    let $expanded :=
+        if ($highlight and exists($result)) then
+            util:expand($result)
+        else
+            $result
+    return $expanded
 };
 
 declare %private function lapi:show-hits-xml($request as map(*), $hits as item()*, $docs as xs:string*, $containter as xs:string, $namespace as xs:string) {
-    response:set-header("pb-total", xs:string(count($hits))),
-    response:set-header("pb-start", xs:string($request?parameters?start)),
-    response:set-header("pb-docs", string-join($docs, ';')),
-    response:set-header( "Content-Type", "application/xml" ),
-    let $config := ()
-    return element {QName($namespace, $containter)} {subsequence($hits, $request?parameters?start, $request?parameters?per-page)}
+    let $result := lapi:show-hits-xml($request, $hits, $docs)
+    return element {QName($namespace, $containter)} {$result}
 };
 
 declare %private function lapi:get-chapter-id($dictId as xs:string, $chapter) {
@@ -599,10 +584,17 @@ declare %private function lapi:get-first-dictionary() {
 declare %private function lapi:show-hits-html($request as map(*), $hits as item()*, $docs as xs:string*) {
     response:set-header("pb-total", xs:string(count($hits))),
     response:set-header("pb-start", xs:string($request?parameters?start)),
+    let $highlight := xs:boolean($request?parameters?highlight)
     let $config := if(empty($hits)) 
         then config:default-config(()) 
         else tpu:parse-pi(root($hits[1]), $request?parameters?view)
-    return lapi:get-html(subsequence($hits, $request?parameters?start, $request?parameters?per-page), $request, $config)
+    let $result := subsequence($hits, $request?parameters?start, $request?parameters?per-page)
+    let $expanded :=
+        if ($highlight and exists($result)) then
+            util:expand($result)
+        else
+            $result
+    return lapi:get-html($expanded, $request, $config)
 };
 
 declare %private function lapi:show-hits($request as map(*), $hits as item()*, $docs as xs:string*) {
