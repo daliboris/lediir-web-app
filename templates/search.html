@@ -111,6 +111,9 @@
             #search-search-button {
                 background-color: var(--pb-color-inverse);
             }
+            #pagination-bottom {
+                padding: 0 16px;
+             }
 
             /*
             #pagination {
@@ -178,6 +181,11 @@
                         </paper-card>
                     </div>
                 </main>
+                <div id="pagination-bottom">
+                        <pb-paginate per-page="20" range="20" subscribe="results" emit="search" show-previous-next="show-previous-next" 
+                                data-template="lib:parse-params"  />
+                        <pb-progress indeterminate="indeterminate" bottom-item="bottom-item"/>
+                </div>
                 <!-- -->
                 <div slot="fallback">
                     <div class="restricted" >
