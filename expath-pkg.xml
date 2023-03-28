@@ -1,4 +1,4 @@
-<package xmlns="http://expath.org/ns/pkg" spec="1.0" version="0.7.14" name="http://slovnik.soc.cas.cz/lediir" abbrev="lediir">
+<package xmlns="http://expath.org/ns/pkg" spec="1.0" version="0.7.15" name="http://slovnik.soc.cas.cz/lediir" abbrev="lediir">
  <title>Elektronická lexikální databáze indoíránských jazyků</title>
  <home>https://eldi.soc.cas.cz/</home>
  <dependency processor="http://exist-db.org" semver-min="5.2.0"/>

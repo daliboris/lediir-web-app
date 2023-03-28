@@ -12,6 +12,15 @@
     <permissions user="redaktor" group="tei" mode="rw-r--r--" />
     <deployed />
     <changelog>
+        <change version="0.7.15">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>oprava jednoduchého hledání (pouze heslová slova, výslovnost a zpětné odkazy)</li>
+                <li>příprava na zvýraznění hledaného textu</li>
+                <li>odělení dat (<i>lediir-data</i>) od webové aplikace (<i>lediir</i>)</li>
+                <li>listování stránky s hesly ve spodní části stránky</li>
+                <li>omezení přístupu ke stránce pro hledání pro nepřihlášené uživatele</li>
+            </ul>
+        </change>
         <change version="0.7.14">
             <ul xmlns="http://www.w3.org/1999/xhtml">
                 <li>pokročilé vyhledávání (kombinace 3 podmínek)</li>
