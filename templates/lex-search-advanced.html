@@ -121,7 +121,7 @@
   </style>
  </head>
  <body>
-  <pb-page data-template="pages:pb-page" unresolved="unresolved" locales="resources/i18n/{{ns}}/{{lng}}.json">
+  <pb-page data-template="pages:pb-page" api-version="1.0" unresolved="unresolved" locales="resources/i18n/{{ns}}/{{lng}}.json">
    <app-header-layout>
     <app-header slot="header" reveals="reveals" fixed="fixed" effects="waterfall">
      <app-toolbar data-template="lib:include" data-template-path="templates/menu.html"></app-toolbar>
@@ -140,7 +140,7 @@
        <paper-tab slot="tab">Sémantické okruhy</paper-tab>
        
        <div slot="page">
-        <pb-search id="search-simple" action="${app}/lex-search.html" data-template="lib:parse-params" value="${query}" redirect="redirect" subforms="#positions-simple">
+        <pb-search id="search-simple" action="${app}/lex-search.html" data-template="pages:parse-params" value="${query}" redirect="redirect" subforms="#positions-simple">
         </pb-search>
         <pb-custom-form id="positions-simple" url="api/search/facets" event="pb-results-received" subscribe="docs" emit="docs">
             <div>
@@ -174,7 +174,7 @@
         <paper-card>
          <div class="card-content">
           <iron-form id="form">
-           <form action="${app}/lex-search.html" data-template="lib:parse-params" value="${query}" redirect="redirect">
+           <form action="${app}/lex-search.html" data-template="pages:parse-params" value="${query}" redirect="redirect">
             <pb-repeat>
              <template>
               <paper-dropdown-menu id="field" data-i18n="[label]search.labels.field" aria-disabled="false" dir="null">
@@ -196,7 +196,7 @@
                 </paper-item>
                </paper-listbox>
               </paper-dropdown-menu>
-              <pb-search id="search-advanced" action="${app}/lex-search.html" data-template="lib:parse-params" value="${query}" redirect="redirect" subforms="#positions-advanced, #field">
+              <pb-search id="search-advanced" action="${app}/lex-search.html" data-template="pages:parse-params" value="${query}" redirect="redirect" subforms="#positions-advanced, #field">
             </pb-search>
               <!-- <paper-input id="text" data-i18n="[label]search.labels.query" type="search" name="query"></paper-input> -->
               <paper-dropdown-menu id="condition" data-i18n="[label]search.labels.condition" aria-disabled="false" dir="null">
@@ -265,7 +265,7 @@
 <!-- 
         <iron-form id="form-domain" subscribe="search">
          <form>
-          <pb-autocomplete id="domain-search-form" name="domain" source="lex/search/autocomplete" data-template="lib:parse-params" value="${query}" redirect="redirect">
+          <pb-autocomplete id="domain-search-form" name="domain" source="lex/search/autocomplete" data-template="pages:parse-params" value="${query}" redirect="redirect">
            <input type="hidden" name="field" value="domain" />
           </pb-autocomplete>
           <button type="submit" slot="searchButton">

@@ -23,7 +23,7 @@ import module namespace config="http://www.tei-c.org/tei-simple/config" at "conf
 import module namespace tei-nav="http://www.tei-c.org/tei-simple/navigation/tei" at "navigation-tei.xql";
 import module namespace jats-nav="http://www.tei-c.org/tei-simple/navigation/jats" at "navigation-jats.xql";
 import module namespace docbook-nav="http://www.tei-c.org/tei-simple/navigation/docbook" at "navigation-dbk.xql";
-import module namespace lex-nav="http://www.tei-c.org/tei-simple/navigation/tei-lex" at "navigation-tei-lex.xql";
+import module namespace tei-lex-nav="http://www.tei-c.org/tei-simple/navigation/tei-lex" at "navigation-tei-lex.xql";
 
 declare %private function nav:dispatch($config as map(*), $function as xs:string, $args as array(*)) {
     let $fn := function-lookup(xs:QName($config?type || "-nav:" || $function), array:size($args))
@@ -36,7 +36,9 @@ declare %private function nav:dispatch($config as map(*), $function as xs:string
 
 declare function nav:get-root($root as xs:string?, $options as map(*)?) {
     tei-nav:get-root($root, $options),
-    docbook-nav:get-root($root, $options)
+    tei-lex-nav:get-root($root, $options),
+    docbook-nav:get-root($root, $options),
+    jats-nav:get-root($root, $options)
 };
 
 declare function nav:get-header($config as map(*), $node as element()) {

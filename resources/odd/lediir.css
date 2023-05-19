@@ -160,40 +160,17 @@ details[open] > .lediir-comment {text-align: right; padding-bottom: 0.5em;}
 
 /* Modified styles */
 
-.menubar pb-lang {
-     max-width: 120px;
-}
-
 section > h1 {
     margin-top: .5em;
     margin-bottom: 1.5em;
     /*background-color: darkgrey;*/
 }
 
-pb-view {
-    max-width: var(--pb-view-max-width);
-    min-width: var(--pb-view-max-width);
-    width: var(--pb-view-max-width);
-}
 
 article[class='entry'] {
     border-bottom: thick solid gainsboro;
 }
 
-.toc {
-    font-size: 1.5em; 
-}
-
-.buttons {
- display:block;
-}
-.buttons button {
- margin: 1em;
-}
-
-.document-buttons > .parent-link {
-    display: inline;
-}
 
 .tei-ref-internal {
     display: list-item;
@@ -235,19 +212,4 @@ table.tei-table td {
 
 table.facets-table {
     width: 100%;
-}
-
-div[slot=fallback] {
-    padding: 1em;
-}
-div.restricted {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    position: relative;
-    padding: 0.75rem 1.25rem;
-    margin-bottom: 1rem;
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
-    margin-top: 1rem;
 }

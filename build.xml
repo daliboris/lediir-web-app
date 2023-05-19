@@ -6,8 +6,6 @@
     <property name="build.dir" value="build" />
     <property name="scripts.dir" value="../../tei-publisher-components/dist" />
     <target name="clean">
-        <echo message="Deleting ${build} directory" />
-        <delete dir="${build}" />
         <echo message="Deleting 'resources/scripts' subdirectory" />
         <delete dir="resources/scripts" includes="*.js *.map" />
         <echo message="Deleting 'images/leaflet' subdirectory" />
@@ -44,9 +42,15 @@
     <target name="xar-local" depends="npm.install,prepare,xar" />
     <target name="xar">
         <mkdir dir="${build.dir}" />
-        <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" excludes="${build.dir}/* node_modules/** *.code-workspace" />
+        <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" excludes="${build.dir} ${build.dir}/* node_modules/** *.code-workspace .existdb.json *build.properties" />
+        <copy file="${build.dir}/${project.app}-${project.version}.xar" overwrite="true" tofile="${build.dir}/${project.app}.xar"/>
     </target>
     <target name="xar-complete" depends="clean,npm.install,xar" />
+    <target name="xar-dev" depends="xar">
+           <copy file="${build.dir}/${project.app}-${project.version}.xar" overwrite="true" tofile="${build.dir}/${project.app}-${project.version}-dev.xar"/>
+           <delete dir="${build.dir}" includes="${project.app}-${project.version}.xar" />
+           <delete dir="${build.dir}" includes="${project.app}.xar" />
+    </target>
     <target name="npm.install">
         <exec executable="${npm}" outputproperty="npm.output">
             <arg line="install" />

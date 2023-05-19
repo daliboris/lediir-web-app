@@ -9,7 +9,7 @@ xquery version "3.1";
 module namespace api="http://teipublisher.com/api/custom";
 
 (: Add your own module imports here :)
-import module namespace rutil="http://exist-db.org/xquery/router/util";
+import module namespace rutil="http://e-editiones.org/roaster/util";
 import module namespace app="teipublisher.com/app" at "app.xql";
 import module namespace lfacets="http://www.tei-c.org/tei-simple/query/tei-lex-facets" at "facets-tei-lex.xql";
 import module namespace lapi="http://www.tei-c.org/tei-simple/query/tei-lex" at "query-tei-lex.xql";

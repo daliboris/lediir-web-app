@@ -2,17 +2,16 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title data-template="config:app-title"/>
+    <title data-template="config:app-title"></title>
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes"/>
     <link rel="shortcut icon" type="image/x-icon" href="resources/images/favicon.ico"/>
     <link rel="shortcut icon" type="image/png" href="resources/images/favicon-16.png" sizes="16x16"/>
     <link rel="shortcut icon" type="image/png" href="resources/images/favicon-24.png" sizes="24x24"/>
     <link rel="shortcut icon" type="image/png" href="resources/images/favicon-32.png" sizes="32x32"/>
     <link rel="shortcut icon" type="image/png" href="resources/images/favicon-64.png" sizes="64x64"/>
-    <link rel="stylesheet" type="text/css" href="resources/fonts/font.css"/>
     <link rel="stylesheet" type="text/css" href="resources/css/theme.css"/>
-    <link rel="stylesheet" type="text/css" href="transform/LeDIIR.css"/>
-    <script type="module" src="pb-components-bundle.js" data-template="pages:load-components"/>
+    <link rel="stylesheet" type="text/css" href="resources/css/lediir-theme.css"/>
+    <script type="module" src="pb-components-bundle.js" data-template="pages:load-components"></script>
 
         <style>
             main {
@@ -284,57 +283,57 @@
 </head>
 
 <body>
-    <pb-page data-template="pages:pb-page" unresolved="unresolved" locales="resources/i18n/{{ns}}/{{lng}}.json">
+    <pb-page data-template="pages:pb-page" api-version="1.0" unresolved="unresolved" theme="resources/css/components.css" locales="resources/i18n/{{ns}}/{{lng}}.json">
         <app-drawer-layout force-narrow="force-narrow">
             <app-drawer slot="drawer" align="right">
                 <div class="drawer-content">
                     <pb-media-query query="(max-width: 1023px)">
                             <!-- language selector -->
-                            <pb-lang name="lang" data-template="pages:languages"/>
+                            <pb-lang name="lang" data-template="pages:languages"></pb-lang>
                         </pb-media-query>
                     </div>
                 </app-drawer>
              <app-header-layout>
                 <app-header slot="header" effects="waterfall">
-                    <app-toolbar data-template="lib:include" data-template-path="templates/menu.html"/>
+                    <app-toolbar data-template="lib:include" data-template-path="templates/menu.html"></app-toolbar>
                     <!-- --> <pb-restricted login="login" group="tei"> <!-- -->
                     <app-toolbar>
                         
                          <h1 class="tp-title">
                             <pb-i18n key="lediir.title">Electronic Lexical Database of Indo-Iranian Languages</pb-i18n>
                             /
-                            <span><a href="browse.html?id=${id}" data-template="lib:parse-params">${id}</a></span>
+                            <span><a href="browse.html?id=${id}" data-template="pages:parse-params">${id}</a></span>
                         </h1>
                     </app-toolbar>
                     
                     <app-toolbar>
-                        <pb-load id="chapters" url="api/lex/dictionaries/${id}/contents" loadOnce="loadOnce" data-template="lib:parse-params" />
+                        <pb-load id="chapters" url="api/lex/dictionaries/${id}/contents" loadOnce="loadOnce" data-template="pages:parse-params"></pb-load>
                     </app-toolbar>
                     <app-toolbar id="pagination">
                         <pb-paginate per-page="20" range="20" subscribe="results" emit="search" show-previous-next="show-previous-next" 
-                        id="${id}" chapter="${chapter}" data-template="lib:parse-params"  />
-                        <pb-progress indeterminate="indeterminate" bottom-item="bottom-item"/>
+                        id="${id}" chapter="${chapter}" data-template="pages:parse-params"></pb-paginate>
+                        <pb-progress indeterminate="indeterminate" bottom-item="bottom-item"></pb-progress>
                     </app-toolbar>
                     <!-- --> </pb-restricted> <!-- -->
                 </app-header>
                 <!-- --> <pb-restricted login="login" group="tei"> <!-- -->
                 <main>
-                    <pb-load id="results" url="api/lex/browse" emit="results" data-template="lib:parse-params" />
+                    <pb-load id="results" url="api/lex/browse" emit="results" data-template="pages:parse-params"></pb-load>
                     <div class="search-panel">
                         <paper-card>
                             <div class="card-content">
-                                <pb-search id="search-form" subscribe="search" data-template="lib:parse-params" 
+                                <pb-search id="search-form" subscribe="search" data-template="pages:parse-params" 
                                     value="${query}" hide="hide"
                                     source="api/lex/search/autocomplete"
                                     submit-on-load="submit-on-load">
-                                    <input type="hidden" name="id" value="${id}" data-template="lib:parse-params" />
-                                    <input type="hidden" name="chapter" value="${chapter}" data-template="lib:parse-params" />
+                                    <input type="hidden" name="id" value="${id}" data-template="pages:parse-params" />
+                                    <input type="hidden" name="chapter" value="${chapter}" data-template="pages:parse-params" />
                                     <div class="targets">
                                      <!-- <paper-checkbox name="field" value="text"><pb-i18n key="settings.search-sections">Search sections</pb-i18n></paper-checkbox>
                                      <paper-checkbox name="field" value="head"><pb-i18n key="settings.search-headings">Search headings</pb-i18n></paper-checkbox>
                                      <paper-checkbox name="field" value="entry"><pb-i18n key="settings.search-entries">Search entries</pb-i18n></paper-checkbox> -->
                                     </div>
-                                    <pb-custom-form id="facets" url="api/lex/search/facets" subscribe="results" event="pb-results-received" emit="search"/>
+                                    <pb-custom-form id="facets" url="api/lex/search/facets" subscribe="results" event="pb-results-received" emit="search"></pb-custom-form>
                                     <div class="search-buttons">
                                         <paper-button id="search-reset-button" slot="resetButton"><pb-i18n key="search.reset"></pb-i18n></paper-button>
                                         <paper-button id="search-search-button" slot="searchButton"><pb-i18n key="search.search"></pb-i18n></paper-button>
@@ -347,8 +346,8 @@
                 </main>
                 <div id="pagination-bottom">
                         <pb-paginate per-page="20" range="20" subscribe="results" emit="search" show-previous-next="show-previous-next" 
-                                data-template="lib:parse-params"  />
-                        <pb-progress indeterminate="indeterminate" bottom-item="bottom-item"/>
+                                data-template="pages:parse-params"  ></pb-paginate>
+                        <pb-progress indeterminate="indeterminate" bottom-item="bottom-item"></pb-progress>
                 </div>
                 <!-- -->
                 <div slot="fallback">
@@ -358,7 +357,7 @@
                 </div>
                 </pb-restricted>
                 <!-- -->
-                <footer data-template="lib:include" data-template-path="templates/footer.html"/>
+                <footer data-template="lib:include" data-template-path="templates/footer.html"></footer>
             </app-header-layout>
         </app-drawer-layout>
         <paper-dialog id="downloadDialog">
@@ -366,7 +365,7 @@
                 <pb-i18n key="dialogs.generatingFile">Generating File...</pb-i18n>
             </h2>
             <paper-dialog-scrollable>
-                <pb-i18n key="dialogs.downloadMessage"/>
+                <pb-i18n key="dialogs.downloadMessage"></pb-i18n>
             </paper-dialog-scrollable>
             <div class="buttons">
                 <paper-button dialog-confirm="dialog-confirm" autofocus="autofocus">
@@ -376,7 +375,7 @@
         </paper-dialog>
         <paper-dialog id="errorDialog">
             <h2><pb-i18n key="dialogs.error">Error</pb-i18n></h2>
-            <paper-dialog-scrollable/>
+            <paper-dialog-scrollable></paper-dialog-scrollable>
             <div class="buttons">
                 <paper-button dialog-confirm="dialog-confirm" autofocus="autofocus">
                     <pb-i18n key="dialogs.close">Close</pb-i18n>
@@ -384,52 +383,9 @@
             </div>
         </paper-dialog>
     </pb-page>
-    <div class="splash"/>
-    <script>
-            const facets = document.getElementById('facets');
-            const reset = document.getElementById('search-reset-button');
-            if (facets) { 
-                facets.addEventListener('pb-custom-form-loaded', function(ev) {
-                    const elems = ev.detail.querySelectorAll('.facet');
-                    elems.forEach(facet =&gt; {
-                        facet.addEventListener('change', () =&gt; {
-                            const heading = facet.closest('h3');
-                            if (heading) {
-                                facets._submit();
-                            }
-                        });
-                    });
-                });
-                if(reset) {
-                    reset.addEventListener('click', () =&gt; {
-                        const elems = facets.querySelectorAll('.facet');
-                        elems.forEach(facet =&gt; { 
-                            const table = facet.closest('table');
-                            if (table) { 
-                                facet.checked = false;
-                                const nested = table.querySelectorAll('.nested .facet').forEach(nested =&gt; {
-                                    if (nested != facet) {
-                                        nested.checked = false;
-                                    }
-                                });
-                            }
-                        });
-                        /*
-                        TODO: doesn't work yet
-                        const query = document.getElementById('search-form');
-                        if(query &amp;&amp; query.value !== "") {
-                            query.value = "";
-                            query._submit;
-                        }
-                        else {
-                                facets._submit();
-                        }
-                        */
-                        facets._submit();
-                    });
-                }
-            }
-        </script>
+    <div class="splash"></div>
+    <script src="resources/scripts/browse.js"></script>
+    <script src="resources/scripts/facets.js"></script>
 </body>
 
 </html>

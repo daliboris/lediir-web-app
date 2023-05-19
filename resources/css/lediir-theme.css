@@ -1,0 +1,42 @@
+pb-view {
+    max-width: var(--pb-view-max-width);
+    min-width: var(--pb-view-max-width);
+    width: var(--pb-view-max-width);
+}
+
+
+.menubar pb-lang {
+    max-width: 120px;
+}
+
+
+.toc {
+    font-size: 1.5em; 
+}
+
+.buttons {
+    display:block;
+   }
+   .buttons button {
+    margin: 1em;
+   }
+   
+   .document-buttons > .parent-link {
+       display: inline;
+   }
+   
+   
+div[slot=fallback] {
+    padding: 1em;
+}
+div.restricted {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    margin-top: 1rem;
+}

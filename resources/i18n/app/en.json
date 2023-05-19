@@ -50,6 +50,7 @@
             "pronunciation": "Pronunciation",
             "domain": "Domain",
             "reversal": "Reversal",
+            "complexForm": "Complex form",
             "anything": "Anything",
             "and": "AND",
             "andNot": "AND NOT CONTAINS",
@@ -57,7 +58,8 @@
         },
         "areas": {
             "basic-fileds": "Basic fields",
-            "whole-text": "Whole text"
+            "whole-text": "Whole text",
+            "complexForm": "[Complex form]"
         }
     },
     "app": {

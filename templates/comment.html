@@ -265,8 +265,8 @@
                 <app-header-layout>
                 <app-header slot="header" reveals="reveals" fixed="fixed" effects="waterfall">
                     <app-toolbar class="menubar">
-                        <a href="${app}/index.html" class="logo" data-template="lib:parse-params"/>
-                        <a href="${app}/search.html" data-template="lib:parse-params">
+                        <a href="${app}/index.html" class="logo" data-template="pages:parse-params"/>
+                        <a href="${app}/search.html" data-template="pages:parse-params">
                          <pb-i18n key="menu.search">Search</pb-i18n>
                         </a>
                      <pb-media-query query="(min-width: 1024px)">
@@ -283,13 +283,13 @@
                                         </paper-item>
                                         <paper-item data-template="pages:edit-odd-list"/>
                                         <paper-item>
-                                            <a href="${app}/api.html" data-template="lib:parse-params" target="_blank">API Documentation</a>
+                                            <a href="${app}/api.html" data-template="pages:parse-params" target="_blank">API Documentation</a>
                                         </paper-item>
                                     </paper-listbox>
                                 </paper-menu-button>
                             </pb-restricted>
                             <!-- Search input -->
-                            <pb-search action="${app}/search.html" data-template="lib:parse-params" value="${query}" redirect="redirect"/>
+                            <pb-search action="${app}/search.html" data-template="pages:parse-params" value="${query}" redirect="redirect"/>
 
                       <paper-menu-button>
                        <a href="#" slot="dropdown-trigger">
@@ -297,22 +297,22 @@
                        </a>
                        <paper-listbox slot="dropdown-content">
                         <paper-item>
-                         <a href="${app}/LeDIIR-about.xml?id=project-about" data-template="lib:parse-params">
+                         <a href="${app}/LeDIIR-about.xml?id=project-about" data-template="pages:parse-params">
                           <pb-i18n key="menu.about">About</pb-i18n>
                          </a>
                         </paper-item>
                         <paper-item>
-                         <a href="${app}/LeDIIR-about.xml?id=project-how-to-cite" data-template="lib:parse-params">
+                         <a href="${app}/LeDIIR-about.xml?id=project-how-to-cite" data-template="pages:parse-params">
                           <pb-i18n key="headings.howToCite">How to cite</pb-i18n>
                          </a>
                         </paper-item>
                         <paper-item>
-                         <a href="${app}/LeDIIR-about.xml?id=project-news" data-template="lib:parse-params">
+                         <a href="${app}/LeDIIR-about.xml?id=project-news" data-template="pages:parse-params">
                           <pb-i18n key="headings.news">News</pb-i18n>
                          </a>
                         </paper-item>
                         <paper-item>
-                         <a href="${app}/LeDIIR-about.xml?id=project-about-language" data-template="lib:parse-params">
+                         <a href="${app}/LeDIIR-about.xml?id=project-about-language" data-template="pages:parse-params">
                           <pb-i18n key="headings.aboutLanguage">About Langauge</pb-i18n>
                          </a>
                         </paper-item>
@@ -331,7 +331,7 @@
                     <pb-media-query query="(max-width: 1023px)">
                         <app-toolbar class="toolbar" sticky="sticky">
                             <!-- Search input -->
-                            <pb-search action="${app}/search.html" data-template="lib:parse-params" value="${query}" redirect="redirect"/>
+                            <pb-search action="${app}/search.html" data-template="pages:parse-params" value="${query}" redirect="redirect"/>
                             <paper-icon-button icon="icons:menu" drawer-toggle="drawer-toggle"/>
                         </app-toolbar>
                     </pb-media-query>

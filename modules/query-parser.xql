@@ -115,7 +115,7 @@ let $options :=
     <options>
         <default-operator>and</default-operator>
         <phrase-slop>1</phrase-slop>
-        <leading-wildcard>{if($position = $qrp:POSITION-END) then "yes" else "no"}</leading-wildcard>
+        <leading-wildcard>{if($position = ($qrp:POSITION-END, $qrp:POSITION-EVERYWHERE) or ($position = "" and matches($query, '^\*|\?'))) then "yes" else "no"}</leading-wildcard>
         <filter-rewrite>yes</filter-rewrite>
     </options>
  return $options

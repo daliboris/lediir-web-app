@@ -9,9 +9,8 @@
         <link rel="shortcut icon" type="image/png" href="resources/images/favicon-64.png" sizes="64x64"/>
 
         <title data-template="config:app-title"/>
-        <link rel="stylesheet" type="text/css" href="resources/fonts/font.css"/>
         <link rel="stylesheet" type="text/css" href="resources/css/theme.css"/>
-        <link rel="stylesheet" type="text/css" href="transform/LeDIIR.css"/>
+        <link rel="stylesheet" type="text/css" href="resources/css/lediir-theme.css"/>
         <script type="module" src="pb-components-bundle.js" data-template="pages:load-components" />
 
         <style>
@@ -103,7 +102,9 @@
                 vertical-align: middle;
             }
 
-
+            #download-button, .menu-edit-odd {
+                display: none;
+            }
             .search-buttons {
                 text-align: end;
             }
@@ -127,13 +128,22 @@
     </head>
 
     <body>
-     <pb-page data-template="pages:pb-page" unresolved="unresolved" locales="resources/i18n/{{ns}}/{{lng}}.json">
+     <pb-page data-template="pages:pb-page" api-version="1.0" unresolved="unresolved" theme="resources/css/components.css" locales="resources/i18n/{{ns}}/{{lng}}.json">
+            <app-drawer-layout force-narrow="force-narrow">
+                <app-drawer slot="drawer" align="right">
+                    <div class="drawer-content">
+                        <pb-media-query query="(max-width: 1023px)">
+                            <div data-template="lib:include" data-template-path="templates/menu-drawer.html"/>
+                        </pb-media-query>
+                    </div>
+                </app-drawer>
             <app-header-layout>
-                <app-header slot="header" effects="waterfall">
+                    <app-header slot="header" reveals="reveals" fixed="fixed" effects="waterfall">
                     <app-toolbar data-template="lib:include" data-template-path="templates/menu.html"/>
+                        <app-toolbar data-template="lib:include" data-template-path="templates/toolbar.html"/>
                     <!-- --> <pb-restricted login="login" group="tei"> <!-- -->
                     <app-toolbar id="pagination">
-                        <pb-paginate class="pb-paginate" per-page="20" range="20" subscribe="results" emit="search"  show-previous-next="show-previous-next" data-template="lib:parse-params"/>
+                      <pb-paginate class="pb-paginate" per-page="20" range="20" subscribe="results" emit="search"  show-previous-next="show-previous-next" data-template="pages:parse-params"/>
                         <pb-progress indeterminate="indeterminate" bottom-item="bottom-item"/>
                     </app-toolbar>
                     <!-- --> </pb-restricted> <!-- -->
@@ -145,25 +155,25 @@
                     <div class="search-panel">
                         <paper-card>
                             <div class="card-content">
-                                <pb-search id="search-form" subscribe="search" data-template="lib:parse-params" 
+                                 <pb-search id="search-form" subscribe="search" data-template="pages:parse-params" 
                                     value="${query}" 
                                     source="api/lex/search/autocomplete"
                                     submit-on-load="submit-on-load">
-                                    <input type="hidden" name="ids" value="${ids}" data-template="lib:parse-params" />
-                                    <input type="hidden" name="field" value="${field}" data-template="lib:parse-params" />
-                                    <input type="hidden" name="position" value="${position}" data-template="lib:parse-params" />
-                                    <input type="hidden" name="field[1]" value="${field[1]}" data-template="lib:parse-params" />
-                                    <input type="hidden" name="position[1]" value="${position[1]}" data-template="lib:parse-params" />
-                                    <input type="hidden" name="query-advanced[1]" value="${query-advanced[1]}" data-template="lib:parse-params" />
-                                    <input type="hidden" name="condition[1]" value="${condition[1]}" data-template="lib:parse-params" />
-                                    <input type="hidden" name="field[2]" value="${field[2]}" data-template="lib:parse-params" />
-                                    <input type="hidden" name="position[2]" value="${position[2]}" data-template="lib:parse-params" />
-                                    <input type="hidden" name="query-advanced[2]" value="${query-advanced[2]}" data-template="lib:parse-params" />
-                                    <input type="hidden" name="condition[2]" value="${condition[2]}" data-template="lib:parse-params" />
-                                    <input type="hidden" name="field[3]" value="${field[3]}" data-template="lib:parse-params" />
-                                    <input type="hidden" name="position[3]" value="${position[3]}" data-template="lib:parse-params" />
-                                    <input type="hidden" name="query-advanced[3]" value="${query-advanced[3]}" data-template="lib:parse-params" />
-                                    <input type="hidden" name="condition[3]" value="${condition[3]}" data-template="lib:parse-params" />
+                                  <input type="hidden" name="ids" value="${ids}" data-template="pages:parse-params" />
+                                  <input type="hidden" name="field" value="${field}" data-template="pages:parse-params" />
+                                  <input type="hidden" name="position" value="${position}" data-template="pages:parse-params" />
+                                  <input type="hidden" name="field[1]" value="${field[1]}" data-template="pages:parse-params" />
+                                  <input type="hidden" name="position[1]" value="${position[1]}" data-template="pages:parse-params" />
+                                  <input type="hidden" name="query-advanced[1]" value="${query-advanced[1]}" data-template="pages:parse-params" />
+                                  <input type="hidden" name="condition[1]" value="${condition[1]}" data-template="pages:parse-params" />
+                                  <input type="hidden" name="field[2]" value="${field[2]}" data-template="pages:parse-params" />
+                                  <input type="hidden" name="position[2]" value="${position[2]}" data-template="pages:parse-params" />
+                                  <input type="hidden" name="query-advanced[2]" value="${query-advanced[2]}" data-template="pages:parse-params" />
+                                  <input type="hidden" name="condition[2]" value="${condition[2]}" data-template="pages:parse-params" />
+                                  <input type="hidden" name="field[3]" value="${field[3]}" data-template="pages:parse-params" />
+                                  <input type="hidden" name="position[3]" value="${position[3]}" data-template="pages:parse-params" />
+                                  <input type="hidden" name="query-advanced[3]" value="${query-advanced[3]}" data-template="pages:parse-params" />
+                                  <input type="hidden" name="condition[3]" value="${condition[3]}" data-template="pages:parse-params" />
                                     <!--
                                     <div class="targets">
                                      <paper-checkbox name="level" value="entry"><pb-i18n key="settings.search-level.entry">Within entry</pb-i18n></paper-checkbox>
@@ -176,14 +186,14 @@
                                         <paper-button id="search-search-button" slot="searchButton"><pb-i18n key="search.search"></pb-i18n></paper-button>
                                     </div>                                       
                                 </pb-search>
-                            
                             </div>
                         </paper-card>
                     </div>
                 </main>
+
                 <div id="pagination-bottom">
                         <pb-paginate per-page="20" range="20" subscribe="results" emit="search" show-previous-next="show-previous-next" 
-                                data-template="lib:parse-params"  />
+                   data-template="pages:parse-params"  />
                         <pb-progress indeterminate="indeterminate" bottom-item="bottom-item"/>
                 </div>
                 <!-- -->
@@ -193,44 +203,14 @@
                     </div>
                 </div>
                 </pb-restricted>
+                
                 <!-- -->
             </app-header-layout>
+            </app-drawer-layout>
             <app-toolbar data-template="lib:include" data-template-path="templates/footer.html"/>
         </pb-page>
         <div class="splash"/>
-        <script>
-            const facets = document.getElementById('facets');
-            const reset = document.getElementById('search-reset-button');
-            if (facets) { 
-                facets.addEventListener('pb-custom-form-loaded', function(ev) {
-                    const elems = ev.detail.querySelectorAll('.facet');
-                    elems.forEach(facet =&gt; {
-                        facet.addEventListener('change', () =&gt; {
-                            const heading = facet.closest('h3');
-                            if (heading) {
-                                facets._submit();
-                            }
-                        });
-                    });
-                });
-                if(reset) {
-                    reset.addEventListener('click', () =&gt; {
-                        const elems = facets.querySelectorAll('.facet');
-                        elems.forEach(facet =&gt; { 
-                            const table = facet.closest('table');
-                            if (table) { 
-                                facet.checked = false;
-                                const nested = table.querySelectorAll('.nested .facet').forEach(nested =&gt; {
-                                    if (nested != facet) {
-                                        nested.checked = false;
-                                    }
-                                });
-                            }
-                        });
-                        facets._submit();
-                    });
-                }
-            }
-        </script>
+        <script src="resources/scripts/browse.js"/>
+        <script src="resources/scripts/facets.js"/>
     </body>
 </html>

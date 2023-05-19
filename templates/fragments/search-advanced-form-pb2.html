@@ -1,6 +1,6 @@
      <div class="card-content">
       <iron-form id="form" allow-redirect="allow-redirect">
-       <form id="search-advanced-form" action="${app}/search.html" data-template="lib:parse-params">
+       <form id="search-advanced-form" action="${app}/search.html" data-template="pages:parse-params">
         <pb-repeat>
          <template>
             <div class="search-advanced-container">
@@ -20,7 +20,10 @@
                     </paper-item>
                     <paper-item value="reversal">
                         <pb-i18n key="search.fields.reversal">reversal</pb-i18n>
-                    </paper-item>                
+                    </paper-item>
+                    <paper-item value="complexForm">
+                        <pb-i18n key="search.areas.complexForm">complex form</pb-i18n>
+                    </paper-item>
                     <paper-item value="all">
                      <pb-i18n key="search.fields.anything">anything</pb-i18n>
                     </paper-item>
@@ -32,7 +35,7 @@
             </pb-autocomplete> -->
            <pb-search id="search-advanced" name="query-advanced"
                 source="api/lex/search/autocomplete"
-                data-template="lib:parse-params" subforms="#positions-advanced, #area-advanced-form">
+                data-template="pages:parse-params" subforms="#positions-advanced, #area-advanced-form">
              </pb-search> 
             <pb-custom-form id="positions-advanced" name="position">
                 <div>
@@ -55,6 +58,11 @@
                         <input type="radio" id="contactChoiceEverywhere-advanced" name="position" value="everywhere" />
                         <pb-i18n key="search.labels.everywhere">everywhere</pb-i18n>
                     </label>
+
+                    <!-- <label for="contactChoiceWithinComplex-advanced">
+                        <input type="radio" id="contactChoiceWithinComplex-advanced" name="position" value="within-complex" />
+                        <pb-i18n key="search.labels.within-complex">within complex</pb-i18n>
+                    </label> -->
 
                     <label>| </label>
                 <pb-popover theme="translucent">

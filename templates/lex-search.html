@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="resources/fonts/font.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald&amp;display=swap" />
   <link rel="stylesheet" href="resources/css/theme.css" />
-  <link rel="stylesheet" href="transform/LeDIIR.css" />
+  <link rel="stylesheet" href="resources/css/lediir-theme.css"/>
   <script type="module" src="pb-components-bundle.js" data-template="pages:load-components"></script>
   <style>
    main {
@@ -130,11 +130,12 @@
     display: grid;
     column-gap: 1em;
     grid-template-columns: 2fr 4fr 3fr;
+    align-items: end;
   }
 
   #search-simple-container-search {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-self: center;
     justify-content: space-between;
     row-gap: 10px;
@@ -145,11 +146,12 @@
     display: grid;
     column-gap: 1em;
     grid-template-columns: 2fr 4fr 3fr;
+    align-items: end;
   }
 
   div.search-advanced-area-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-self: center;
     justify-content: space-between;
     row-gap: 10px;
@@ -165,7 +167,7 @@
 </style>
  </head>
  <body>
-  <pb-page data-template="pages:pb-page" unresolved="unresolved" locales="resources/i18n/{{ns}}/{{lng}}.json">
+  <pb-page data-template="pages:pb-page" api-version="1.0"  unresolved="unresolved" theme="resources/css/components.css" locales="resources/i18n/{{ns}}/{{lng}}.json">
    <app-header-layout>
     <app-header slot="header" reveals="reveals" fixed="fixed" effects="waterfall">
      <app-toolbar data-template="lib:include" data-template-path="templates/menu.html"></app-toolbar>
@@ -190,12 +192,13 @@
             <pb-select data-i18n="[label]search.labels.field" name="field" value="headword">
                 <paper-item value="headword"><pb-i18n key="search.areas.basic-fileds">basic fileds</pb-i18n></paper-item>
                 <paper-item value="entry"><pb-i18n key="search.areas.whole-text">whole text</pb-i18n></paper-item>
+                <paper-item value="complexForm"><pb-i18n key="search.areas.complexForm">complex form</pb-i18n></paper-item>
             </pb-select>
         </pb-custom-form>
             <div id="search-simple-container-search">
              <pb-search id="search-simple" action="${app}/search.html" 
               source="api/lex/search/autocomplete"
-              data-template="lib:parse-params" value="${query}" 
+              data-template="pages:parse-params" value="${query}" 
               redirect="redirect" subforms="#positions-simple, #area">
              </pb-search>
              <pb-custom-form id="positions-simple">
@@ -262,7 +265,7 @@
 <!-- 
         <iron-form id="form-domain" subscribe="search">
          <form>
-          <pb-autocomplete id="domain-search-form" name="domain" source="lex/search/autocomplete" data-template="lib:parse-params" value="${query}" redirect="redirect">
+          <pb-autocomplete id="domain-search-form" name="domain" source="lex/search/autocomplete" data-template="pages:parse-params" value="${query}" redirect="redirect">
            <input type="hidden" name="field" value="domain" />
           </pb-autocomplete>
           <button type="submit" slot="searchButton">

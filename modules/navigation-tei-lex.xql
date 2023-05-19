@@ -7,6 +7,14 @@ declare namespace tei="http://www.tei-c.org/ns/1.0";
 import module namespace config="http://www.tei-c.org/tei-simple/config" at "config.xqm";
 import module namespace nav-tei="http://www.tei-c.org/tei-simple/navigation/tei";
 
+declare function nav:get-root($root as xs:string?, $options as map(*)?) {
+    $config:data-default ! (
+        for $doc in collection(. || "/" || $root)//tei:text[ft:query(., "file:*", $options)]
+        return
+            $doc/ancestor::tei:TEI
+    )
+};
+
 
 (:~
  : By-division view:

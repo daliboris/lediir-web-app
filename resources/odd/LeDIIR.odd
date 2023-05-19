@@ -4,6 +4,7 @@
         <fileDesc>
             <titleStmt>
                 <title>Lexikografická databáze IIR</title>
+		        <title type="short">LeDIIR</title>
             </titleStmt>
             <publicationStmt>
                 <publisher>eXistSolutions GmbH</publisher>
@@ -156,7 +157,7 @@
     </teiHeader>
     <text>
         <body>
-            <schemaSpec start="TEI teiCorpus" ident="LeDIIR" source="teipublisher.odd">
+            <schemaSpec start="TEI teiCorpus" ident="lediir" source="teipublisher.odd">
                 <elementSpec ident="entry" mode="add">
                     <model predicate="not(@copyOf) and sense[1]/@n" behaviour="entry-polysemy" cssClass="tei-entry">
                         <param name="id" value="@xml:id" />

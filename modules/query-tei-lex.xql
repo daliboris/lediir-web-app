@@ -15,13 +15,14 @@ import module namespace query="http://www.tei-c.org/tei-simple/query" at "query.
 import module namespace kwic="http://exist-db.org/xquery/kwic" at "resource:org/exist/xquery/lib/kwic.xql";
 import module namespace pm-config="http://www.tei-c.org/tei-simple/pm-config" at "pm-config.xql";
 import module namespace dapi="http://teipublisher.com/api/documents" at "lib/api/document.xql";
-import module namespace router="http://exist-db.org/xquery/router";
+import module namespace router="http://e-editiones.org/roaster";
 import module namespace capi="http://teipublisher.com/api/collection" at "lib/api/collection.xql";
 (: import module namespace facets="http://teipublisher.com/facets" at "facets.xql"; :)
 import module namespace lfacets="http://www.tei-c.org/tei-simple/query/tei-lex-facets";
 import module namespace rq="http://www.daliboris.cz/ns/xquery/request"  at "request.xql";
 import module namespace qrp="https://www.daliboris.cz/ns/xquery/query-parser/1.0"  at "query-parser.xql";
 import module namespace edq = "http://www.daliboris.cz/schema/ns/xquery" at "exist-db-query-parser.xql"; 
+import module namespace console="http://exist-db.org/xquery/console";
 
 (:
  Semantic categories
@@ -376,7 +377,7 @@ declare function lapi:search($request as map(*)) {
     
           (:If there is no query string, fill up the map with existing values:)
     return
-    if (empty($request?parameters?query) and empty($request?parameters("query-advanced[1]")))
+    if ((empty($request?parameters?query) and empty($request?parameters("query-advanced[1]"))) or empty($exist-db-query))
     then
         let $max-hits := $config:maximum-hits-limit
         let $hitsAll := session:get-attribute($config:session-prefix || ".hits")
@@ -594,7 +595,9 @@ declare %private function lapi:show-hits-html($request as map(*), $hits as item(
             util:expand($result)
         else
             $result
-    return lapi:get-html($expanded, $request, $config)
+    (: let $log := console:log("api:show-hits-html: " || $config?odd) :)
+    return 
+        lapi:get-html($expanded, $request, $config)
 };
 
 declare %private function lapi:show-hits($request as map(*), $hits as item()*, $docs as xs:string*) {
@@ -648,14 +651,49 @@ declare %private function lapi:show-hits($request as map(*), $hits as item()*, $
         </paper-card>
 };
 
+(:
+ See dapi:print in /modules/lib/api/document.xql 
+:)
 declare function lapi:get-html($hits as item()*, $request as map(*), $config) {
-    let $xml := <tei:div xmlns="http://www.tei-c.org/ns/1.0">{$hits}</tei:div>
+  lapi:get-html($hits, $request, $config, "print")
+};
+
+(:
+ See dapi:generate-html in /modules/lib/api/document.xql 
+:)
+
+declare function lapi:get-html($hits as item()*, $request as map(*), $config, $outputMode as xs:string) {
+    let $addStyles :=
+        for $href in $request?parameters?style
+        return
+            <link rel="Stylesheet" href="{$href}"/>
+    let $addScripts :=
+        for $src in $request?parameters?script
+        return
+            <script src="{$src}"></script>
+    let $xml := <tei:TEI xmlns="http://www.tei-c.org/ns/1.0">{$hits}</tei:TEI>
     (: set root parameter to the root document of hits :)
     let $root := if(empty($hits)) then $xml else root($hits[1])
-    let $out := $pm-config:web-transform($xml, map { "root": $root, "webcomponents": 7 }, $config?odd)
-    let $styles := if (count($out) > 1) then $out[1] else ()
+    (:    let $out := $pm-config:web-transform($xml, map { "root": $root, "webcomponents": 7 }, $config?odd):)
+    let $out :=  if ($outputMode = 'print') then
+                            $pm-config:print-transform($xml, map { "root": $xml, "webcomponents": 7 }, $config?odd)
+                        else
+                            $pm-config:web-transform($xml, map { "root": $xml, "webcomponents": 7 }, $config?odd)
+    let $styles := ($addStyles,
+                    if (count($out) > 1) then $out[1] else (),
+                        <link rel="stylesheet" type="text/css" href="transform/{replace($config?odd, "^.*?/?([^/]+)\.odd$", "$1")}.css"/>
+                    )
+    (:
+    let $log := console:log("lapi:get-html: count=" || count($styles) || ", content: " || $styles[1])
+    let $log := console:log("lapi:get-html: $config?odd=" || $config?odd)
+    let $log := console:log(($out[2], $out[1])[1])
+    :)
+
+    let $main := <html>{($out[2], $out[1])[1]}</html>
     return
-        dapi:postprocess(($out[2], $out[1])[1], $styles, $config?odd, $request?parameters?base, $request?parameters?wc)
+      (:        dapi:postprocess(($out[2], $out[1])[1], $styles, $config?odd, $request?parameters?base, $request?parameters?wc):)
+      (: dapi:postprocess(($out[2], $out[1])[1], $styles, $addScripts, $request?parameters?base, $request?parameters?wc) :)
+      dapi:postprocess($main, $styles, $addScripts, $request?parameters?base, $request?parameters?wc)
 };
 
 declare function lapi:browse-default($chapter as xs:string,
@@ -673,6 +711,11 @@ declare function lapi:browse-default($chapter as xs:string,
             collection($config:data-root || "/dictionaries/")
             //tei:entry[ft:query(., $query)][not(@copyOf)]
 
+};
+
+declare function lapi:query-default($fields as xs:string+, $query as xs:string, $target-texts as xs:string*,
+    $sortBy as xs:string*) {
+    lapi:query-default($fields, $query, $target-texts, $sortBy, ())
 };
 
 declare function lapi:query-default($fields as xs:string+, 
@@ -717,6 +760,23 @@ declare function lapi:query-default($fields as xs:string+,
                     else
                         collection($config:data-root || "/dictionaries/")//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
     else ()
+};
+
+
+(: TODO :)
+declare function lapi:query-metadata($path as xs:string?, $field as xs:string?, $query as xs:string?, $sort as xs:string) {
+    let $queryExpr := 
+        if ($field = "file" or empty($query) or $query = '') then 
+            "file:*" 
+        else
+            ($field, "text")[1] || ":" || $query
+    let $options := query:options($sort, ($field, "text")[1])
+    let $result :=
+        $config:data-default ! (
+            collection(. || "/" || $path)//tei:text[ft:query(., $queryExpr, $options)]
+        )
+    return
+        query:sort($result, $sort)
 };
 
 (: 
@@ -793,6 +853,7 @@ declare function lapi:autocomplete($request as map(*)) {
     let $q := request:get-parameter("query", ())
     let $type := request:get-parameter("field", "entry")
     let $doc := request:get-parameter("ids", ())
+    let $position := request:get-parameter("position", "start")
     let $items :=
         if ($q) then
             lapi:autocomplete($doc, $type, $q)
@@ -829,10 +890,27 @@ declare function lapi:facets($request as map(*)) {
     return <result>{($params, $facets, <hits count="{count($hits)}">{$hits}</hits>)}</result>
     :) (::)
 
+    let $log := console:log("Parameters: " || $request?parameters?format)
      
     let $hits := session:get-attribute($config:session-prefix || ".hits")
     where count($hits) > 0
-    return
+
+    let $params := rq:get-all-parameters($request)
+    let $f := function($k, $v) {<item value="{$k}" count="{$v}" />}
+    let $facet-dimension := for $dim in $config:facets?*
+        let $facets-map := ft:facets($hits, $dim?dimension, 5)
+        return <dimension name="{$dim?dimension}" parameter="{request:get-parameter("facet[" || $dim?dimension || "]", ())}">
+            <facet>{map:for-each($facets-map, $f)}</facet>
+        </dimension>
+    let $facets := <facets count="{count($config:facets?*)}">
+                        <dimensions>{$facet-dimension}</dimensions>
+                    </facets>
+
+    return if($request?parameters?format = "xml") then
+        (response:set-header("Content-Type", "application/xml"),
+        <result>{($params, $facets, <hits count="{count($hits)}">{$hits}</hits>)}</result>)
+    else
+    
         <div>
         {
             for $config in $config:facets?*
@@ -1072,7 +1150,7 @@ declare %private function lapi:get-lucene-query-for-chapter($parameter as elemen
     )
 };
 
-declare %private function lapi:get-exist-db-query-xml($request as map(*)) as element()* {
+declare %public function lapi:get-exist-db-query-xml($request as map(*)) as element()* {
 
     let $parameters := rq:get-all-parameters($request)
     let $hasQuery := not(empty($parameters/parameter[@name='query']/value[node()]))

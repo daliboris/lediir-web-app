@@ -50,6 +50,7 @@
             "pronunciation": "výslovnost",
             "domain": "sémantický okruh",
             "reversal": "zpětný odkaz",
+            "complexForm": "komplexní výraz",
             "anything": "vše",
             "and": "A",
             "andNot": "A NEOBSAHUJE",
@@ -57,7 +58,8 @@
         },
         "areas": {
             "basic-fileds": "základní pole",
-            "whole-text": "celý text"
+            "whole-text": "celý text",
+            "complexForm": "komplexní výraz"
         }
     },
     "app": {

@@ -3,16 +3,17 @@ xquery version "3.1";
 
 module namespace pm-config="http://www.tei-c.org/tei-simple/pm-config";
 
-import module namespace pm-LeDIIR-web="http://www.tei-c.org/pm/models/LeDIIR/web/module" at "../transform/LeDIIR-web-module.xql";
-import module namespace pm-LeDIIR-print="http://www.tei-c.org/pm/models/LeDIIR/fo/module" at "../transform/LeDIIR-print-module.xql";
-import module namespace pm-LeDIIR-latex="http://www.tei-c.org/pm/models/LeDIIR/latex/module" at "../transform/LeDIIR-latex-module.xql";
-import module namespace pm-LeDIIR-epub="http://www.tei-c.org/pm/models/LeDIIR/epub/module" at "../transform/LeDIIR-epub-module.xql";
+import module namespace pm-lediir-web="http://www.tei-c.org/pm/models/lediir/web/module" at "../transform/lediir-web-module.xql";
+import module namespace pm-lediir-print="http://www.tei-c.org/pm/models/lediir/print/module" at "../transform/lediir-print-module.xql";
+import module namespace pm-lediir-latex="http://www.tei-c.org/pm/models/lediir/latex/module" at "../transform/lediir-latex-module.xql";
+import module namespace pm-lediir-epub="http://www.tei-c.org/pm/models/lediir/epub/module" at "../transform/lediir-epub-module.xql";
+import module namespace pm-lediir-fo="http://www.tei-c.org/pm/models/lediir/fo/module" at "../transform/lediir-fo-module.xql";
 import module namespace pm-docx-tei="http://www.tei-c.org/pm/models/docx/tei/module" at "../transform/docx-tei-module.xql";
 
 declare variable $pm-config:web-transform := function($xml as node()*, $parameters as map(*)?, $odd as xs:string?) {
     switch ($odd)
-    case "LeDIIR.odd" return pm-LeDIIR-web:transform($xml, $parameters)
-    default return pm-LeDIIR-web:transform($xml, $parameters)
+    case "lediir.odd" return pm-lediir-web:transform($xml, $parameters)
+    default return pm-lediir-web:transform($xml, $parameters)
             
     
 };
@@ -21,8 +22,8 @@ declare variable $pm-config:web-transform := function($xml as node()*, $paramete
 
 declare variable $pm-config:print-transform := function($xml as node()*, $parameters as map(*)?, $odd as xs:string?) {
     switch ($odd)
-    case "LeDIIR.odd" return pm-LeDIIR-print:transform($xml, $parameters)
-    default return pm-LeDIIR-print:transform($xml, $parameters)
+    case "lediir.odd" return pm-lediir-print:transform($xml, $parameters)
+    default return pm-lediir-print:transform($xml, $parameters)
             
     
 };
@@ -31,8 +32,8 @@ declare variable $pm-config:print-transform := function($xml as node()*, $parame
 
 declare variable $pm-config:latex-transform := function($xml as node()*, $parameters as map(*)?, $odd as xs:string?) {
     switch ($odd)
-    case "LeDIIR.odd" return pm-LeDIIR-latex:transform($xml, $parameters)
-    default return pm-LeDIIR-latex:transform($xml, $parameters)
+    case "lediir.odd" return pm-lediir-latex:transform($xml, $parameters)
+    default return pm-lediir-latex:transform($xml, $parameters)
             
     
 };
@@ -41,8 +42,18 @@ declare variable $pm-config:latex-transform := function($xml as node()*, $parame
 
 declare variable $pm-config:epub-transform := function($xml as node()*, $parameters as map(*)?, $odd as xs:string?) {
     switch ($odd)
-    case "LeDIIR.odd" return pm-LeDIIR-epub:transform($xml, $parameters)
-    default return pm-LeDIIR-epub:transform($xml, $parameters)
+    case "lediir.odd" return pm-lediir-epub:transform($xml, $parameters)
+    default return pm-lediir-epub:transform($xml, $parameters)
+            
+    
+};
+            
+
+
+declare variable $pm-config:fo-transform := function($xml as node()*, $parameters as map(*)?, $odd as xs:string?) {
+    switch ($odd)
+    case "lediir.odd" return pm-lediir-fo:transform($xml, $parameters)
+    default return pm-lediir-fo:transform($xml, $parameters)
             
     
 };

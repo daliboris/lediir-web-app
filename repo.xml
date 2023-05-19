@@ -12,6 +12,11 @@
     <permissions user="redaktor" group="tei" mode="rw-r--r--" />
     <deployed />
     <changelog>
+        <change version="0.7.16">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>závislost na projektu <b>lediir-data</b></li>
+            </ul>
+        </change>
         <change version="0.7.15">
             <ul xmlns="http://www.w3.org/1999/xhtml">
                 <li>oprava jednoduchého hledání (pouze heslová slova, výslovnost a zpětné odkazy)</li>

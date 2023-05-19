@@ -8,7 +8,7 @@
   "servers": [
     {
       "description": "Endpoint for testing on localhost",
-      "url": "http://localhost:8080/exist/apps/lediir"
+      "url": "/exist/apps/lediir"
     }
   ],
   "paths": {
@@ -4583,9 +4583,489 @@
       }
     },
     "/test/search": {
+      "get": {
+        "summary": "Run a search on all TEI Publisher collections",
+        "operationId": "tapi:search",
+        "tags": [
+          "test"
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "Array of identifiers for a dictionary. Value of an `@xml:id` attribute of the `<TEI>` element.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true
+            }
+          },
+          {
+            "name": "field[1]",
+            "in": "query",
+            "description": "The field to query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pronunciation",
+                "partOfSpeechAll",
+                "domain",
+                "lemma",
+                "reversal",
+                "all"
+              ],
+              "description": "Parts of the entry to be returned."
+            }
+          },
+          {
+            "name": "field[2]",
+            "in": "query",
+            "description": "The field to query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pronunciation",
+                "partOfSpeechAll",
+                "domain",
+                "lemma",
+                "reversal",
+                "all"
+              ],
+              "description": "Parts of the entry to be returned."
+            }
+          },
+          {
+            "name": "field[3]",
+            "in": "query",
+            "description": "The field to query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pronunciation",
+                "partOfSpeechAll",
+                "domain",
+                "lemma",
+                "reversal",
+                "all"
+              ],
+              "description": "Parts of the entry to be returned."
+            }
+          },
+          {
+            "name": "query-advanced[1]",
+            "in": "query",
+            "description": "The query itself",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "query-advanced[2]",
+            "in": "query",
+            "description": "The query itself",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "query-advanced[3]",
+            "in": "query",
+            "description": "The query itself",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "position[1]",
+            "in": "query",
+            "description": "The position of the text within the query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "exactly",
+                "start",
+                "end",
+                "everywhere"
+              ],
+              "description": "The position of the text in searched query. Default is `exactly`."
+            }
+          },
+          {
+            "name": "position[2]",
+            "in": "query",
+            "description": "The position of the text within the query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "exactly",
+                "start",
+                "end",
+                "everywhere"
+              ],
+              "description": "The position of the text in searched query. Default is `exactly`."
+            }
+          },
+          {
+            "name": "position[3]",
+            "in": "query",
+            "description": "The position of the text within the query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "exactly",
+                "start",
+                "end",
+                "everywhere"
+              ],
+              "description": "The position of the text in searched query. Default is `exactly`."
+            }
+          },
+          {
+            "name": "condition[1]",
+            "in": "query",
+            "description": "The condition between two filters",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "and",
+                "not",
+                "andNot"
+              ],
+              "description": "The condition between two parts of the query. Default is `and`."
+            }
+          },
+          {
+            "name": "condition[2]",
+            "in": "query",
+            "description": "The condition between two filters",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "and",
+                "not",
+                "andNot"
+              ],
+              "description": "The condition between two parts of the query. Default is `and`."
+            }
+          },
+          {
+            "name": "condition[3]",
+            "in": "query",
+            "description": "The condition between two filters",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "and",
+                "not",
+                "andNot"
+              ],
+              "description": "The condition between two parts of the query. Default is `and`."
+            }
+          },
+          {
+            "name": "facet",
+            "in": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "dictionary": {
+                  "type": "string"
+                },
+                "objectLanguage": {
+                  "type": "string"
+                },
+                "targetLanguage": {
+                  "type": "string"
+                },
+                "partOfSpeech": {
+                  "type": "string"
+                },
+                "domain": {
+                  "type": "string"
+                },
+                "domainHierarchy": {
+                  "type": "string"
+                },
+                "style": {
+                  "type": "string"
+                },
+                "polysemy": {
+                  "type": "string"
+                },
+                "frequency": {
+                  "type": "string"
+                },
+                "complexFormType": {
+                  "type": "string"
+                }
+              }
+            },
+            "style": "deepObject",
+            "explode": true,
+            "required": false
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Query string",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "field",
+            "in": "query",
+            "description": "The field to query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "headword",
+                "entry"
+              ],
+              "default": "headword",
+              "description": "Parts of the entry to be returned."
+            }
+          },
+          {
+            "name": "position",
+            "in": "query",
+            "description": "Position of the search string in the query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "exactly",
+                "start",
+                "end",
+                "everywhere"
+              ],
+              "description": "The position of the text in searched query. Default is `exactly`."
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Start offset of the first item to show from the result set",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "per-page",
+            "in": "query",
+            "description": "Number of items to show on one page",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          },
+          {
+            "name": "highlight",
+            "in": "query",
+            "description": "If true found text will be highlighted",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "description": "The format to return: either `html`, or `xml`. Default is `html`.",
+            "schema": {
+              "default": "html",
+              "type": "string",
+              "enum": [
+                "html",
+                "xml"
+              ],
+              "description": "The format to return: either `html`, or `xml`. Default is `html`."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Results returned",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "source": {
+                            "title": "ErrorSource",
+                            "required": [
+                              "location",
+                              "name"
+                            ],
+                            "properties": {
+                              "location": {
+                                "type": "string",
+                                "enum": [
+                                  "path",
+                                  "query",
+                                  "body",
+                                  "header"
+                                ]
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "The name of the property or parameter causing the error"
+                              },
+                              "path": {
+                                "type": "string",
+                                "description": "JSON path targeting the source of error (only used when location is `body`)"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "MissingTokenError": {
+                    "summary": "No Api-Key header",
+                    "description": "The header may be missing or its name contains a typo error",
+                    "value": {
+                      "errors": [
+                        {
+                          "code": "required",
+                          "location": "header",
+                          "name": "Api-Key",
+                          "message": "Missing Api-Key header"
+                        }
+                      ]
+                    }
+                  },
+                  "InvalidTokenError": {
+                    "summary": "Invalid key in Api-Key header",
+                    "value": {
+                      "errors": [
+                        {
+                          "code": "invalid",
+                          "location": "header",
+                          "name": "Api-Key",
+                          "message": "Invalid Api-Key header"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error. Consumer may try to send the request again.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "source": {
+                            "title": "ErrorSource",
+                            "required": [
+                              "location",
+                              "name"
+                            ],
+                            "properties": {
+                              "location": {
+                                "type": "string",
+                                "enum": [
+                                  "path",
+                                  "query",
+                                  "body",
+                                  "header"
+                                ]
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "The name of the property or parameter causing the error"
+                              },
+                              "path": {
+                                "type": "string",
+                                "description": "JSON path targeting the source of error (only used when location is `body`)"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "UnexpectedError": {
+                    "summary": "An unexpected error",
+                    "value": {
+                      "errors": [
+                        {
+                          "code": "unexpected",
+                          "message": "An expected error occurred, you may try again later"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/test/lucene-search": {
       "post": {
         "summary": "Test searching via Lucence queries and option",
-        "operationId": "tapi:search",
+        "operationId": "tapi:lucene-search",
         "tags": [
           "test"
         ],

@@ -12,8 +12,34 @@ import module namespace query="http://www.tei-c.org/tei-simple/query" at "query.
 import module namespace qrp="https://www.daliboris.cz/ns/xquery/query-parser/1.0"  at "query-parser.xql";
 import module namespace edq = "http://www.daliboris.cz/schema/ns/xquery" at "exist-db-query-parser.xql"; 
 import module namespace rq="http://www.daliboris.cz/ns/xquery/request" at "request.xql";
+import module namespace lapi="http://www.tei-c.org/tei-simple/query/tei-lex" at "query-tei-lex.xql";
 
-declare function test:search($request as map(*)) {
+declare function test:search($request as map(*)) { 
+  (: lapi:get-exist-db-query-xml($request) :)
+  let $parameters := rq:get-all-parameters($request)
+    let $hasQuery := not(empty($parameters/parameter[@name='query']/value[node()]))
+    let $hasChapter := not(empty($parameters/parameter[@name='chapter']/value[node()]))
+    let $lucene := if($hasChapter and $hasQuery) then
+            (
+            lapi:get-lucene-query($parameters/parameter[@name=('query', 'field', 'position')])
+            , lapi:get-lucene-query-for-chapter($parameters/parameter[@name=('chapter')])
+            )
+         else if ($hasChapter) then
+            lapi:get-lucene-query-for-chapter($parameters/parameter[@name=('chapter')])
+        else if($hasQuery) then
+        lapi:get-lucene-query($parameters/parameter[@name=('query', 'field', 'position')])
+        else
+        for $group in $parameters/group[parameter[@name='query-advanced'][node()]]
+        order by $group/@name
+        return lapi:get-lucene-query($group/parameter)
+    let $facets := lapi:get-facets-values($request)
+    let $combined := qrp:combine-queries($lucene)
+    let $exist-db-query := if (empty($combined)) then () else <exist-db-query>{($combined, $facets)}</exist-db-query>
+    return  ($parameters, <facets>{$facets}</facets>,  <lucene>{$lucene}</lucene>, <exist-db-query>{$exist-db-query}</exist-db-query>)
+    
+};
+
+declare function test:lucene-search($request as map(*)) {
     let $query := $request?parameters?query
     let $options := $request?body?options
     return <result length="{string-length($options)}"> {$query, string-length($options)} <options>{$request?body}</options> </result>
@@ -64,6 +90,8 @@ declare function test:query($request as map(*)) {
   let $merged := rq:get-all-parameters($request)
   return <result>{($parameters, $parameters-api, $merged)}</result>
 };
+
+
 
 declare function test:advanced-query($request as map(*)) { 
   (: let $parameters := test:get-parameters-simple($request) :)

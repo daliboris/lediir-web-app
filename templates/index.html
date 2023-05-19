@@ -2,21 +2,31 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title data-template="config:app-title"></title>
+    <title data-template="config:app-title"/>
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes"/>
     <link rel="shortcut icon" type="image/x-icon" href="resources/images/favicon.ico"/>
     <link rel="shortcut icon" type="image/png" href="resources/images/favicon-16.png" sizes="16x16"/>
     <link rel="shortcut icon" type="image/png" href="resources/images/favicon-24.png" sizes="24x24"/>
     <link rel="shortcut icon" type="image/png" href="resources/images/favicon-32.png" sizes="32x32"/>
     <link rel="shortcut icon" type="image/png" href="resources/images/favicon-64.png" sizes="64x64"/>
-    <link rel="stylesheet" type="text/css" href="resources/fonts/font.css"/>
     <link rel="stylesheet" href="resources/css/theme.css"/>
-    <link rel="stylesheet" href="transform/LeDIIR.css"/>
+    <link rel="stylesheet" href="resources/css/lediir-theme.css"/>
     <script type="module" src="pb-components-bundle.js" data-template="pages:load-components"/>
+    <custom-style>
     <style>
         main {
             margin: 0 20px 0 20px;
-            flex: 1 100%;
+            --pb-browse-toolbar-justify-content: space-between;
+        }
+        
+        app-header-layout {
+            /*
+            background-image: url('resources/images/triangle-background.jpg');
+            background-size: 100% auto;
+            background-repeat-x: no-repeat;
+            */
+            background-color: #e8fafa;
+            min-height: 100vh;
         }
         
         @media (max-width: 1023px) {
@@ -38,10 +48,15 @@
             #facets {
                 display: none;
             }
+            /*
+            app-header-layout {
+                background-repeat-y: no-repeat;
+            }
+            */
         }
         
         .tp-title {
-            font-family: "Oswald", Verdana, "Helvetica", sans-serif;
+            font-family: var(--pb-heading-font-family);
             font-size: 36px;
             font-weight: 400;
         }
@@ -51,24 +66,15 @@
             font-size: 26px;
             margin-top: 12px;
         }
-        
-        pb-results {
-            overflow: scroll;
-            margin: 0 20px;
-            height: calc(100vh - 128px);
-        }
-        
+
         @media (min-width: 1024px) {
             .toolbar {
                 display: none;
             }
             .panels {
-                display: flex;
-                flex-direction: row;
-            }
-            .panels .doclist {
-                flex: 2 auto;
-                margin-right: 20px;
+                display: grid;
+                grid-template-columns: 1fr minmax(220px, 20vw);
+                column-gap: 16px;
             }
         }
         
@@ -79,7 +85,7 @@
         .panels .doclist {
             --paper-tabs-selection-bar-color: #607D8B;
             --paper-tab-content: {
-                font-family: "Oswald", Verdana, "Helvetica", sans-serif;
+                font-family: var(--pb-heading-font-family);
                 font-weight: 400;
             }
             ;
@@ -88,7 +94,7 @@
             }
             ;
             --paper-card-header-text: {
-                font-family: "Oswald", Verdana, "Helvetica", sans-serif;
+                font-family: var(--pb-heading-font-family);
                 font-size: 16px;
                 font-weight: 400;
             }
@@ -100,31 +106,30 @@
         }
         
         .panels .doclist .browse {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            column-gap: 16px;
             padding: 0;
         }
         
-        #document-list {
-            flex: 2;
-            margin-right: 20px;
+        .panels .doclist dts-client {
+            padding: 0 20px;
         }
         
-        .upload-panel {
+        aside {
             flex: 1;
             display: flex;
             flex-direction: column;
-            min-width: 360px;
         }
         
+        aside .odds,
         aside .upload {
             --paper-card-header: {
                 background-color: #607D8B;
             }
             ;
             --paper-card-header-text: {
-                font-family: "Oswald", Verdana, "Helvetica", sans-serif;
+                font-family: var(--pb-heading-font-family);
                 font-size: 16px;
                 font-weight: 400;
                 color: white;
@@ -133,9 +138,22 @@
         }
         
         aside .upload {
+            margin-bottom: 20px;
             width: 100%;
         }
         
+        .browse aside {
+            padding: 0 10px;
+        }
+
+        pb-select {
+            margin-top: 0;
+        }
+
+        #document-list {
+            margin-top: 1rem;
+        }
+
         .parent-link iron-icon {
             padding-right: 4px;
         }
@@ -143,20 +161,27 @@
         .parent-link {
             display: block;
             margin-bottom: 10px;
-            margin-top: 16px;
             padding: 6px 0;
-            border-bottom: thin solid var(--paper-grey-300);
+        }
+
+        .collection {
+            margin-top: 8px;
+            padding-top: 12px;
+            /* border-top: thin solid var(--paper-grey-300); */
+        }
+
+        .documents img, .documents svg {
+            margin-right: 40px;
+        }
+
+        @media (max-width: 1023px) {
+            .documents img, .documents svg  {
+                display: none;
+            }
         }
 
         .documents ul {
             list-style: none;
-        }
-        
-        .documents app-toolbar {
-            @apply --layout-start-justified;
-            font-size: 14px;
-            margin-top: 10px;
-            padding-left: 0;
         }
         
         .documents div {
@@ -196,182 +221,98 @@
         h4,
         h5,
         h6 {
-            font-family: "Oswald", Verdana, "Helvetica", sans-serif;
+            font-family: var(--pb-heading-font-family);
             font-weight: 400 !important;
             line-height: 1.2;
         }
         
         h5 {
-            font-size: 16px;
+            font-size: 1rem;
             margin: 0;
         }
         
-        #facets {
-            flex: 0;
-            min-width: 220px;
-            margin-right: 20px;
-            background-color: #F0F0F0;
-            padding: 0 10px;
-        }
-        
-        #facets h3 {
-            display: flex;
-            flex-direction: row;
+        .welcome {
+            display: grid;
+            grid-template-columns: 1fr 400px;
             align-items: center;
-        }
-        
-        #facets h3 paper-checkbox {
-            margin-left: 16px;
-            font-size: 11px;
-        }
-        
-        #facets table {
-            font-size: 14px;
-        }
-        
-        #facets table table {
-            padding-left: 16px;
+            min-height: 15vh;
             width: 100%;
         }
-        
-        #facets table td {
-            padding: 4px 0;
+
+        .side {
+            max-width: 40vw;
+            padding-left: 3em;
+        }
+
+        .side strong {
+            color: var(--pb-color-focus);
+        }
+
+        .thumbnail img {
+            border-radius:35px;
+            border-color: #19232d;
+            border-style: groove;
+            box-shadow: 1px 1px 1px 1px  #19232d;
+        }
+
+        /* hide Download menu button */
+        #download-button {
+            display: none;
         }
         
-        #facets table td:nth-child(2) {
-            color: #808080;
-            text-align: right;
-            padding-left: 1em;
-            vertical-align: middle;
-        }
-        footer {
-            flex: 1 100%;
-        }
-        .menubar {
-            z-index: 5;
-        }
     </style>
+    </custom-style>
 </head>
 
 <body>
-    <pb-page data-template="pages:pb-page" unresolved="unresolved" locales="resources/i18n/{{ns}}/{{lng}}.json">
+    <pb-page data-template="pages:pb-page" api-version="1.0" unresolved="unresolved" theme="resources/css/components.css" locales="resources/i18n/{{ns}}/{{lng}}.json">
         <app-drawer-layout force-narrow="force-narrow">
             <app-drawer slot="drawer" align="right">
                 <div class="drawer-content">
                     <pb-media-query query="(max-width: 1023px)">
-                            <!-- language selector -->
-                            <pb-lang name="lang" data-template="pages:languages"/>
-                        </pb-media-query>
-                    </div>
-                </app-drawer>
-                <app-header-layout>
-                    <app-header slot="header" effects="waterfall">
-                    <app-toolbar data-template="lib:include" data-template-path="templates/menu.html"/>
-                    <!-- 
-                    <app-toolbar class="menubar">
-                        <a href="${app}/index.html" class="logo" data-template="lib:parse-params"/>
-                        <a href="${app}/search.html" data-template="lib:parse-params">
-                         <pb-i18n key="menu.search">Search</pb-i18n>
-                        </a>
-                     <pb-media-query query="(min-width: 1024px)">
-                            <pb-restricted login="login" group="tei">
-                                <paper-menu-button>
-                                    <a href="#" slot="dropdown-trigger">
-                                        <pb-i18n key="menu.admin.title">Admin</pb-i18n>
-                                    </a>
-                                    <paper-listbox slot="dropdown-content">
-                                        <paper-item>
-                                            <pb-download url="api/apps/download">
-                                                <pb-i18n key="appgen.xar-download">Download App as .xar</pb-i18n>
-                                            </pb-download>
-                                        </paper-item>
-                                        <paper-item data-template="pages:edit-odd-list"/>
-                                        <paper-item>
-                                            <a href="${app}/api.html" data-template="lib:parse-params" target="_blank">API Documentation</a>
-                                        </paper-item>
-                                    </paper-listbox>
-                                </paper-menu-button>
-                            </pb-restricted>
-                            
-                            <pb-search action="${app}/search.html" data-template="lib:parse-params" value="${query}" redirect="redirect"/>
-
-                            <paper-menu-button>
-                                <a href="#" slot="dropdown-trigger">
-                                <pb-i18n key="menu.about">About</pb-i18n>
-                                </a>
-                                <paper-listbox slot="dropdown-content">
-                                <paper-item>
-                                    <a href="${app}/LeDIIR?id=project-about" data-template="lib:parse-params">
-                                    <pb-i18n key="menu.about">About</pb-i18n>
-                                    </a>
-                                </paper-item>
-                                <paper-item>
-                                    <a href="${app}/LeDIIR?id=project-how-to-cite" data-template="lib:parse-params">
-                                    <pb-i18n key="headings.howToCite">How to cite</pb-i18n>
-                                    </a>
-                                </paper-item>
-                               
-                                 <paper-item>
-                                    <a href="${app}/LeDIIR?id=project-news" data-template="lib:parse-params">
-                                    <pb-i18n key="headings.news">News</pb-i18n>
-                                    </a>
-                                </paper-item>
-                                
-                                <paper-item>
-                                    <a href="${app}/LeDIIR?id=FACS-about" data-template="lib:parse-params">
-                                    <pb-i18n key="headings.FACS">Persian-Czech Dictionary</pb-i18n>
-                                    </a>
-                                </paper-item>
-                                </paper-listbox>
-                            </paper-menu-button>
-                            
-                      
-                            
-                            <pb-lang name="lang" data-template="pages:languages"/>
-                        </pb-media-query>
-                        <pb-login id="login" group="tei">
-                            <iron-icon slot="icon" icon="account-circle"/>
-                        </pb-login>
-                        <pb-progress indeterminate="indeterminate" bottom-item="bottom-item" subscribe="docs"/>
-                    </app-toolbar>
-                -->
-                    <pb-media-query query="(max-width: 1023px)">
-                        <app-toolbar class="toolbar" sticky="sticky">
-                            <!-- Search input -->
-                            <pb-search action="${app}/search.html" data-template="lib:parse-params" value="${query}" redirect="redirect"/>
-                            <paper-icon-button icon="icons:menu" drawer-toggle="drawer-toggle"/>
-                        </app-toolbar>
+                        <div data-template="lib:include" data-template-path="templates/menu-drawer.html"/>
                     </pb-media-query>
+                </div>
+            </app-drawer>
+            <app-header-layout>
+                <app-header slot="header" reveals="reveals" fixed="fixed" effects="waterfall">
+                    <app-toolbar data-template="lib:include" data-template-path="templates/menu.html">
+                        <pb-progress subscribe="search" indeterminate="indeterminate" bottom-item="bottom-item" data-target="menubar-after"/>
+                    </app-toolbar>
+                    <app-toolbar data-template="lib:include" data-template-path="templates/toolbar.html"/>
                 </app-header>
-                <!-- --> <pb-restricted login="login" group="tei"> <!-- -->
+                <!-- --> <pb-restricted login="login" group="tei">
                 <main>
                     <section>
-                         <h1 class="tp-title">
-                            <pb-i18n key="lediir.title">Electronic Lexical Database of Indo-Iranian Languages</pb-i18n>
-                        </h1>
+                        <h1 class="tp-title" data-template="config:app-title"/>
                     </section>
                     <section class="panels">
-                     <paper-card class="doclist" data-i18n="[heading]headings.dictionaries" heading="Dictionaries">
+                        <paper-card class="doclist" data-i18n="[heading]browse.documents" heading="documents">
                             <div class="card-content">
-                                <div class="browse" slot="page">
-                                    <pb-custom-form id="facets" url="api/lex/search/facets" event="pb-results-received" subscribe="docs" emit="docs" />
-                                    <!-- list of documents is generated via documents.html; available paremeters (work, path, ident, config) are set in function app:browse -->
-                                    <!-- header of the document is set within app:short-header in browse.xql module -->
-                                    <pb-browse-docs id="document-list" url="api/collection/" collection="dictionaries"
-                                     sort-options="[{&#34;label&#34;: &#34;browse.title&#34;, &#34;value&#34;: &#34;title&#34;},{&#34;label&#34;: &#34;browse.author&#34;, &#34;value&#34;: &#34;author&#34;}]" 
-                                     sort-by="title" 
-                                     filter-options="[{&#34;label&#34;: &#34;browse.title&#34;, &#34;value&#34;: &#34;title&#34;},{&#34;label&#34;: &#34;browse.author&#34;, &#34;value&#34;: &#34;author&#34;},{&#34;label&#34;: &#34;browse.file&#34;, &#34;value&#34;: &#34;file&#34;}]"
-                                     filter-by="title" auto="auto" history="history" login="login" emit="docs" subscribe="docs">
-                                        <!--<pb-paginate slot="toolbar" id="paginate" per-page="10" range="5" emit="docs" subscribe="docs"/>-->
-                                        <pb-restricted login="login" slot="toolbar">
-                                            <pb-ajax emit="docs" url="api/odd" method="post" data-template="lib:parse-params" event="pb-search-resubmit" title="Recompile ODD" data-i18n="[title]odd.manage.regenerate-all">
-                                                <h3 slot="title">
-                                                    <pb-i18n key="odd.manage.regenerate-all"/>
-                                                </h3>
-                                                <paper-icon-button icon="icons:update"/>
-                                            </pb-ajax>
-                                        </pb-restricted>
-                                    </pb-browse-docs>
+                                <div class="browse">
+                                    <aside data-template="browse:form">
+                                        <!--pb-custom-form class="options" auto-submit="[name=sort]" emit="search"-->
+                                        <pb-custom-form class="options">
+                                            <input type="hidden" name="collection" value="${collection}" data-template="pages:parse-params"/>
+                                            <pb-select label="browse.sort" name="sort" value="${sort}" data-template="pages:parse-params">
+                                                <paper-item value="title"><pb-i18n key="browse.title"/></paper-item>
+                                                <paper-item value="author"><pb-i18n key="browse.author"/></paper-item>
+                                            </pb-select>
+                                            <pb-select label="search.scope" name="field" value="${field}" data-template="pages:parse-params">
+                                                <paper-item value="text"><pb-i18n key="search.content"/></paper-item>
+                                                <paper-item value="title"><pb-i18n key="search.title"/></paper-item>
+                                            </pb-select>
+                                        </pb-custom-form>
+                                        <pb-search id="search-form" subscribe="search" data-template="pages:parse-params" value="${query}" subforms=".facets,.options" submit-on-load="submit-on-load">
+                                            <paper-button slot="searchButton"><pb-i18n key="search.search">Search</pb-i18n></paper-button>
+                                        </pb-search>
+                                        <pb-custom-form class="facets" url="api/search/facets" event="pb-results-received" subscribe="search" emit="search"/>
+                                    </aside>
+                                    <div id="document-list">
+                                        <pb-paginate id="paginate" per-page="10" range="5" subscribe="search" emit="search"/>
+                                        <pb-load url="api/collection/{collection}" expand="" emit="search" data-template="pages:parse-params"/>
+                                        <!--pb-browse url="api/collection" emit="search"></pb-browse-->
+                                    </div>
                                 </div>
                             </div>
                         </paper-card>
@@ -379,7 +320,7 @@
                             <aside>
                                 <paper-card class="upload" data-i18n="[heading]upload.upload" heading="Upload">
                                     <div class="card-content">
-                                        <pb-upload id="upload" emit="docs" accept=".xml, .tei, .odd, .docx, .mei" target="dictionaries"/> <!-- @target => name of the collection under $config:data-root, see also pb-browse-docs/@collection -->
+                                        <pb-upload id="upload" subscribe="search" emit="search" accept=".xml, .tei, .odd, .docx, .md, .mei" event="pb-search-resubmit"/>
                                     </div>
                                 </paper-card>
                             </aside>
@@ -387,15 +328,15 @@
                     </section>
                 </main>
                 <!-- -->
-                 <div slot="fallback">
+                <div slot="fallback">
                     <div class="restricted" >
                         <p><pb-i18n key="app.messages.restricted">You need to be logged in to see this content.</pb-i18n></p>
                     </div>
                 </div>
                 </pb-restricted>
                 <!-- -->
-                <footer data-template="lib:include" data-template-path="templates/footer.html"/>
             </app-header-layout>
+            <app-toolbar data-template="lib:include" data-template-path="templates/footer.html"></app-toolbar>
         </app-drawer-layout>
         <paper-dialog id="downloadDialog">
             <h2>
@@ -421,27 +362,7 @@
         </paper-dialog>
     </pb-page>
     <div class="splash"/>
-    <script>
-        const facets = document.getElementById('facets');
-        if (facets) {
-            facets.addEventListener('pb-custom-form-loaded', function(ev) {
-                const elems = ev.detail.querySelectorAll('.facet');
-                elems.forEach(facet =&gt; {
-                    facet.addEventListener('change', () =&gt; {
-                        const table = facet.closest('table');
-                        if (table) {
-                            const nested = table.querySelectorAll('.nested .facet').forEach(nested =&gt; {
-                                if (nested != facet) {
-                                    nested.checked = false;
-                                }
-                            });
-                        }
-                        facets.submit();
-                    });
-                });
-            });
-        }
-    </script>
+    <script src="resources/scripts/browse.js"/>
 </body>
 
 </html>

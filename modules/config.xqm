@@ -34,15 +34,16 @@ declare namespace tei="http://www.tei-c.org/ns/1.0";
  : In this case, change $config:webcomponents-cdn to point to http://localhost:port 
  : (default: 8000, but check where your server is running).
  :)
-(: declare variable $config:webcomponents :="1.36.3"; :)
-(: declare variable $config:webcomponents := "dev"; :)
- declare variable $config:webcomponents := "local";
+(: declare variable $config:webcomponents :="2.4.5"; :)
+declare variable $config:webcomponents := "dev";
+ (: declare variable $config:webcomponents := "local"; :)
 
 (:~
  : CDN URL to use for loading webcomponents. Could be changed if you created your
  : own library extending pb-components and published it to a CDN.
  :)
-(: declare variable $config:webcomponents-cdn := "https://unpkg.com/@teipublisher/pb-components"; :)
+(: declare variable $config:webcomponents-cdn := "https://cdn.jsdelivr.net/npm/@teipublisher/pb-components"; :)
+(: declare variable $config:webcomponents-cdn := "https://cdn.tei-publisher.com/"; :)
 declare variable $config:webcomponents-cdn := "http://localhost:8000";
 
 (:~~
@@ -53,6 +54,18 @@ declare variable $config:webcomponents-cdn := "http://localhost:8000";
 declare variable $config:origin-whitelist := (
     "(?:https?://localhost:.*|https?://127.0.0.1:.*)"
 );
+
+(:~
+ : Set to true to allow caching: if the browser sends an If-Modified-Since header,
+ : TEI Publisher will respond with a 304 if the resource has not changed since last
+ : access. However, this does *not* take into account changes to ODD or other auxiliary 
+ : files, so don't use it during development.
+ :)
+declare variable $config:enable-proxy-caching :=
+    let $prop := util:system-property("teipublisher.proxy-caching")
+    return
+        exists($prop) and lower-case($prop) = 'true'
+;
 
 (:~
  : Should documents be located by xml:id or filename?
@@ -107,6 +120,12 @@ declare variable $config:pagination-fill := 5;
  : are configured in the index configuration, collection.xconf.
  :)
 declare variable $config:facets := [
+    map {
+        "dimension": "genre",
+        "heading": "facets.genre",
+        "max": 5,
+        "hierarchical": true()
+    },
      map {
         "dimension": "dictionary",
         "heading": "app.facets.dictionary",
@@ -294,7 +313,7 @@ declare variable $config:fop-config :=
  : arguments.
  :)
 declare variable $config:tex-command := function($file) {
-    ( "/usr/local/bin/pdflatex", "-interaction=nonstopmode", $file )
+    ( "pdflatex", "-interaction=nonstopmode", $file )
 };
 
 (:
@@ -360,8 +379,15 @@ declare variable $config:app-root :=
  : but may need to be changed if the app is behind a proxy.
  :)
 declare variable $config:context-path :=
-   request:get-context-path() || substring-after($config:app-root, "/db")
-    (: "" :)
+    let $prop := util:system-property("teipublisher.context-path")
+    return
+        if (not(empty($prop)) and $prop != "auto") 
+            then ($prop)
+        else if(not(empty(request:get-header("X-Forwarded-Host"))))
+            then ("")
+        else ( 
+            request:get-context-path() || substring-after($config:app-root, "/db") 
+        )  
 ;
 
 (:~
@@ -391,14 +417,14 @@ declare variable $config:data-exclude := (
 (:~
  : The main ODD to be used by default
  :)
-declare variable $config:default-odd :="LeDIIR.odd";
+declare variable $config:default-odd :="lediir.odd";
 
 (:~
  : Complete list of ODD files used by the app. If you add another ODD to this list,
  : make sure to run modules/generate-pm-config.xql to update the main configuration
  : module for transformations (modules/pm-config.xql).
  :)
-declare variable $config:odd-available :=("LeDIIR.odd");
+declare variable $config:odd-available :=("lediir.odd");
 
 (:~
  : List of ODD files which are used internally only, i.e. not for displaying information
