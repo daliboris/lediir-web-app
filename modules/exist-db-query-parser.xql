@@ -68,7 +68,7 @@ declare %private function edq:return-as-xml($input as element(exist-db-query), $
  : @version 1.0
  : @since 1.0
  : @param $input an element <query-option> with options element for each query
- : @return: headword: (fortress AND hrad*)
+ : @return: headword:(fortress AND hrad*)
 :)
 declare %private function edq:parse-query($input as element(query-option)*) as xs:string? {
     let $result :=
@@ -156,10 +156,10 @@ declare %private function edq:parse-options($input as element(query-option)*) {
 :)
 declare %private function edq:parse-fields($input as element(exist-db-query)*) {
     let $result :=
-        if(empty($input/query-option/@field | $input/fields)) then
+        if(empty($input/query-option/@field | $input/fields | $input/sort)) then
             map{}
         else
-            let $values := distinct-values($input/query-option/@field | $input/fields/field/@name)
+            let $values := distinct-values($input/query-option/@field | $input/fields/field/@name | $input/sort/@field)
             return map { "fields" : distinct-values($values) }
     return $result
 };
@@ -168,6 +168,15 @@ declare %private function edq:parse-fields($input as element(exist-db-query)*) {
  : Parses XML input
  : <pre>
  :    <facets>
+ :       <facet name="domainHierarchy" has-hierarchy="true">
+ :               <value text="4 Social behavior"></value>
+ :               <value text="3 Language and thought">
+ :                   <value text="3.3 Want"></value>
+ :                   <value text="3.3 Want">
+ :                       <value text="3.3.3 Influence"></value>
+ :                   </value>
+ :               </value>
+ :        </facet>
  :       <facet name="partOfSpeechAll">
  :           <value>adj</value>
  :           <value>adv</value>
@@ -185,7 +194,8 @@ declare %private function edq:parse-fields($input as element(exist-db-query)*) {
  : @return: <pre>
  : map {
  :   "facets": map {
- :   "keyword": ("indexing", "facets")
+ :   "partOfSpeechAll": ("adj", "adv"),
+     "polysemy" : 2
  :  }
  : </pre>
 :)
@@ -197,12 +207,20 @@ declare %private function edq:parse-facets($input as element(facets)?) {
            map { "facets" :
              map:merge(
               for $facet in $input/facet
-               let $values :=distinct-values($facet/value)
+               let $values := if($facet[@has-hierarchy='true']) then 
+                    edq:hierarchical-values-to-array($facet/value)
+                else
+                    distinct-values($facet/value)
                return map:entry($facet/@name,  $values)
               )
             }
     return $result
+};
 
+declare %private function edq:hierarchical-values-to-array($values as element(value)*) {
+    let $array := array{for $value in $values return data($value/@text )}
+    let $result := array:for-each($array, function($value) {$value, distinct-values($values[@text=$value]//value/@text)})
+    return $result
 };
 
 declare %private function edq:map-to-xml-format-value($value) {

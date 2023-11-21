@@ -17,14 +17,13 @@
  :)
 xquery version "3.1";
 
-module namespace lfacets="http://www.tei-c.org/tei-simple/query/tei-lex-facets";
+module namespace facets="http://www.tei-c.org/tei-simple/query/tei-lex-facets";
 
 import module namespace config="http://www.tei-c.org/tei-simple/config" at "config.xqm";
-(: import module namespace facets="http://teipublisher.com/facets" at "facets.xqm"; :)
 
 declare namespace tei="http://www.tei-c.org/ns/1.0";
 
-declare function lfacets:sort($facets as map(*)?) {
+declare function facets:sort($facets as map(*)?) {
     array {
         if (exists($facets)) then
             for $key in map:keys($facets)
@@ -37,20 +36,34 @@ declare function lfacets:sort($facets as map(*)?) {
     }
 };
 
-declare function lfacets:print-table($config as map(*), $nodes as element()+, $values as xs:string*, $params as xs:string*) {
-    let $all := exists($config?max) and request:get-parameter("all-" || $config?dimension, ())
-    let $count := if ($all) then 50 else $config?max
-    let $facets :=
-        if (exists($values)) then
-            ft:facets($nodes, $config?dimension, $count, $values)
+declare function facets:print-table($config as map(*), $nodes as element()+, $values as xs:string*, $params as xs:string*) {
+    let $all := request:get-parameter("all-" || $config?dimension, ())
+    let $count := if ($all) then 100 else $config?max
+    let $paths := if(exists($values)) then 
+            distinct-values(for $i in $values return  tokenize($i, "\|"))
         else
-            ft:facets($nodes, $config?dimension, $count)
+            ()
+    let $facets :=
+        if ($all) then 
+            if (exists($values)) then
+                ft:facets($nodes, $config?dimension, (), $values)
+            else
+                ft:facets($nodes, $config?dimension, ())
+        else 
+            if (exists($values)) then
+                ft:facets($nodes, $config?dimension, $count, $values)
+            else
+                ft:facets($nodes, $config?dimension, $count)
     return
         if (map:size($facets) > 0) then
-            <table class="facets-table">
+            <table>
             {
-                array:for-each(lfacets:sort($facets), function($entry) {
+                array:for-each(facets:sort($facets), function($entry) {
                     map:for-each($entry, function($label, $freq) {
+                        let $value := if(exists($values)) then 
+                            concat(string-join($values, '|'), '|', $label)
+                        else $label
+                        return
                         <tr>
                             <td>
                                 <paper-checkbox class="facet" name="facet[{$config?dimension}]" value="{$label}">
@@ -62,53 +75,86 @@ declare function lfacets:print-table($config as map(*), $nodes as element()+, $v
                                             $label
                                     }
                                 </paper-checkbox>
+                                <!--
+                                <br />values: {$values}
+                                <br />value: {$value}
+                                <br />params: {string-join($params, "~")}
+                                <br />paths: {string-join($paths, "~")}
+                                <br />label: {$value}
+                                <br />head: {head($params)}
+                                -->
                             </td>
                             <td>{$freq}</td>
-                        </tr>
-                    })
-                }),
-                if (empty($params)) then
-                    ()
-                else
-                    let $nested := lfacets:print-table($config, $nodes, ($values, head($params)), tail($params))
-                    return
-                        if ($nested) then
-                            <tr class="nested">
-                                <td colspan="2">
-                                {$nested}
-                                </td>
-                            </tr>
-                        else
+                        </tr>,
+                        if (empty($params)) then
                             ()
+                        else
+                            if(head($params) ne $label) then () 
+                            else
+                            let $new-params := ($values, head($params))
+                            (: let $new-params := head($params) :)
+                            let $nested := facets:print-table($config, $nodes, $new-params, tail($params))
+                            return
+                                if ($nested) then
+                                    <tr class="nested">
+                                        <td colspan="2">
+                                        {$nested}
+                                        </td>
+                                    </tr>
+                                else
+                                    ()
+                            })
+                })
             }
             </table>
         else
             ()
 };
 
-declare function lfacets:display($config as map(*), $nodes as element()+) {
-    (:let $params := request:get-parameter("facet-" || $config?dimension, ()) :)
+declare function facets:display($config as map(*), $nodes as element()+) {
     let $params := request:get-parameter("facet[" || $config?dimension || "]", ())
-    let $table := lfacets:print-table($config, $nodes, (), $params)
+    let $table := facets:print-table($config, $nodes, (), $params)
+
+    let $maxcount := 100
+    (: maximum number shown :)
+    let $max := head(($config?max, 100))
+
+    (: facet count for current values selected :)
+    let $fcount :=
+    map:size(
+     if (count($params)) then
+            ft:facets($nodes, $config?dimension, $maxcount, $params)
+        else
+            ft:facets($nodes, $config?dimension, $maxcount)
+    )
+
     where $table
     return
         <div>
             <h3><pb-i18n key="{$config?heading}">{$config?heading}</pb-i18n>
             {
-                if (exists($config?max)) then
+                if ($fcount > $max) then
                     <paper-checkbox class="facet" name="all-{$config?dimension}">
-                        { if (request:get-parameter("all-" || $config?dimension, ())) 
-                            then attribute checked { "checked" }
-                             else () 
-                        }
-                        <pb-i18n key="app.facets.show-all">Show top 50</pb-i18n>
+                        { if (request:get-parameter("all-" || $config?dimension, ())) then attribute checked { "checked" } else () }
+                        <pb-i18n key="app.facets.show-all">Show all</pb-i18n> ({$fcount})
                     </paper-checkbox>
                 else
                     ()
             }
             </h3>
+            <div class="facet-block">
             {
                 $table
             }
+            </div>
         </div>
+};
+
+declare function facets:infoPopover($label) {
+    <pb-popover theme="light">
+        <span slot="default"><iron-icon icon="info" style="color: gray;"/></span>
+            <template slot="alternate">
+                <pb-i18n key="info.{$label}"/>
+            </template>
+    </pb-popover>
 };
