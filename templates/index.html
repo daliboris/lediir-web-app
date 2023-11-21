@@ -24,8 +24,8 @@
             background-image: url('resources/images/triangle-background.jpg');
             background-size: 100% auto;
             background-repeat-x: no-repeat;
-            */
             background-color: #e8fafa;
+            */
             min-height: 100vh;
         }
         
@@ -259,6 +259,10 @@
         #download-button {
             display: none;
         }
+
+        .co-author::after {
+            content: " – ";
+        }
         
     </style>
     </custom-style>
@@ -281,13 +285,13 @@
                     </app-toolbar>
                     <app-toolbar data-template="lib:include" data-template-path="templates/toolbar.html"/>
                 </app-header>
-                <!-- --> <pb-restricted login="login" group="tei">
+                <!-- --> <!-- <pb-restricted login="login" group="tei"> -->
                 <main>
                     <section>
                         <h1 class="tp-title" data-template="config:app-title"/>
                     </section>
                     <section class="panels">
-                        <paper-card class="doclist" data-i18n="[heading]browse.documents" heading="documents">
+                        <paper-card class="doclist" data-i18n="[heading]headings.dictionaries" heading="Dictionaries">
                             <div class="card-content">
                                 <div class="browse">
                                     <aside data-template="browse:form">
@@ -299,28 +303,29 @@
                                                 <paper-item value="author"><pb-i18n key="browse.author"/></paper-item>
                                             </pb-select>
                                             <pb-select label="search.scope" name="field" value="${field}" data-template="pages:parse-params">
-                                                <paper-item value="text"><pb-i18n key="search.content"/></paper-item>
                                                 <paper-item value="title"><pb-i18n key="search.title"/></paper-item>
+                                                <paper-item value="author"><pb-i18n key="search.author"/></paper-item>
+                                                <!-- <paper-item value="text"><pb-i18n key="search.content"/></paper-item> -->
                                             </pb-select>
                                         </pb-custom-form>
                                         <pb-search id="search-form" subscribe="search" data-template="pages:parse-params" value="${query}" subforms=".facets,.options" submit-on-load="submit-on-load">
                                             <paper-button slot="searchButton"><pb-i18n key="search.search">Search</pb-i18n></paper-button>
                                         </pb-search>
-                                        <pb-custom-form class="facets" url="api/search/facets" event="pb-results-received" subscribe="search" emit="search"/>
+                                        <pb-custom-form class="facets" url="api/lex/search/facets" event="pb-results-received" subscribe="search" emit="search"/>
                                     </aside>
                                     <div id="document-list">
                                         <pb-paginate id="paginate" per-page="10" range="5" subscribe="search" emit="search"/>
-                                        <pb-load url="api/collection/{collection}" expand="" emit="search" data-template="pages:parse-params"/>
-                                        <!--pb-browse url="api/collection" emit="search"></pb-browse-->
+                                        <!-- <pb-load url="api/collection/{collection}" expand="" emit="search" data-template="pages:parse-params"/> -->
+                                        <pb-browse url="api/collection" emit="search"></pb-browse>
                                     </div>
                                 </div>
                             </div>
                         </paper-card>
-                        <pb-restricted class="upload-panel" login="login">
+                        <pb-restricted class="upload-panel" login="login" group="tei">
                             <aside>
                                 <paper-card class="upload" data-i18n="[heading]upload.upload" heading="Upload">
                                     <div class="card-content">
-                                        <pb-upload id="upload" subscribe="search" emit="search" accept=".xml, .tei, .odd, .docx, .md, .mei" event="pb-search-resubmit"/>
+                                        <pb-upload id="upload" subscribe="search" emit="search" accept=".xml, .tei, .odd, .docx, .md, .mei, .zip" event="pb-search-resubmit"/>
                                     </div>
                                 </paper-card>
                             </aside>
@@ -328,12 +333,13 @@
                     </section>
                 </main>
                 <!-- -->
-                <div slot="fallback">
+                <!-- <div slot="fallback">
                     <div class="restricted" >
                         <p><pb-i18n key="app.messages.restricted">You need to be logged in to see this content.</pb-i18n></p>
                     </div>
                 </div>
-                </pb-restricted>
+                -->
+                <!-- </pb-restricted> -->
                 <!-- -->
             </app-header-layout>
             <app-toolbar data-template="lib:include" data-template-path="templates/footer.html"></app-toolbar>
@@ -363,6 +369,17 @@
     </pb-page>
     <div class="splash"/>
     <script src="resources/scripts/browse.js"/>
+    <script>
+        /*
+        document.addEventListener('DOMContentLoaded', function () {
+            pbEvents.subscribe('pb-login', null, function(ev) {
+                if (ev.detail.userChanged) {
+                    document.location.reload();
+                }
+            }); 
+        });
+        */
+    </script>
 </body>
 
 </html>
