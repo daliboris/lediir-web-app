@@ -23,9 +23,16 @@
         "expand-quotes": "[expand quotes]",
         "search-sections": "[Search sections]",
         "search-headings": "[Search headings]",
-        "search-entries": "[Search entries]"
+        "search-entries": "[Search entries]",
+        "search" : {
+            "mode" : {
+                "simple" : "[Simple]",
+                "advanced" : "[Advanced]"
+            }
+        }
     },
     "search": {
+        "author" : "[Search authors]",
         "headings": {
             "simple": "[Simple]",
             "advanced": "[Advanced]",
@@ -84,7 +91,8 @@
             "tg": "[Tajic]"
         },
         "messages": {
-            "restricted": "[You need to be logged in to see this content.]"
+            "restricted": "[You need to be logged in to see this content.]",
+            "continue" : "[Select an item from the menu or footer to continue.]"
         }
     },
     "buttons": {

@@ -23,9 +23,16 @@
         "expand-quotes": "automaticky rozbalit doklady",
         "search-sections": "v textu",
         "search-headings": "v nadpisech",
-        "search-entries": "v heslech"
+        "search-entries": "v heslech",
+        "search" : {
+            "mode" : {
+                "simple" : "jednoduché",
+                "advanced" : "rozšířené"
+            }
+        }
     },
     "search": {
+        "author" : "Autora",
         "headings": {
             "simple": "Jednoduché",
             "advanced": "Pokročilé",
@@ -84,7 +91,8 @@
             "tg": "tádžičtina"
         },
         "messages": {
-            "restricted": "Pro zobrazení tohoto obsahu se musíte přihlásit."
+            "restricted": "Pro zobrazení tohoto obsahu se musíte přihlásit.",
+            "continue" : "Pro pokračování vyberte položku z nabídky nebo zápatí."
         }
     },
     "buttons": {
