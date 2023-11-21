@@ -30,6 +30,11 @@ import module namespace console="http://exist-db.org/xquery/console";
  Implementation based on tutorial available at https://faq.teipublisher.com/api/tutorial/
 :)
 
+declare variable $lapi:debug := false();
+
+declare variable $lapi:default-browse-sort-field := <sort field="sortKey" />;
+declare variable $lapi:default-search-sort-field := <sort field="sortKeyWithFrequency" />;
+
 declare function lapi:domains($request as map(*)) {
     let $all := "all"
     let $format := $request?parameters?format
@@ -142,7 +147,7 @@ declare function lapi:entry($request as map(*)) {
     let $format := $request?parameters?format
     let $hits :=
         if ($id) then
-             collection($config:data-root)//id($id)
+             collection($config:data-default)//id($id)
         else
             ()
     return
@@ -190,7 +195,7 @@ declare function lapi:dictionary-entries($request as map(*)) {
 
     let $max-hits := $config:maximum-hits-limit
 
-    let $doc := collection($config:data-root || "/dictionaries")/id($dictionaryId)
+    let $doc := collection($config:data-default)/id($dictionaryId)
     (:
      For example, to view all articles in the collection you could pass in an empty sequence in place of the query string like this
      //db:article[ft:query(., (), map { "fields": ("title", "author") })]
@@ -200,7 +205,7 @@ declare function lapi:dictionary-entries($request as map(*)) {
     :)
     (: let $hitsAll := for $hit in $doc//tei:entry[ft:query(., (), map { "fields": ("sortKey") } )] order by ft:field($hit, "sortKey") return $hit :)
     let $hitsAll := lapi:query-default(("entry"), "*", $dictionaryId, (), $position)
-    (: let $hitsAll := for $hit in $doc//tei:entry[not(parent::tei:entry)] order by $hit/@sortKey return $hit :)
+    let $hitsAll := for $hit in $doc//tei:entry[not(parent::tei:entry)] order by $hit/@sortKey return $hit
     let $hitCount := count($hitsAll)
 
     let $hits := if ($max-hits > 0 and $hitCount > $max-hits) 
@@ -210,7 +215,7 @@ declare function lapi:dictionary-entries($request as map(*)) {
     let $store := (
         session:set-attribute($config:session-prefix || ".hits", $hitsAll),
         session:set-attribute($config:session-prefix || ".hitCount", $hitCount),
-        session:set-attribute($config:session-prefix || ".query", if (empty($request?parameters?query))
+        session:set-attribute($config:session-prefix || ".search", if (empty($request?parameters?query))
              then () else xmldb:decode($request?parameters?query)),
         session:set-attribute($config:session-prefix || ".docs", $request?parameters?id)
     )
@@ -243,22 +248,24 @@ declare function lapi:dictionary-entries($request as map(*)) {
 };
 
 declare function lapi:dictionary-entry($request as map(*)) {  
+    let $dictionaryId := $request?parameters?id
     let $format := $request?parameters?format
     let $parts := $request?parameters?dictionaryParts
     let $entry-id := $request?parameters?entry-id
 
-    let $hits := collection($config:data-root)//id($entry-id)
+    let $hits := collection($config:data-default)//id($entry-id)
     let $hits := $hits/ancestor-or-self::tei:entry[1]
 
     return if($format = "xml") then 
-        lapi:show-hits-xml($request, $hits, $request?parameters?id)
+        lapi:show-hits-xml($request, $hits, $dictionaryId)
     else 
-        lapi:show-hits-html($request, $hits, $request?parameters?id)
+        lapi:show-hits-html($request, $hits, $dictionaryId)
 };
 
 (: Dictionary entries :)
 declare function lapi:browse($request as map(*)) { 
     
+    let $query-start-time := util:system-time()
     let $max-hits := $config:maximum-hits-limit
 
     let $format := $request?parameters?format
@@ -270,6 +277,9 @@ declare function lapi:browse($request as map(*)) {
 
     let $chapter := lapi:get-chapter-id($dictId,  $chapter)
 
+    let $log := if($lapi:debug) then console:log("[lapi:browse] $chapter: " || $chapter || "; $dictId: " || $dictId) else ()
+    let $log := if($lapi:debug) then lapi:log-duration($query-start-time, "[lapi:browse] $query-duration:") else ()
+    
 
     
     return
@@ -292,7 +302,6 @@ declare function lapi:browse($request as map(*)) {
         else
      :)
     
-     
     
     
     if (empty($chapter))
@@ -308,7 +317,7 @@ declare function lapi:browse($request as map(*)) {
             (:Otherwise, perform the query.:)
             (: Here the actual query commences. This is split into two parts, the first for a Lucene query and the second for an ngram query. :)
             (:The query passed to a Luecene query in ft:query is an XML element <query> containing one or two <bool>. The <bool> contain the original query and the transliterated query, as indicated by the user in $query-scripts.:)
-            let $exist-db-query := lapi:get-exist-db-query-xml($request)
+            let $exist-db-query := lapi:get-exist-db-query-xml($request, $lapi:default-browse-sort-field)
             let $hitsAll := if(empty($exist-db-query)) then
                     lapi:browse-default($chapter, $dictId)
                  else 
@@ -317,28 +326,35 @@ declare function lapi:browse($request as map(*)) {
                     let $hits := lapi:browse-default($chapter, $dictId)
                     return  lapi:execute-query-return-hits($qry?query, $qry?full-options, $hits)
                      :)
-                     return  lapi:execute-query-return-hits($qry?query, $qry?full-options)
+                     return  lapi:execute-query-return-hits($qry?query, $qry?full-options, $exist-db-query/sort/@field) (: $exist-db-query/sort/@field :)
 
             let $hitCount := count($hitsAll)
+            let $log := if($lapi:debug) then console:log("[lapi:browse] $hitCount: " || $hitCount) else ()
+            let $log := if($lapi:debug) then lapi:log-duration($query-start-time, "[lapi:browse] alfter $hitCount $query-duration:") else ()
+
             (:Store the result in the session.:)
             let $store := (
                 session:set-attribute($config:session-prefix || ".hits", $hitsAll),
                 session:set-attribute($config:session-prefix || ".hitCount", $hitCount),
-                session:set-attribute($config:session-prefix || ".query", if (empty($query))
+                session:set-attribute($config:session-prefix || ".search", if (empty($query))
              then () else xmldb:decode($query)),
                 session:set-attribute($config:session-prefix || ".chapter", if (empty($chapter))
              then () else xmldb:decode($chapter)),
                 session:set-attribute($config:session-prefix || ".docs", $dictId)
             )
 
+            let $log := if($lapi:debug) then lapi:log-duration($query-start-time, "[lapi:browse] after $store $query-duration:") else ()
+
             let $hits := if ($max-hits > 0 and $hitCount > $max-hits) then subsequence($hitsAll, 1, $max-hits) else $hitsAll
             
             
-            return if($format = "xml") then 
+            let $result := if($format = "xml") then 
                 lapi:show-hits-xml($request, $hits, $dictId, "div", "http://www.tei-c.org/ns/1.0")
             else lapi:show-hits-html($request, $hits, $dictId)
                 (:lapi:show-hits($request, $hits, $request?parameters?doc):) 
             
+            let $log := if($lapi:debug) then lapi:log-duration($query-start-time, "[lapi:browse] after lapi:show-hits $query-duration:") else ()
+            return $result
 };
 
 (: Dictionary entries :)
@@ -376,10 +392,11 @@ declare function lapi:search($request as map(*)) {
     :) (::)
     
           (:If there is no query string, fill up the map with existing values:)
+    let $log := if($lapi:debug) then console:log($exist-db-query) else ()
+    let $max-hits := $config:maximum-hits-limit
     return
     if ((empty($request?parameters?query) and empty($request?parameters("query-advanced[1]"))) or empty($exist-db-query))
     then
-        let $max-hits := $config:maximum-hits-limit
         let $hitsAll := session:get-attribute($config:session-prefix || ".hits")
         let $hitCount := count($hitsAll)
         let $hits := if ($max-hits > 0 and $hitCount > $max-hits) then subsequence($hitsAll, 1, $max-hits) else $hitsAll
@@ -392,18 +409,18 @@ declare function lapi:search($request as map(*)) {
     else
         (:Otherwise, perform the query.:)
         (: Here the actual query commences. This is split into two parts, the first for a Lucene query and the second for an ngram query. :)
-        (:The query passed to a Luecene query in ft:query is an XML element <query> containing one or two <bool>. The <bool> contain the original query and the transliterated query, as indicated by the user in $query-scripts.:)
-       let $max-hits := $config:maximum-hits-limit
+        (:The query passed to a Luecene query in ft:query is an XML element <query> containing one or two <bool>. 
+        The <bool> contain the original query and the transliterated query, as indicated by the user in $query-scripts.:)
        let $hitsAll :=
                 let $qry := edq:parse-exist-db-query($exist-db-query)
-                return  lapi:execute-query-return-hits($qry?query, $qry?full-options)
+                return  lapi:execute-query-return-hits($qry?query, $qry?full-options, $exist-db-query/sort/@field)
 
         let $hitCount := count($hitsAll)
         (:Store the result in the session.:)
         let $store := (
             session:set-attribute($config:session-prefix || ".hits", $hitsAll),
             session:set-attribute($config:session-prefix || ".hitCount", $hitCount),
-            session:set-attribute($config:session-prefix || ".query", if (empty($request?parameters?query))
+            session:set-attribute($config:session-prefix || ".search", if (empty($request?parameters?query))
              then () else xmldb:decode($request?parameters?query)),
             session:set-attribute($config:session-prefix || ".field", $request?parameters?field),
             session:set-attribute($config:session-prefix || ".position", $request?parameters?position),
@@ -424,8 +441,6 @@ declare function lapi:search($request as map(*)) {
 declare %private function lapi:get-facets-values($request as map(*)) as element(facets)? {
     let $item-name := "facet"
     let $items-name := "facets"
-    let $prefix := "facet["
-    let $indexed := "facet\[([^\]]*)\]"
     let $parameters := rq:get-all-parameters($request)
     let $items := $parameters/group[@name=$item-name]/parameter
     let $items := if(empty($items)) then ()
@@ -436,44 +451,46 @@ declare %private function lapi:get-facets-values($request as map(*)) as element(
                         $i/node()
                     }
                 }
-
-    (: let $items := if ($parameters/parameter[starts-with(@name, $prefix)]) then :)
-    (:
-    let $items := if ($parameters/parameter[matches(@name, $indexed)]) then
-        element {$items-name}
-         {
-            (: for $item in $parameters/parameter[starts-with(@name, $prefix)] :)
-            for $item in $parameters/parameter[matches(@name, $indexed)]
-                return element {$item-name} {
-                    (: attribute {"name"} {substring-after($item/@name, $prefix) => substring-before("]")},:)
-                    attribute {"name"} {analyze-string($item/@name, $indexed)/*/*[1]},
-                    for $item in tokenize($item, ' ') return <value>{$item}</value>
-                }
-            }
-        else ()
-    :)
     return $items
 };
 
-declare %private function lapi:execute-query-return-hits($query as item(), $options as item()? ) {
+declare %private function lapi:execute-query-return-hits($query as item(), $options as item()?, $sort as xs:string? ) {
  
- lapi:execute-query-return-hits($query, $options, ())
+ lapi:execute-query-return-hits($query, $options, $sort, ())
 
  };
 
-declare %private function lapi:execute-query-return-hits($query as item(), $options as item()?,
+declare %private function lapi:execute-query-return-hits($query as item(), $options as item()?, $sort as xs:string?,
     $hits as element(tei:entry)* ) {
+
+    let $console := if($lapi:debug) then 
+        (
+            console:log("[lapi:execute-query-return-hits] $query:"),
+            console:log($query),
+            console:log("[lapi:execute-query-return-hits] $options:"),
+            console:log($options),
+            console:log("[lapi:execute-query-return-hits] $sort:"),
+            console:log($sort)
+        )
+        else ()
 
     let $query-start-time := util:system-time()
     let $ft := if(empty($hits)) then
-            collection($config:data-root || "/dictionaries/")//tei:entry[ft:query(., $query, $options)]
+            collection($config:data-default)//tei:entry[not(parent::tei:entry)][ft:query(., $query, $options)]
         else 
             $hits[ft:query(., $query, $options)]
-    let $result := $ft
+    (: let $result := $ft :)
+    let $console := if($lapi:debug) then console:log("[lapi:execute-query-return-hits] $sort: " || $sort || "; empty or '': " || (empty($sort) or $sort = '')) else ()
+    (: let $console := if($lapi:debug) then console:log("ft") else ()
+    let $console := if($lapi:debug) then console:log($ft) else () :)
+    let $result := if(empty($sort) or $sort = '') then $ft
+         else if($sort = 'score') then
+         for $f in $ft order by ft:score($f) descending return $f
+         (: else if($sort = 'lemma' or empty($sort)) then $ft :)
+         else for $f in $ft order by ft:field($f, $sort) ascending return $f
 
-    let $query-end-time := util:system-time()
-    let $query-duration := ($query-end-time - $query-start-time) div xs:dayTimeDuration('PT1S')
-    
+    let $log := if($lapi:debug) then lapi:log-duration($query-start-time, "[lapi:execute-query-return-hits] after sort:") else ()
+
     return
         $result
 
@@ -520,7 +537,7 @@ declare %private function lapi:prepare-session($request as map(*), $function as 
         let $store := (
             session:set-attribute($config:session-prefix || ".hits", $hitsAll),
             session:set-attribute($config:session-prefix || ".hitCount", $hitCount),
-            session:set-attribute($config:session-prefix || ".query", if (empty($request?parameters?query))
+            session:set-attribute($config:session-prefix || ".search", if (empty($request?parameters?query))
              then () else xmldb:decode($request?parameters?query)),
             session:set-attribute($config:session-prefix || ".field", $request?parameters?field),
             session:set-attribute($config:session-prefix || ".docs", $request?parameters?ids)
@@ -560,12 +577,19 @@ declare %private function lapi:get-chapter-id($dictId as xs:string, $chapter) {
 };
 
 declare %private function lapi:get-first-chapter($dictId as xs:string) {
-    let $div :=
-    if(empty($dictId)) then
-        collection($config:data-root || "/dictionaries/")//tei:div[@type='letter'][1]
-    else
-        doc($config:data-root || "/dictionaries/LeDIIR-" || $dictId || ".xml")//tei:div[@type='letter'][1]
-    return data($div/@n)
+    let $div := if(empty($dictId)) then
+                    collection($config:metadata-default)//tei:div[@type='letter'][1]
+                else
+                    let $id := $dictId || "-metadata"
+                    return collection($config:metadata-default)/tei:TEI[@xml:id=$id]//tei:div[@type='letter'][1] (: || "/LeDIIR-" || $dictId || ".xml" :)
+    let $console := if($lapi:debug) then 
+        (
+            console:log("[lapi:get-first-chapter] $config:metadata-default: " || $config:metadata-default),
+            console:log("[lapi:get-first-chapter] $dictId: " || $dictId),
+            console:log("[lapi:get-first-chapter] $firstChapterId: " || $div/@subtype/data())
+        )
+        else ()
+    return $div/@subtype/data()
 };
 
 declare %private function lapi:get-dictionary-id($dictId) {
@@ -574,17 +598,20 @@ declare %private function lapi:get-dictionary-id($dictId) {
             lapi:get-first-dictionary()
         else
             $dictId
+    let $console := if($lapi:debug) then console:log("[llapi:get-dictionary-id($dictId)] $dictId: " || $dictId) else ()
     return $dictId
 };
 
 declare %private function lapi:get-first-dictionary() {
     let $project := lapi:project-xml()
-    return $project/dictionary[1]/@xml:id
+    let $console := if($lapi:debug) then console:log("[lapi:get-first-dictionary] @xml:id: " || $project//dictionary[1]/@xml:id || "; dictionary: " || $project//dictionary[1]) else ()
+    return $project//dictionary[1]/@xml:id
 };
 
 declare %private function lapi:show-hits-html($request as map(*), $hits as item()*, $docs as xs:string*) {
     response:set-header("pb-total", xs:string(count($hits))),
     response:set-header("pb-start", xs:string($request?parameters?start)),
+    let $query-start-time := util:system-time()
     let $highlight := xs:boolean($request?parameters?highlight)
     let $config := if(empty($hits)) 
         then config:default-config(()) 
@@ -595,9 +622,15 @@ declare %private function lapi:show-hits-html($request as map(*), $hits as item(
             util:expand($result)
         else
             $result
-    (: let $log := console:log("api:show-hits-html: " || $config?odd) :)
+    let $log := if($lapi:debug) then (
+            console:log("api:show-hits-html: ODD" || $config?odd),
+            console:log("api:show-hits-html: $highlight: " || ($highlight and exists($result)))
+            )
+             else ()
+    let $result-html := lapi:get-html($expanded, $request, $config)
+    let $log := lapi:log-duration($query-start-time, "[lapi:show-hits-html] after lapi:get-html:")
     return 
-        lapi:get-html($expanded, $request, $config)
+        $result-html
 };
 
 declare %private function lapi:show-hits($request as map(*), $hits as item()*, $docs as xs:string*) {
@@ -676,18 +709,21 @@ declare function lapi:get-html($hits as item()*, $request as map(*), $config, $o
     let $root := if(empty($hits)) then $xml else root($hits[1])
     (:    let $out := $pm-config:web-transform($xml, map { "root": $root, "webcomponents": 7 }, $config?odd):)
     let $out :=  if ($outputMode = 'print') then
-                            $pm-config:print-transform($xml, map { "root": $xml, "webcomponents": 7 }, $config?odd)
+                            $pm-config:print-transform($xml, map { "root": $root, "webcomponents": 7 }, $config?odd)
                         else
-                            $pm-config:web-transform($xml, map { "root": $xml, "webcomponents": 7 }, $config?odd)
+                            $pm-config:web-transform($xml, map { "root": $root, "webcomponents": 7 }, $config?odd)
     let $styles := ($addStyles,
                     if (count($out) > 1) then $out[1] else (),
                         <link rel="stylesheet" type="text/css" href="transform/{replace($config?odd, "^.*?/?([^/]+)\.odd$", "$1")}.css"/>
                     )
-    (:
-    let $log := console:log("lapi:get-html: count=" || count($styles) || ", content: " || $styles[1])
+
+    (:   
+    let $log := console:log("lapi:get-html: styles count=" || count($styles) || ", content: " || $styles[1])
     let $log := console:log("lapi:get-html: $config?odd=" || $config?odd)
-    let $log := console:log(($out[2], $out[1])[1])
+    let $log := console:log("lapi:get-html: $parameters?root")
+    let $log := console:log(($out[2], $out[1])[1]) 
     :)
+    
 
     let $main := <html>{($out[2], $out[1])[1]}</html>
     return
@@ -705,10 +741,10 @@ declare function lapi:browse-default($chapter as xs:string,
          "letter:(" || $chapter || ")"
 
     return if (exists($text)) then
-            doc($config:data-root || "/dictionaries/LeDIIR-" || $text || ".xml")
+            doc($config:data-default || "/LeDIIR-" || $text || ".xml")
             //tei:entry[ft:query(., $query)][not(@copyOf)]
         else
-            collection($config:data-root || "/dictionaries/")
+            collection($config:data-default)
             //tei:entry[ft:query(., $query)][not(@copyOf)]
 
 };
@@ -733,9 +769,9 @@ declare function lapi:query-default($fields as xs:string+,
                     if (exists($target-texts)) then
                         for $text in $target-texts
                         return
-                            $config:data-root ! doc(. || "/dictionaries/LeDIIR-" || $text || ".xml")//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
+                            $config:data-default ! doc(. || "/LeDIIR-" || $text || ".xml")//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
                     else
-                        collection($config:data-root || "/dictionaries/")//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
+                        collection($config:data-default)//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
                 (:
                 case "domain" return
                     if (exists($target-texts)) then
@@ -756,9 +792,9 @@ declare function lapi:query-default($fields as xs:string+,
                     if (exists($target-texts)) then
                         for $text in $target-texts
                         return
-                            $config:data-root ! doc(. || "/dictionaries/LeDIIR-" || $text || ".xml")//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
+                            $config:data-default ! doc(. || "/LeDIIR-" || $text || ".xml")//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
                     else
-                        collection($config:data-root || "/dictionaries/")//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
+                        collection($config:data-default)//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
     else ()
 };
 
@@ -811,17 +847,17 @@ declare function lapi:query-advanced(
                     if (exists($target-texts)) then
                         for $text in $target-texts
                         return
-                            $config:data-root ! doc(. || "/dictionaries/LeDIIR-" || $text || ".xml")//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
+                            $config:data-default ! doc(. || "/LeDIIR-" || $text || ".xml")//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
                     else
-                        collection($config:data-root || "/dictionaries/")//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
+                        collection($config:data-default)//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
             case "part-of-speech" return
-                    collection($config:data-root || "/dictionaries/")//tei:entry[not(@copyOf)]//tei:gram[@type='pos'][ft:query(., $query, query:options($sortBy))]
+                    collection($config:data-default)//tei:entry[not(@copyOf)]//tei:gram[@type='pos'][ft:query(., $query, query:options($sortBy))]
             case "pronunciation" return
-                    collection($config:data-root || "/dictionaries/")//tei:entry[not(@copyOf)]//tei:pron[ft:query(., $query, query:options($sortBy))]
+                    collection($config:data-default)//tei:entry[not(@copyOf)]//tei:pron[ft:query(., $query, query:options($sortBy))]
             case "domain" return
-                    collection($config:data-root || "/dictionaries/")//tei:entry[not(@copyOf)]//tei:usg[@type='domain'][ft:query(., $query, query:options($sortBy))]
+                    collection($config:data-default)//tei:entry[not(@copyOf)]//tei:usg[@type='domain'][ft:query(., $query, query:options($sortBy))]
             default return
-                    collection($config:data-root || "/dictionaries/")//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
+                    collection($config:data-default)//tei:entry[not(@copyOf)][ft:query(., $query, query:options($sortBy))]
 };
 
 declare function lapi:modify-query($query as xs:string?, $position as xs:string?) as xs:string {
@@ -871,30 +907,10 @@ declare function lapi:autocomplete($request as map(*)) {
 };
 
 declare function lapi:facets($request as map(*)) {
-    
-    (: (::)
-    response:set-header("Content-Type", "application/xml"),
-    let $f := function($k, $v) {<item value="{$k}" count="{$v}" />}
-    let $params := rq:get-all-parameters($request)
-    let $hits := session:get-attribute($config:session-prefix || ".hits")
-    let $facet-dimension := for $dim in $config:facets?*
-        let $facets-map := ft:facets($hits, $dim?dimension, 5)
-        return <dimension name="{$dim?dimension}" parameter="{request:get-parameter("facet[" || $dim?dimension || "]", ())}">
-            <facet>{map:for-each($facets-map, $f)}</facet>
-        </dimension>
-    let $facets := <facets count="{count($config:facets?*)}">
-                        <dimensions>{$facet-dimension}</dimensions>
-                    </facets>
-    
-
-    return <result>{($params, $facets, <hits count="{count($hits)}">{$hits}</hits>)}</result>
-    :) (::)
-
-    let $log := console:log("Parameters: " || $request?parameters?format)
      
     let $hits := session:get-attribute($config:session-prefix || ".hits")
-    where count($hits) > 0
-
+    return if($request?parameters?format = "xml") then
+    
     let $params := rq:get-all-parameters($request)
     let $f := function($k, $v) {<item value="{$k}" count="{$v}" />}
     let $facet-dimension := for $dim in $config:facets?*
@@ -905,11 +921,11 @@ declare function lapi:facets($request as map(*)) {
     let $facets := <facets count="{count($config:facets?*)}">
                         <dimensions>{$facet-dimension}</dimensions>
                     </facets>
-
-    return if($request?parameters?format = "xml") then
+    return
         (response:set-header("Content-Type", "application/xml"),
         <result>{($params, $facets, <hits count="{count($hits)}">{$hits}</hits>)}</result>)
-    else
+    
+    else if(count($hits) > 0) then
     
         <div>
         {
@@ -918,6 +934,7 @@ declare function lapi:facets($request as map(*)) {
                 lfacets:display($config, $hits)
         }
         </div>
+        else ()
     
 };
 
@@ -960,10 +977,10 @@ declare function lapi:autocomplete($doc as xs:string?, $fields as xs:string+, $q
             
             case "entry" return
                 if ($doc) then
-                    doc($config:data-root || "/dictionaries/LeDIIR-" || $doc || ".xml")/util:index-keys-by-qname(xs:QName("tei:entry"), $lower-case-q,
+                    doc($config:data-default || "/LeDIIR-" || $doc || ".xml")/util:index-keys-by-qname(xs:QName("tei:entry"), $lower-case-q,
                         $f, $max-items, $index)
                 else
-                    collection($config:data-root)/util:index-keys-by-qname(xs:QName("tei:entry"), $lower-case-q,
+                    collection($config:data-default)/util:index-keys-by-qname(xs:QName("tei:entry"), $lower-case-q,
                         $f, $max-items, $index)
             case "objectLanguage"
             case "targetLanguage"
@@ -979,10 +996,10 @@ declare function lapi:autocomplete($doc as xs:string?, $fields as xs:string+, $q
             case "polysemy"
             case "lemma" return
                 if ($doc) then
-                    doc($config:data-root || "/dictionaries/LeDIIR-" || $doc || ".xml")/ft:index-keys-for-field($field, $lower-case-q,
+                    doc($config:data-default || "/LeDIIR-" || $doc || ".xml")/ft:index-keys-for-field($field, $lower-case-q,
                     $f, $max-items)
                 else
-                    collection($config:data-root)/ft:index-keys-for-field($field, $lower-case-q,
+                    collection($config:data-default)/ft:index-keys-for-field($field, $lower-case-q,
                     $f, $max-items)       
             
             
@@ -1023,7 +1040,7 @@ declare function lapi:get-breadcrumbs($config as map(*), $hit as node(), $parent
  : on it.
  :)
 declare function lapi:expand($data as node()) {
-    let $query := session:get-attribute($config:session-prefix || ".query")
+    let $query := session:get-attribute($config:session-prefix || ".search")
     let $field := session:get-attribute($config:session-prefix || ".field")
     let $div :=
         if ($data instance of element(tei:pb)) then
@@ -1096,11 +1113,11 @@ declare function lapi:project($request as map(*)) {
 };
 
 declare function lapi:project-xml() {
-    let $items := collection($config:data-root || "/dictionaries")/tei:TEI 
-                    
+    let $items := collection($config:metadata-default)/tei:TEI 
     let $dictionary := for $item in $items
-        return <dictionary xml:id="{$item/@xml:id}">
-            <title>{$item/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title}</title>
+        return <dictionary xml:id="{substring-before($item/@xml:id, '-metadata')}">
+            {$item/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title}
+            <contents n="{$item/tei:text/tei:body/@n}">{$item/tei:text/tei:body/tei:div}</contents>
          </dictionary>
     return <project>{$dictionary}</project>
 };
@@ -1115,12 +1132,21 @@ declare function lapi:dictionary-contents($request as map(*)) {
 
     let $dictionaryId := lapi:get-dictionary-id($dictionaryId)
 
-    let $doc := collection($config:data-root || "/dictionaries")/id($dictionaryId)
+    let $doc := collection($config:metadata-default)/id(concat($dictionaryId, '-metadata'))
     let $lang := ($doc/tei:TEI/tei:teiHeader/tei:profileDesc/tei:langUsage/tei:language[@role='objectLanguage']/@ident | $doc/@xml:lang)[1]
     let $items := $doc//tei:text/tei:body/tei:div[tei:head]
 
     let $chapter := lapi:get-chapter-id($dictionaryId, $chapter)
 
+    let $console := if($lapi:debug) then 
+        (
+            console:log("[lapi:dictionary-contents] $dictionaryId:"),
+            console:log($dictionaryId),
+            console:log("[lapi:dictionary-contents] $chapter:"),
+            console:log($chapter),
+            console:log("[lapi:dictionary-contents] $lang: " || $lang)
+        )
+        else ()
     
     (: let $result := <div type="contents" xmlns="http://www.tei-c.org/ns/1.0"> {
         for $item in $items 
@@ -1128,9 +1154,9 @@ declare function lapi:dictionary-contents($request as map(*)) {
     }</div> :)
     let $result := <ul class="chapters" lang="{$lang}"> {
         for $item in $items
-        let $count := count($item/tei:entry)
-        return <li class="{if($item/@n = $chapter) then 'chapter active' else 'chapter'}">
-         <a title="{$count}" tooltip="{$count}" href="{$config:context-path}/browse.html?id={$dictionaryId}&amp;chapter={$item/@n}">{$item/tei:head[1]}</a>
+        let $count := $item/@n (: count($item/tei:entry) :)
+        return <li class="{if($item/@subtype = $chapter) then 'chapter active' else 'chapter'}">
+         <a title="{$count}" tooltip="{$count}" href="{$config:context-path}/browse.html?id={$dictionaryId}&amp;chapter={$item/@subtype}">{$item/tei:head[1]}</a>
          </li>}</ul>
     
     return $result
@@ -1138,7 +1164,12 @@ declare function lapi:dictionary-contents($request as map(*)) {
 
 
 declare %private function lapi:get-lucene-query($parameter as element(parameter)*) {
-  qrp:get-query-options(($parameter[@name='query-advanced']/. | $parameter[@name='query']/.), $parameter[@name='position']/., $parameter[@name='field']/., $parameter[@name='condition']/.)
+  qrp:get-query-options(
+    ($parameter[@name='query-advanced']/. | $parameter[@name='query']/.), 
+    $parameter[@name='position']/., 
+    $parameter[@name='field']/., 
+    $parameter[@name='condition']/.
+    )
 };
 
 declare %private function lapi:get-lucene-query-for-chapter($parameter as element(parameter)*) {
@@ -1149,10 +1180,12 @@ declare %private function lapi:get-lucene-query-for-chapter($parameter as elemen
     ()
     )
 };
-
-declare %public function lapi:get-exist-db-query-xml($request as map(*)) as element()* {
-
+declare %public function lapi:get-exist-db-query-xml($request as map(*), $sort-field as element()?) as element()* { 
     let $parameters := rq:get-all-parameters($request)
+    (: let $console := console:log($parameters) :)
+    let $sort := if(empty($parameters/parameter[@name='sort']/value) or $parameters/parameter[@name='sort']/value = '') 
+        then ($sort-field, $lapi:default-search-sort-field)[1]
+        else <sort field="{$parameters/parameter[@name='sort']/value}" />
     let $hasQuery := not(empty($parameters/parameter[@name='query']/value[node()]))
     let $hasChapter := not(empty($parameters/parameter[@name='chapter']/value[node()]))
     let $lucene := if($hasChapter and $hasQuery) then
@@ -1170,7 +1203,17 @@ declare %public function lapi:get-exist-db-query-xml($request as map(*)) as elem
         return lapi:get-lucene-query($group/parameter)
     let $facets := lapi:get-facets-values($request)
     let $combined := qrp:combine-queries($lucene)
-    let $exist-db-query := if (empty($combined)) then () else <exist-db-query>{($combined, $facets)}</exist-db-query>
+    let $exist-db-query := if (empty($combined)) then () else <exist-db-query>{($combined, $facets, $sort)}</exist-db-query>
     (: return  ($parameters, <lucene>{$lucene}</lucene>, $exist-db-query) :)
     return $exist-db-query
+};
+
+declare %public function lapi:get-exist-db-query-xml($request as map(*)) as element()* {
+    lapi:get-exist-db-query-xml($request, ())
+};
+
+declare %private function lapi:log-duration($query-start-time as xs:time, $message as xs:string?) {
+    let $query-end-time := if($lapi:debug) then util:system-time() else ()
+    let $query-duration := if($lapi:debug) then ($query-end-time - $query-start-time) div xs:dayTimeDuration('PT1S') else ()
+    return if($lapi:debug) then console:log($message || " " || $query-duration) else ()
 };
