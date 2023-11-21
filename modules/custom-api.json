@@ -1364,6 +1364,30 @@
               ],
               "description": "The format to return: either `html`, or `xml`. Default is `html`."
             }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Field to sort the result",
+            "schema": {
+              "type": "string",
+              "default": "sortKey",
+              "description": "Field to sort found result."
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Order of the sorted field",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ascending",
+                "descending"
+              ],
+              "default": "ascending",
+              "description": "Order of sorted field."
+            }
           }
         ],
         "responses": {
@@ -5625,6 +5649,20 @@
           "description": "Parts of the dictionary to be returned. Order of the parts in the source document is preserved."
         }
       },
+      "SortOrder": {
+        "type": "string",
+        "enum": [
+          "ascending",
+          "descending"
+        ],
+        "default": "ascending",
+        "description": "Order of sorted field."
+      },
+      "SortField": {
+        "type": "string",
+        "default": "sortKey",
+        "description": "Field to sort found result."
+      },
       "SimpleSearchField": {
         "type": "string",
         "enum": [
@@ -5980,6 +6018,30 @@
             "type": "string"
           },
           "nullable": true
+        }
+      },
+      "SortFieldParameter": {
+        "name": "sort",
+        "in": "query",
+        "description": "Field to sort the result",
+        "schema": {
+          "type": "string",
+          "default": "sortKey",
+          "description": "Field to sort found result."
+        }
+      },
+      "SortOrderParameter": {
+        "name": "order",
+        "in": "query",
+        "description": "Order of the sorted field",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "ascending",
+            "descending"
+          ],
+          "default": "ascending",
+          "description": "Order of sorted field."
         }
       },
       "QueryPrefixParameter": {
