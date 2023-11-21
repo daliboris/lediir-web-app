@@ -157,6 +157,9 @@
     row-gap: 10px;
     padding-top: 16px;
   }
+  paper-tab {
+    font-size: 1.5em;
+  }
   </style>
   <style is="custom-style">
   :root {
@@ -176,7 +179,7 @@
       <pb-progress indeterminate="indeterminate" bottom-item="bottom-item"></pb-progress>
      </app-toolbar>
     </app-header>
-    <!-- --> <pb-restricted login="login" group="tei"> 
+    <!-- --> <!-- <pb-restricted login="login" group="tei"> -->
     <main>
      <!-- <pb-load id="results" url="api/lex/search" emit="results"></pb-load> -->
      <div  id="results"> <!-- class="search-panel" -->
@@ -284,12 +287,16 @@
      </div>
     </main>
     <!-- -->
+    <!--
       <div slot="fallback">
           <div class="restricted" >
               <p><pb-i18n key="app.messages.restricted">You need to be logged in to see this content.</pb-i18n></p>
           </div>
       </div>
+      -->
+      <!--
       </pb-restricted>
+      -->
     <!-- -->
    </app-header-layout>
    <app-toolbar data-template="lib:include" data-template-path="templates/footer.html"></app-toolbar>
