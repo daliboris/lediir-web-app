@@ -42,6 +42,7 @@ declare function qrp:escape-for-regex
 declare variable $qrp:POSITION-START := "start";
 declare variable $qrp:POSITION-END := "end";
 declare variable $qrp:POSITION-EVERYWHERE := "everywhere";
+declare variable $qrp:EXACTLY := "exactly";
 declare variable $qrp:DOUBLE-QUOT := '&#x22;';
 
 
@@ -115,13 +116,14 @@ let $options :=
     <options>
         <default-operator>and</default-operator>
         <phrase-slop>1</phrase-slop>
-        <leading-wildcard>{if($position = ($qrp:POSITION-END, $qrp:POSITION-EVERYWHERE) or ($position = "" and matches($query, '^\*|\?'))) then "yes" else "no"}</leading-wildcard>
+        <leading-wildcard>{if($position = ($qrp:POSITION-END, $qrp:POSITION-EVERYWHERE) or ($position = ($qrp:EXACTLY, "")  and matches($query, '^\*|\?'))) then "yes" else "no"}</leading-wildcard>
         <filter-rewrite>yes</filter-rewrite>
     </options>
  return $options
 };
 
-declare function qrp:get-query-options($query as xs:string?, $position as xs:string, $field as xs:string?, $condition as xs:string?) as element(query-options) {
+declare function qrp:get-query-options($query as xs:string?, $position as xs:string, 
+  $field as xs:string?, $condition as xs:string?) as element(query-options) {
 <query-options field="{$field}" condition="{$condition}">
   {
    (
