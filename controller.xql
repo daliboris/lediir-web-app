@@ -2,6 +2,7 @@ xquery version "3.0";
 
 import module namespace config="http://www.tei-c.org/tei-simple/config" at "modules/config.xqm";
 import module namespace login="http://exist-db.org/xquery/login" at "resource:org/exist/xquery/modules/persistentlogin/login.xql";
+import module namespace sm="http://exist-db.org/xquery/securitymanager";
 
 
 declare variable $exist:path external;
@@ -46,7 +47,6 @@ else if ($exist:path eq '/api.html') then
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
         <forward url="{$exist:controller}/templates/api.html"/>
     </dispatch>
-    
 (: static resources from the resources, transform, templates, odd or modules subirectories are directly returned :)
 else if (matches($exist:path, "^.*/(resources|transform|templates)/.*$")
     or matches($exist:path, "^.*/odd/.*\.css$")
@@ -72,6 +72,17 @@ else if (matches($exist:path, "^.*/(resources|transform|templates)/.*$")
 else if (matches($exist:resource, "\.(png|jpg|jpeg|gif|tif|tiff|txt|mei)$", "s")) then
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
         <forward url="{$exist:controller}/data/{$exist:path}"/>
+    </dispatch>
+(: if the user is not logged in and access the HTML file he is redirected to login page :)
+else if (not(sm:is-authenticated()) and matches($exist:path, "\.(html|htm)$") and not($exist:path eq "/login.html")) then
+    <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+        <redirect url="login.html" />
+    </dispatch>
+
+(: if the user is logged in and access the login.html file he is redirected to main page :)
+else if (sm:is-authenticated() and ($exist:path eq "/login.html")) then
+    <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+        <redirect url="index.html" />
     </dispatch>
 
 (: all other requests are passed on the Open API router :)
