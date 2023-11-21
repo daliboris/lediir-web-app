@@ -95,6 +95,10 @@
                 font-size: 85%;
             }
 
+            #facets table {
+                width: 100%;
+            }
+
             #facets table td:nth-child(2) {
                 color: #808080;
                 text-align: right;
@@ -138,18 +142,18 @@
                     </div>
                 </app-drawer>
             <app-header-layout>
-                    <app-header slot="header" reveals="reveals" fixed="fixed" effects="waterfall">
+                    <app-header slot="header" fixed="fixed" effects="waterfall">
                     <app-toolbar data-template="lib:include" data-template-path="templates/menu.html"/>
-                        <app-toolbar data-template="lib:include" data-template-path="templates/toolbar.html"/>
-                    <!-- --> <pb-restricted login="login" group="tei"> <!-- -->
+                     <!--    <app-toolbar data-template="lib:include" data-template-path="templates/toolbar.html"/> -->
+                    <!-- --> <!-- <pb-restricted login="login" group="tei"> -->
                     <app-toolbar id="pagination">
                       <pb-paginate class="pb-paginate" per-page="20" range="20" subscribe="results" emit="search"  show-previous-next="show-previous-next" data-template="pages:parse-params"/>
-                        <pb-progress indeterminate="indeterminate" bottom-item="bottom-item"/>
+                        <pb-progress indeterminate="indeterminate" bottom-item="bottom-item" subscribe="results"/>
                     </app-toolbar>
-                    <!-- --> </pb-restricted> <!-- -->
+                    <!-- --> <!-- </pb-restricted> -->
                 </app-header>
 
-                <!-- -->  <pb-restricted login="login" group="tei"> <!-- -->
+                <!-- --> <!-- <pb-restricted login="login" group="tei"> -->
                 <main>
                     <pb-load id="results" url="api/lex/search" emit="results"/>
                     <div class="search-panel">
@@ -174,10 +178,25 @@
                                   <input type="hidden" name="position[3]" value="${position[3]}" data-template="pages:parse-params" />
                                   <input type="hidden" name="query-advanced[3]" value="${query-advanced[3]}" data-template="pages:parse-params" />
                                   <input type="hidden" name="condition[3]" value="${condition[3]}" data-template="pages:parse-params" />
+                                  <input type="hidden" name="sort" value="${sort}" data-template="pages:parse-params" />
+                                  <input type="hidden" name="order" value="${order}" data-template="pages:parse-params" />
                                     <!--
                                     <div class="targets">
                                      <paper-checkbox name="level" value="entry"><pb-i18n key="settings.search-level.entry">Within entry</pb-i18n></paper-checkbox>
                                      <paper-checkbox name="level" value="sense"><pb-i18n key="settings.search-level.sense">Within sense</pb-i18n></paper-checkbox>
+                                    </div>
+                                    -->
+                                    <!--
+                                    <div class="targets">
+                                        <label for="search.mode.simple">
+                                            <input type="radio" id="search.mode.simple" name="search-mode" value="simple" checked="${search-mode} = simple)" />
+                                            <pb-i18n key="settings.search.mode.simple">Simple</pb-i18n>
+                                        </label>
+                                
+                                        <label for="search.mode.advanced">
+                                            <input type="radio" id="search.mode.advanced" name="search-mode" value="advanced" checked="${search-mode} = advanced" />
+                                            <pb-i18n key="settings.search.mode.advanced">Advanced</pb-i18n>
+                                        </label>
                                     </div>
                                     -->
                                     <pb-custom-form id="facets" url="api/lex/search/facets" subscribe="results" event="pb-results-received" emit="search" />
@@ -190,20 +209,24 @@
                         </paper-card>
                     </div>
                 </main>
-
+                <!--
                 <div id="pagination-bottom">
                         <pb-paginate per-page="20" range="20" subscribe="results" emit="search" show-previous-next="show-previous-next" 
                    data-template="pages:parse-params"  />
-                        <pb-progress indeterminate="indeterminate" bottom-item="bottom-item"/>
+                        <pb-progress indeterminate="indeterminate" bottom-item="bottom-item" subscribe="results"/>
                 </div>
+                -->
                 <!-- -->
+                <!--
                 <div slot="fallback">
                     <div class="restricted" >
                         <p><pb-i18n key="app.messages.restricted">You need to be logged in to see this content.</pb-i18n></p>
                     </div>
                 </div>
+                 -->
+                 <!--
                 </pb-restricted>
-                
+                -->
                 <!-- -->
             </app-header-layout>
             </app-drawer-layout>
