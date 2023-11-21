@@ -17,6 +17,8 @@ declare function rq:get-api-parameters($request as map(*)) as element(parameters
 
     let $items := rq:group-parameters($items)
 
+    let $items := rq:hierarchize-parameters($items)
+
     let $items := rq:sort-parameters($items)
 
     return <parameters type="api">{$items}</parameters>
@@ -34,6 +36,8 @@ declare function rq:get-request-parameters($request as map(*)) as element(parame
                         </parameter>
 
     let $items := rq:group-parameters($items)
+
+    let $items := rq:hierarchize-parameters($items)
 
     let $items := rq:sort-parameters($items)
 
@@ -155,4 +159,45 @@ declare %private function rq:group-parameters($items as element(parameter)*) as 
     
     return $items
 
+};
+
+declare %private function rq:hierarchize-parameters($items as element()*) as element()* {
+       let $delim := "\|"
+   
+    let $result := for $item in $items 
+     return if($item[value[matches(., $delim)]]) then
+     <parameter name="{$item/@name}" has-hierarchy="true">
+    {rq:hierarchize-values($item/value)}
+   </parameter>
+     else if($item[value]) then
+       $item
+      else
+     element {node-name($item)}
+                 { 
+                    $item/@*,
+                    rq:hierarchize-parameters($item/*) 
+                } 
+   
+   return $result
+};
+
+declare %private function rq:hierarchize-values($values as xs:string*) {
+let $delim := "|"
+return
+ for $value in $values
+                let $prefix := if(contains($value, $delim)) then substring-before($value, $delim) else $value
+                 group by $prefix
+                
+               return
+               
+
+               <value text="{$prefix}"> 
+               {
+                  for $item in $value
+                  where contains($item, $delim)
+                  let $val := substring-after($item, $delim)
+                  return if(contains($val, $delim)) then rq:hierarchize-values($val) else <value text="{$val}" />
+                  }
+                  </value>
+                
 };
