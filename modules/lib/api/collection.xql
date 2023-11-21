@@ -14,6 +14,8 @@ import module namespace pm-config="http://www.tei-c.org/tei-simple/pm-config" at
 import module namespace custom="http://teipublisher.com/api/custom" at "../../custom-api.xql";
 import module namespace query="http://www.tei-c.org/tei-simple/query" at "../query.xql";
 import module namespace nav="http://www.tei-c.org/tei-simple/navigation" at "../navigation.xql";
+import module namespace unzip="http://joewiz.org/ns/xquery/unzip" at "../../unzip.xql";
+import module namespace console="http://exist-db.org/xquery/console";
 
 declare function capi:list($request as map(*)) {
     let $path := if ($request?parameters?path) then xmldb:decode($request?parameters?path) else ()
@@ -119,6 +121,14 @@ declare %private function capi:upload($root, $paths, $payloads) {
                 let $collectionPath := $config:data-root || "/" || $root
                 return
                     if (xmldb:collection-available($collectionPath)) then
+                    
+                        if (ends-with($path, ".zip")) then
+                            let $stored := xmldb:store($collectionPath, xmldb:encode($path), $data)
+                            let $log := console:log("$stored: " || $stored)
+                            let $unzip := unzip:unzip($stored, true())
+                            let $log := console:log($unzip)
+                            return $unzip//entry/@path
+                        else
                         if (ends-with($path, ".docx")) then
                             let $mediaPath := $config:data-root || "/" || $root || "/" || xmldb:encode($path) || ".media"
                             let $stored := xmldb:store($collectionPath, xmldb:encode($path), $data)
@@ -138,6 +148,14 @@ declare %private function capi:upload($root, $paths, $payloads) {
                     else
                         error($errors:NOT_FOUND, "Collection not found: " || $collectionPath)
         return
+            if(count($path) gt 1) then
+                for $p in $path return map {
+                    "name": $p,
+                    "path": substring-after($p, $config:data-root || "/" || $root),
+                    "type": xmldb:get-mime-type($p),
+                    "size": 93928
+                }
+            else
             map {
                 "name": $path,
                 "path": substring-after($path, $config:data-root || "/" || $root),
