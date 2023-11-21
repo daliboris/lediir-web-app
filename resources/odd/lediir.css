@@ -172,12 +172,21 @@ article[class='entry'] {
 }
 
 
+/* seznam s odkazy na interní hesla */
 .tei-ref-internal {
-    display: list-item;
+    /* display: list-item; */
+    font-size: 1.75em;
 }
 
+.tei-ref-internal::before { 
+    content: "⏵ ";
+    font-size: 75%;
+}
+
+/* seznam odkazů */
 .tei-xr-block {
     margin-top: 0.5em;
+    list-style: inside;
 }
 
 .tei-lbl-variant::before { content: " "  }
@@ -212,4 +221,14 @@ table.tei-table td {
 
 table.facets-table {
     width: 100%;
+}
+
+.tei-link-corpus {
+    text-decoration: none;
+    vertical-align: super;
+    margin-left: 0.5em;
+}
+
+.co-author::after {
+    content: " – ";
 }
