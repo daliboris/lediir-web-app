@@ -39,7 +39,45 @@
             <!-- <fileset dir="node_modules/@teipublisher/pb-components/i18n/common" /> -->
         </copy>
     </target>
-    <target name="xar-local" depends="npm.install,prepare,xar" />
+    <target name="prepare-config">
+        <replaceregexp file="modules/config.xqm" 
+        match="^(\s)*declare.*\$config:webcomponents :=.*;(\s)*$"
+        replace="(: \0 :)"
+        byline="true" />
+        <replaceregexp file="modules/config.xqm" 
+            match="^(\s)*declare.*\$config:webcomponents-cdn :=.*;(\s)*$"
+            replace="(: \0 :)"
+            byline="true" />
+    </target>
+    <target name="prepare-local" depends="prepare-config">
+        <echo message="Changing 'modules/config.xqm' file: using 'local' for $config:webcomponents" />
+        
+        <replaceregexp file="modules/config.xqm" 
+            match='^(\s*)\(:\s*(declare.*\$config:webcomponents\s*:=\s*"local"\s*;)\s+:\)$'
+            replace='declare variable $config:webcomponents := "local";'
+            byline="true" />
+        <echo message="Changing 'modules/config.xqm' file: using 'cdn' for $config:webcomponents-cdn" />
+        
+        <replaceregexp file="modules/config.xqm" 
+            match='^(\s*)\(:\s*(declare.*\$config:webcomponents-cdn\s*:=\s*"https://cdn.jsdelivr.net/npm/@teipublisher/pb-components"\s*;)\s+:\)$'
+            replace='declare variable $config:webcomponents-cdn := "https://cdn.jsdelivr.net/npm/@teipublisher/pb-components";'
+            byline="true" />
+    </target>
+    <target name="prepare-dev" depends="prepare-config">
+        <echo message="Changing 'modules/config.xqm' file: using 'dev' for $config:webcomponents" />
+        
+        <replaceregexp file="modules/config.xqm" 
+            match='^(\s*)\(:\s*(declare.*\$config:webcomponents\s*:=\s*"dev"\s*;)\s+:\)$'
+            replace='declare variable $config:webcomponents := "dev";'
+            byline="true" />
+        <echo message="Changing 'modules/config.xqm' file: using 'cdn' for $config:webcomponents-cdn" />
+        
+        <replaceregexp file="modules/config.xqm" 
+            match='^(\s*)\(:\s*(declare.*\$config:webcomponents-cdn\s*:=\s*"http://localhost:8000"\s*;)\s+:\)$'
+            replace='declare variable $config:webcomponents-cdn := "http://localhost:8000";'
+            byline="true" />
+    </target>
+    <target name="xar-local" depends="npm.install,prepare,prepare-local,xar" />
     <target name="xar">
         <mkdir dir="${build.dir}" />
         <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" excludes="${build.dir} ${build.dir}/* node_modules/** *.code-workspace .existdb.json *build.properties" />
