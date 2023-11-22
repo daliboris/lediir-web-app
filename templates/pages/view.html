@@ -210,7 +210,7 @@
                         <app-toolbar data-template="lib:include" data-template-path="templates/lex-toolbar.html"/>
                     </app-header>
                     
-                    <!-- --> <pb-restricted login="login" group="tei"> <!-- -->
+                    <!-- --> <!-- <pb-restricted login="login" group="tei"> --> <!-- -->
 
                     <pb-drawer toggle="tocToggle" class="toc" emit="toc" subscribe="transcription">
                         <div class="drawer-content">
@@ -258,6 +258,7 @@
                             <pb-paginate slot="header" id="paginate" per-page="10" page-count="20" range="10" show-previous-next="show-previous-next" emit="docs" subscribe="docs"/>
                             <pb-restricted login="login" slot="toolbar">
                             </pb-restricted>
+                            
                         </pb-browse-docs>
                     
                         
@@ -270,12 +271,16 @@
                 -->
                     </main>
                 <!-- -->
+                <!--
                     <div slot="fallback">
                         <div class="restricted" >
                             <p><pb-i18n key="app.messages.restricted">You need to be logged in to see this content.</pb-i18n></p>
                         </div>
                     </div>
+                    -->
+                    <!--
                     </pb-restricted>
+                    -->
                     <!-- -->
                  <app-toolbar data-template="lib:include" data-template-path="templates/footer.html"/>
                 </app-header-layout>
