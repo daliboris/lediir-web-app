@@ -403,6 +403,9 @@ declare variable $config:data-root :=$config:app-root || "-data/data";
 (: declare variable $config:data-default := $config:data-root; :)
 declare variable $config:data-default := $config:app-root || "-data/data/dictionaries";
 
+declare variable $config:metadata-default := $config:data-root || "/metadata";
+
+
 (:~
  : A sequence of root elements which should be excluded from the list of
  : documents displayed in the browsing view.
@@ -738,3 +741,10 @@ Maximum items returned for autocomplete function.
 declare variable $config:autocomplete-max-items := 30;
 
 declare variable $config:autocomplete-return-values := function($key, $count) {$key};
+
+(: declare variable $config:corpus-url := "http://unesco.uniba.sk/guest/run.cgi/first?corpname=AranPers_x&amp;queryselector=lemmarow&amp;default_attr=word&amp;fc_lemword_window_type=both&amp;fc_lemword_wsize=5&amp;fc_lemword_type=all&amp;fc_pos_window_type=both&amp;fc_pos_wsize=5&amp;fc_pos_type=all&amp;lemma="; :)
+declare variable $config:corpus-url := "http://unesco.uniba.sk/aranea/run.cgi/first?corpname=AranPers_b&amp;queryselector=lemmarow&amp;default_attr=word&amp;fc_lemword_window_type=both&amp;fc_lemword_wsize=5&amp;fc_lemword_type=all&amp;fc_pos_window_type=both&amp;fc_pos_wsize=5&amp;fc_pos_type=all&amp;lemma=";
+declare variable $config:corpus-url-map := map {
+    "redaktor" : "http://unesco.uniba.sk/aranea/run.cgi/first?corpname=AranPers_b&amp;queryselector=lemmarow&amp;default_attr=word&amp;fc_lemword_window_type=both&amp;fc_lemword_wsize=5&amp;fc_lemword_type=all&amp;fc_pos_window_type=both&amp;fc_pos_wsize=5&amp;fc_pos_type=all&amp;lemma=",
+    "host" : "http://unesco.uniba.sk/guest/run.cgi/first?corpname=AranPers_x&amp;queryselector=lemmarow&amp;default_attr=word&amp;fc_lemword_window_type=both&amp;fc_lemword_wsize=5&amp;fc_lemword_type=all&amp;fc_pos_window_type=both&amp;fc_pos_wsize=5&amp;fc_pos_type=all&amp;lemma="
+};
