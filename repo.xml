@@ -12,9 +12,35 @@
     <permissions user="redaktor" group="tei" mode="rw-r--r--" />
     <deployed />
     <changelog>
+        <change version="0.7.18">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>nahrávání souborů pomocí souborů ZIP</li>
+                <li>fulltextové hledání výrazů, které začánají hvězdičkou (*)</li>
+                <li>abecední řazení hesel při procházení</li>
+                <li>při hledání se řazení řídí podle frekvence výskytu (častější jsou na začátku)</li>
+                <li>použitelnější ovládací prvek s listováním pro hledání i procházení</li>
+            </ul>
+        </change>
+        <change version="0.7.17">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>odlišné zobrazení zahnízdovaných hesel (větší písmo, výraznější ikona, odsazení)</li>
+                <li>vylepšený odkaz u heslového slova na hledání v korpusu <a href="http://unesco.uniba.sk/guest/run.cgi/corp_info?corpname=AranPers_x&amp;struct_attr_stats=1&amp;subcorpora=1">Araneum Persicum Beta Minus</a>
+                    <ul>
+                        <li>v korpuse se vyhledává pomocí simple query</li>
+                        <li>slovesa se vyhledávají bez koncového znaku <i>ن</i> </li>
+                    </ul>
+                </li>
+            </ul>
+        </change>
         <change version="0.7.16">
             <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>přechod na novější verzi TEI Publisheru 8.0.0 (resp. TEI Publisher: Processing Model Libraries 3.0.0)</li>
                 <li>závislost na projektu <b>lediir-data</b></li>
+                <li>povinné přihlašování (řeší problém se špatným zobrazením heslových statí)</li>
+                <li>oprava hledání sémantických okruhů kliknutím na číslo identifikátoru</li>
+                <li>oprava zobrazení podřízených položek v hierarchických fasetech (sémantických okruhů)</li>
+                <li>odlišné zobrazení zahnízdovaných hesel (větší písmo, výraznější ikona, odsazení)</li>
+                <li>odkaz u heslového slova na hledání v korpusu <a href="http://unesco.uniba.sk/guest/run.cgi/corp_info?corpname=AranPers_x&amp;struct_attr_stats=1&amp;subcorpora=1">Araneum Persicum Beta Minus</a></li>
             </ul>
         </change>
         <change version="0.7.15">
