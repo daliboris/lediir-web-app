@@ -2,6 +2,7 @@ build
 transform
 /node_modules/
 local.build.properties
+local.*
 resources/scripts/*.js
 resources/scripts/*.map
 resources/lib/
@@ -12,3 +13,4 @@ resources/images/leaflet
 resources/i18n/common
 data
 *.code-workspace
+remote-*.xstrc
