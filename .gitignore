@@ -13,3 +13,4 @@ resources/images/leaflet
 resources/i18n/common
 data
 *.code-workspace
+remote-*.xstrc
