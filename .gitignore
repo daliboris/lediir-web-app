@@ -6,6 +6,7 @@ local.*
 resources/scripts/*.js
 resources/scripts/*.map
 !resources/scripts/browse.js
+!resources/scripts/facets.js
 resources/lib/
 resources/css/leaflet/
 resources/css/prismjs

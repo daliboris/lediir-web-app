@@ -7,8 +7,8 @@
     <property name="build.dir" value="build" />
     <property name="scripts.dir" value="../../tei-publisher-components/dist" />
     <target name="clean">
-        <echo message="Deleting 'resources/scripts' subdirectory" />
-        <delete dir="resources/scripts" includes="*.js *.map" />
+        <echo message="Deleting 'resources/scripts' subdirectory (excluding browse.js, facets.js)" />
+        <delete dir="resources/scripts" includes="*.js *.map" excludes="browse.js facets.js" />
         <echo message="Deleting 'images/leaflet' subdirectory" />
         <delete dir="resources/images/leaflet" />
         <delete dir="resources/images/openseadragon" />
