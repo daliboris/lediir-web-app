@@ -57,6 +57,7 @@
             "pronunciation": "Pronunciation",
             "domain": "Domain",
             "reversal": "Reversal",
+            "definition" : "Definition",
             "complexForm": "Complex form",
             "anything": "Anything",
             "and": "AND",
