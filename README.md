@@ -12,12 +12,12 @@ The project "Electronic lexical database of Indo-Iranian languages. Pilot module
 - [Visual Studio Code](https://code.visualstudio.com/download)
   - doplněk [existdb-vscode](https://marketplace.visualstudio.com/items?itemName=eXist-db.existdb-vscode); slouží k synchronizaci změn kódu v úložišti a na serveru eXist-db (pouze jednosměrně: souborový systém => databáze)
 - [eXist-db](https://exist-db.org)
-  - verze [6.0.1](https://github.com/eXist-db/exist/releases/tag/eXist-6.0.1)
+  - verze [6.2.0](https://github.com/eXist-db/exist/releases/tag/eXist-6.2.0)
   - balíček [atom-editor](https://github.com/eXist-db/atom-editor-support/releases/);  slouží k synchronizaci změn kódu v úložišti a na serveru eXist-db (viz doplněk _existdb-vscode_)
 
 ### Aktualizace eXist-db
 
-- přechod ze starší verze, např. [5.3.1](https://github.com/eXist-db/exist/releases/tag/eXist-5.3.1) na verzi aktuální, např. [6.0.1](https://github.com/eXist-db/exist/releases/tag/eXist-6.0.1)
+- přechod ze starší verze, např. [5.3.1](https://github.com/eXist-db/exist/releases/tag/eXist-5.3.1) na verzi aktuální, např. [6.2.0](https://github.com/eXist-db/exist/releases/tag/eXist-6.2.0)
 - před aktualizací zálohovat databázi (<http://localhost:8080/exist/apps/dashboard/admin#>)
 - uložit vygenerovaný ZIP do složky (`V:\Projekty\Temp\LeDIIR\Zaloha\full20220301-1001.zip`)
 - odinstalace eXist-db
