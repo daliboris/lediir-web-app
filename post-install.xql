@@ -4,7 +4,7 @@ import module namespace pmu="http://www.tei-c.org/tei-simple/xquery/util";
 import module namespace pmc="http://www.tei-c.org/tei-simple/xquery/config";
 import module namespace odd="http://www.tei-c.org/tei-simple/odd2odd";
 import module namespace config="http://www.tei-c.org/tei-simple/config" at "modules/config.xqm";
-import module namespace tpu="http://www.tei-c.org/tei-publisher/util" at "util.xql";
+import module namespace tpu="http://www.tei-c.org/tei-publisher/util" at "modules/lib/util.xql";
 
 declare namespace repo="http://exist-db.org/xquery/repo";
 
