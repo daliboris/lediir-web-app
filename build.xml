@@ -5,7 +5,7 @@
     <property name="project.version" value="${package(version)}" />
     <property name="project.app" value="${package(abbrev)}" />
     <property name="build.dir" value="build" />
-    <property name="scripts.dir" value="../../tei-publisher-components/dist" />
+    <property name="scripts.dir" value="${basedir}/node_modules/@daliboris/pb-components/dist" />
     <target name="clean">
         <echo message="Deleting 'resources/scripts' subdirectory (excluding browse.js, facets.js)" />
         <delete dir="resources/scripts" includes="*.js *.map" excludes="browse.js facets.js" />
@@ -92,7 +92,7 @@
            <delete dir="${build.dir}" includes="${project.app}.xar" />
     </target>
     <target name="npm.install">
-        <echo message="npm: ${npm}; basedir: ${basedir}" />
+        <echo message="npm: ${npm}; basedir: ${basedir}; scripts.dir: ${scripts.dir}" />
         <exec executable="${npm}" outputproperty="npm.output">
             <arg line="install" />
         </exec>
