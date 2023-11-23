@@ -1,6 +1,7 @@
 <project name="lediir" default="xar">
-    <xmlproperty file="expath-pkg.xml" /> <!-- Adjust path below to match location of your npm binary -->
-    <property name="npm" value="npm.cmd" />
+    <xmlproperty file="${basedir}/expath-pkg.xml" />
+    <property file="${basedir}/local.build.properties" />
+    <property file="${basedir}/build.properties" />
     <property name="project.version" value="${package(version)}" />
     <property name="project.app" value="${package(abbrev)}" />
     <property name="build.dir" value="build" />
@@ -91,6 +92,7 @@
            <delete dir="${build.dir}" includes="${project.app}.xar" />
     </target>
     <target name="npm.install">
+        <echo message="npm: ${npm}; basedir: ${basedir}" />
         <exec executable="${npm}" outputproperty="npm.output">
             <arg line="install" />
         </exec>
