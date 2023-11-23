@@ -12,6 +12,11 @@
     <permissions user="redaktor" group="tei" mode="rw-r--r--" />
     <deployed />
     <changelog>
+        <change version="0.7.19">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>hledání ve váznamové definici (pokročilé hledání)</li>
+            </ul>
+        </change>
         <change version="0.7.18">
             <ul xmlns="http://www.w3.org/1999/xhtml">
                 <li>nahrávání souborů pomocí souborů ZIP</li>
