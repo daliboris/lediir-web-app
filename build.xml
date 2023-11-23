@@ -80,11 +80,12 @@
     <target name="xar-local" depends="npm.install,prepare,prepare-local,xar" />
     <target name="xar">
         <mkdir dir="${build.dir}" />
-        <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" excludes="${build.dir} ${build.dir}/* node_modules/** *.code-workspace .existdb.json *build.properties" />
+        <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" 
+            excludes="${build.dir} ${build.dir}/** node_modules/** *.code-workspace .existdb.json *build.properties *.xstrc *local*" />
         <copy file="${build.dir}/${project.app}-${project.version}.xar" overwrite="true" tofile="${build.dir}/${project.app}.xar"/>
     </target>
     <target name="xar-complete" depends="clean,npm.install,xar" />
-    <target name="xar-dev" depends="xar">
+    <target name="xar-dev" depends="prepare,prepare-dev,xar">
            <copy file="${build.dir}/${project.app}-${project.version}.xar" overwrite="true" tofile="${build.dir}/${project.app}-${project.version}-dev.xar"/>
            <delete dir="${build.dir}" includes="${project.app}-${project.version}.xar" />
            <delete dir="${build.dir}" includes="${project.app}.xar" />
