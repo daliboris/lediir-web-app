@@ -1,0 +1,38 @@
+# This workflow will build a Java project with Ant
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-ant
+
+name: Release LeDIIR Web Application as eXist-db module
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+ 
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Build with Ant
+        run: ant -noinput -buildfile build.xml xar-local
+      - name: GH Release
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          name: LeDIIR Web Application ${{ github.ref_name }}
+          files: /home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/build/*.xar
+          fail_on_unmatched_files: true
