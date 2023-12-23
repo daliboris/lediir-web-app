@@ -391,10 +391,25 @@
                 </paper-button>
             </div>
         </paper-dialog>
+        <paper-dialog id="commentDialog" modal="modal">
+            <h2><pb-i18n key="dialogs.comment">Comment</pb-i18n></h2>
+            <paper-dialog-scrollable>
+                <input type="text" name="id" value="{id}"/>
+            </paper-dialog-scrollable>
+            <div class="buttons">
+                <paper-button dialog-dismiss="dialog-dismiss" autofocus="autofocus">
+                    <pb-i18n key="dialogs.cancel">Cancel</pb-i18n>
+                </paper-button>
+                <paper-button dialog-confirm="dialog-confirm" autofocus="autofocus">
+                    <pb-i18n key="dialogs.addComment">Comment</pb-i18n>
+                </paper-button>
+            </div>
+        </paper-dialog>        
     </pb-page>
     <div class="splash"></div>
     <script src="resources/scripts/browse.js"></script>
     <script src="resources/scripts/facets.js"></script>
+    <script src="resources/scripts/comments.js"></script>
 </body>
 
 </html>
