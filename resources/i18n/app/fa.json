@@ -3,101 +3,101 @@
         "title": "[Electronic Lexical Database of Indo-Iranian Languages]"
     },
     "menu": {
-        "search": "[Search]",
-        "about": "[About]",
-        "browse": "[Browse]",
-        "contents": "[Contents]"
+        "search": "جستجو",
+        "about": "درباره",
+        "browse": "مرور",
+        "contents": "فهرست"
     },
     "headings": {
-        "dictionaries": "[Dictionaries]",
-        "settings": "[Settings]",
-        "howToCite": "[How to cite]",
-        "help": "[Help]",
-        "news": "[News]",
-        "aboutLanguage": "[About Langauge]",
-        "FACS": "[Persian-Czech Dictionary]"
+        "dictionaries": "لغتنامه ها",
+        "settings": "تنظیمات",
+        "howToCite": "نحوه استنار",
+        "help": "کمک",
+        "news": "اخبار",
+        "aboutLanguage": "درباره زبان",
+        "FACS": "فرهنگ لغت چکی - فارسی"
     },
     "settings": {
-        "abbreviations": "[abbreviations\/full text]",
-        "collapse": "[collapse\/expand entries]",
+        "abbreviations": "اختصارات\/متن کامل",
+        "collapse": "خرابی\/گسترش مدخل ها",
         "expand-quotes": "[expand quotes]",
-        "search-sections": "[Search sections]",
-        "search-headings": "[Search headings]",
-        "search-entries": "[Search entries]",
+        "search-sections": "جستجو- بخش ها",
+        "search-headings": "جستجو - سرفصل ها",
+        "search-entries": "جستجو - مداخل",
         "search" : {
             "mode" : {
-                "simple" : "[Simple]",
-                "advanced" : "[Advanced]"
+                "simple" : "ساده",
+                "advanced" : "پیشرفته"
             }
         }
     },
     "search": {
-        "author" : "[Search authors]",
+        "author" : "جستجوی نویسندگان",
         "headings": {
-            "simple": "[Simple]",
-            "advanced": "[Advanced]",
-            "domains": "[Semantic domains]"
+            "simple": "ساده",
+            "advanced": "پیشرفته",
+            "domains": "حوزه های معنایی"
         },
         "labels": {
-            "field": "[Search for]",
-            "condition": "[Condition]",
-            "query": "[Query]",
-            "exactly": "[exactly]",
-            "start": "[start]",
-            "end": "[end]",
-            "everywhere": "[everywhere]",
-            "area": "[Area]"
+            "field": "جستجو",
+            "condition": "شرایط",
+            "query": "Query",
+            "exactly": "دقیقا",
+            "start": "شروع",
+            "end": "پایان",
+            "everywhere": "همه جا",
+            "area": "حوزه"
         },
         "buttons": {
-            "search": "[Search]"
+            "search": "جستجو"
         },
         "fields": {
-            "lemma": "[Headrwod]",
-            "partOfSpeech": "[Part-of-speech]",
-            "pronunciation": "[Pronunciation]",
-            "domain": "[Domain]",
-            "reversal": "[Reversal]",
-            "definition" : "[Definition]",
-            "complexForm": "[Complex form]",
-            "anything": "[Anything]",
-            "and": "[AND]",
-            "andNot": "[AND NOT CONTAINS]",
-            "or": "[OR]"
+            "lemma": "سرواژه",
+            "partOfSpeech": "اجزای کلام",
+            "pronunciation": "تلفظ",
+            "domain": "دامنه",
+            "reversal": "معکوس",
+            "definition" : "تعریف",
+            "complexForm": "فرم پیجیده",
+            "anything": "هرچیز",
+            "and": "و",
+            "andNot": "و نه شامل",
+            "or": "یا"
         },
         "areas": {
-            "basic-fileds": "[Basic fields]",
-            "whole-text": "[Whole text]",
-            "complexForm": "[Complex form]"
+            "basic-fileds": "حوزه های پایه",
+            "whole-text": "متن کامل",
+            "complexForm": "فرم پیچیده"
         }
     },
     "app": {
         "facets": {
-            "partOfSpeech": "[Part-of-speech]",
-            "domain": "[Domain]",
-            "domainHierarchy": "[Parent domain]",
-            "style": "[Stylistic qualifier]",
-            "object-language": "[Object language]",
-            "target-language": "[Target language]",
-            "polysemy": "[Polysemy]",
-            "frequency": "[Frequency]",
-            "complexFormType": "[Complex form]",
-            "dictionary": "[Dictionary]",
-            "show-all": "[Show all]"
+            "partOfSpeech": "اجزای کلام",
+            "domain": "دامنه",
+            "domainHierarchy": "دامنه والد",
+            "style": "سبک",
+            "object-language": "Object language",
+            "target-language": "زبان مقصد",
+            "polysemy": "چندمعنایی",
+            "frequency": "تکرار",
+            "complexFormType": "فرم پیجیده",
+            "dictionary": "لغتنامه",
+            "show-all": "نمایش همه"
         },
         "languages": {
-            "cs": "[Czech]",
-            "cs-CZ": "[Czech]",
-            "en": "[English]",
-            "fa": "[Persian]",
-            "tg": "[Tajic]"
+            "cs": "چک",
+            "cs-CZ": "چک",
+            "en": "انگلیسی",
+            "fa": "فارسی",
+            "tg": "تاجیکی"
         },
         "messages": {
-            "restricted": "[You need to be logged in to see this content.]",
-            "continue" : "[Select an item from the menu or footer to continue.]"
+            "restricted": "برای دیدن این محتوی باید وارد شوید",
+            "continue" : "برای ادامه، یک مورد را از منو یا پاورقی انتخاب کنید."
         }
     },
     "buttons": {
-        "comments": "[Comments]"
+        "comments": "نظرات"
     },
     "dropdown": {
         "label": "label-fa",
