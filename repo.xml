@@ -12,6 +12,15 @@
     <permissions user="redaktor" group="tei" mode="rw-r--r--" />
     <deployed />
     <changelog>
+        <change version="0.7.20">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>překlad uživatelského rozhraní v peršině</li>
+                <li>informace o parametrech hledání ve výsledcích hledání</li>
+                <li>kaskádové styly pro tisk stránky</li>
+                <li>odkaz na korpus perštiny s GDE (Good Dictionary Examples)</li>
+                <li>změna zprávy pro hosta po přihlášení</li>
+            </ul>
+        </change>
         <change version="0.7.19">
             <ul xmlns="http://www.w3.org/1999/xhtml">
                 <li>hledání ve váznamové definici (pokročilé hledání)</li>
