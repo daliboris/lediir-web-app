@@ -128,6 +128,15 @@
             .menubar {
                 z-index: 5;
             }
+            @media print { 
+                main { display: block; }
+                .search-panel { display: none;}
+                #facets { display: none; }
+                app-header { display: none; }
+                lediir-comment { display: none; }
+                article[class='entry'] {border-bottom: 2px solid silver !important; }
+                #results { overflow: hidden; }
+            }
         </style>
     </head>
 
