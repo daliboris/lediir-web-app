@@ -1,3 +1,4 @@
+const query = document.getElementById('query-for');
 const facets = document.getElementById('facets');
 const reset = document.getElementById('search-reset-button');
 if (facets) { 
@@ -38,6 +39,22 @@ if (facets) {
                         }
                         */
             facets._submit();
+        });
+    }
+    if(query) {
+        facets.addEventListener('pb-custom-form-loaded', function(ev) { 
+            const search = document.getElementById('search-form');
+            const inputs = search.querySelectorAll("input[type='hidden']");
+            var text = "";
+            inputs.forEach((input) => {
+                const value = input.getAttribute("value");
+                if(value != "") {
+                    const key = (value == "headword") ? "search.areas.basic-fileds"  : "search.fields." + value;
+                    const html = "<pb-i18n key=\"" + key + "\">" + value + "</pb-i18n>";
+                    text += (text == "") ? html : "; " + html;
+                }
+              });
+              query.innerHTML = "Dotaz pro: " +  text;
         });
     }
 }
