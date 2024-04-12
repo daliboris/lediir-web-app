@@ -20,7 +20,7 @@
     "settings": {
         "abbreviations": "zkratky\/plný text",
         "collapse": "sbalit\/rozbalit hesla",
-        "expand-quotes": "automaticky rozbalit doklady",
+        "expand-quotes": "automaticky rozbalit hesla",
         "search-sections": "v textu",
         "search-headings": "v nadpisech",
         "search-entries": "v heslech",

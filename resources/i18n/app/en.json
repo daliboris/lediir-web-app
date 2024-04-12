@@ -18,9 +18,9 @@
         "FACS": "Persian-Czech Dictionary"
     },
     "settings": {
-        "abbreviations": "abbreviations\/full text",
-        "collapse": "collapse\/expand entries",
-        "expand-quotes": "expand quotes",
+        "abbreviations": "Abbreviations\/full text",
+        "collapse": "Collapse\/expand entries",
+        "expand-quotes": "Expand entries",
         "search-sections": "Search sections",
         "search-headings": "Search headings",
         "search-entries": "Search entries",
