@@ -248,7 +248,7 @@
                             behaviour="link" cssClass="tei-link-corpus">
                             <desc>Výchozí lemma obsahující variantní podobu</desc>
                             <param name="uri"
-                                value="concat('http://unesco.uniba.sk/guest/run.cgi/first?corpname=AranPers_x', '&amp;amp;', 'iquery=', if(ancestor::entry/sense[gramGrp/gram/@ana='#LeDIIR.taxonomy.v']) then replace(., '(.*)(ن)', '$1') else .)" />
+                                value="concat('http://unesco.uniba.sk/guest/run.cgi/first?corpname=AranPers_x;viewmode=sen', '&amp;amp;', 'gdex_enabled=1&amp;amp;gdexcnt=200', '&amp;amp;', 'iquery=', if(ancestor::entry/sense[gramGrp/gram/@ana='#LeDIIR.taxonomy.v']) then replace(., '(.*)(ن)', '$1') else .)" />
                             <param name="target" value="'_blank'" />
                             <param name="content" value="'⇗'" />
                         </model>
@@ -266,7 +266,7 @@
                             behaviour="link" cssClass="tei-link-corpus">
                             <desc>Výchozí lemma, které neobsahuje variantní podobu</desc>
                             <param name="uri"
-                                value="concat('http://unesco.uniba.sk/guest/run.cgi/first?corpname=AranPers_x', '&amp;amp;', 'iquery=', if(ancestor::entry/sense[gramGrp/gram/@ana='#LeDIIR.taxonomy.v']) then replace(., '(.*)(ن)', '$1') else .)" />
+                                value="concat('http://unesco.uniba.sk/guest/run.cgi/first?corpname=AranPers_x;viewmode=sen', '&amp;amp;', 'gdex_enabled=1&amp;amp;gdexcnt=200', '&amp;amp;', 'iquery=', if(ancestor::entry/sense[gramGrp/gram/@ana='#LeDIIR.taxonomy.v']) then replace(., '(.*)(ن)', '$1') else .)" />
                             <param name="target" value="'_blank'" />
                             <param name="content" value="'⇗'" />
                         </model>
@@ -287,7 +287,7 @@
                             cssClass="tei-link-corpus">
                             <desc>Variantní podoba lemmatu</desc>
                             <param name="uri"
-                                value="concat('http://unesco.uniba.sk/guest/run.cgi/first?corpname=AranPers_x', '&amp;amp;', 'iquery=', if(ancestor::entry/sense[gramGrp/gram/@ana='#LeDIIR.taxonomy.v']) then replace(., '(.*)(ن)', '$1') else .)" />
+                                value="concat('http://unesco.uniba.sk/guest/run.cgi/first?corpname=AranPers_x;viewmode=sen', '&amp;amp;', 'gdex_enabled=1&amp;amp;gdexcnt=200', '&amp;amp;', 'iquery=', if(ancestor::entry/sense[gramGrp/gram/@ana='#LeDIIR.taxonomy.v']) then replace(., '(.*)(ن)', '$1') else .)" />
                             <param name="target" value="'_blank'" />
                             <param name="content" value="'⇗'" />
                         </model>
