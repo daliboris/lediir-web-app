@@ -395,7 +395,12 @@ declare function lapi:search($request as map(*)) {
     let $log := if($lapi:debug) then console:log($exist-db-query) else ()
     let $max-hits := $config:maximum-hits-limit
     return
-    if ((empty($request?parameters?query) and empty($request?parameters("query-advanced[1]"))) or empty($exist-db-query))
+    if ((
+            (empty($request?parameters?query) or $request?parameters?query = '') 
+            and empty($request?parameters("query-advanced[1]"))
+        ) 
+            or empty($exist-db-query)
+        )
     then
         let $hitsAll := session:get-attribute($config:session-prefix || ".hits")
         let $hitCount := count($hitsAll)
@@ -1186,6 +1191,9 @@ declare %public function lapi:get-exist-db-query-xml($request as map(*), $sort-f
     let $sort := if(empty($parameters/parameter[@name='sort']/value) or $parameters/parameter[@name='sort']/value = '') 
         then ($sort-field, $lapi:default-search-sort-field)[1]
         else <sort field="{$parameters/parameter[@name='sort']/value}" />
+    
+    
+
     let $hasQuery := not(empty($parameters/parameter[@name='query']/value[node()]))
     let $hasChapter := not(empty($parameters/parameter[@name='chapter']/value[node()]))
     let $lucene := if($hasChapter and $hasQuery) then
