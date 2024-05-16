@@ -232,3 +232,8 @@ table.facets-table {
 .co-author::after {
     content: " – ";
 }
+
+.complex-forms-delim {
+    margin-left: -1.5em;
+    margin-right: 70%;
+}
