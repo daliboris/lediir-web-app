@@ -21,3 +21,5 @@ resources/i18n/common
 data
 *.code-workspace
 remote-*.xstrc
+.vscode/**
+.vs/**
