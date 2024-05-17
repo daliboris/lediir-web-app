@@ -12,6 +12,16 @@
     <permissions user="redaktor" group="tei" mode="rw-r--r--" />
     <deployed />
     <changelog>
+        <change version="0.7.21">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>aktualizované obrázky s frekvencí</li>
+                <li>zobrazení komplexních forem: oddělení skupin, bez výslovnosti</li>
+                <li>počet zobrazených hesel podle role uživatele</li>
+                <li>skytí nabídky pro správu pro hosta</li>
+                <li>úpravy formulací v nabídkách</li>
+                <li>jednotné pojmenování oblasti v jednoduchém a pokročilém prohledávání</li>
+            </ul>
+        </change>
         <change version="0.7.20">
             <ul xmlns="http://www.w3.org/1999/xhtml">
                 <li>překlad uživatelského rozhraní v peršině</li>
