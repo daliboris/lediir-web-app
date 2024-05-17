@@ -168,23 +168,23 @@
                         cssClass="tei-entry">
                         <param name="id" value="@xml:id" />
                         <param name="summary-lemma"
-                            value="(* except (sense | usg[@type='frequency'] | xr | etym | entry[@copyOf]))" />
+                            value="(* except (sense | usg[@type='frequency'] | xr | etym | lb | entry[@copyOf]))" />
                         <param name="summary-sense-n" value="sense[1]/@n" />
                         <param name="summary-sense"
                             value="sense[1]/(def[1]/preceding-sibling::*, def[1])" />
                         <param name="summary-frequency" value="usg[@type='frequency']" />
                         <param name="rest"
-                            value="(etym, sense, xr[not(@type=('_component-lexeme'))], entry[@copyOf])" />
+                            value="(etym, sense, xr[not(@type=('_component-lexeme'))], ( lb | entry[@copyOf]))" />
                     </model>
                     <model predicate="not(@copyOf)" behaviour="entry" cssClass="tei-entry">
                         <param name="id" value="@xml:id" />
                         <param name="summary-lemma"
-                            value="(* except (sense | usg[@type='frequency'] | xr | etym | entry[@copyOf]))" />
+                            value="(* except (sense | usg[@type='frequency'] | xr | etym | lb | entry[@copyOf]))" />
                         <param name="summary-sense"
                             value="sense[1]/(def[1]/preceding-sibling::*, def[1])" />
                         <param name="summary-frequency" value="usg[@type='frequency']" />
                         <param name="rest"
-                            value="(etym, sense, xr[not(@type=('_component-lexeme'))], entry[@copyOf])" />
+                            value="(etym, sense, xr[not(@type=('_component-lexeme'))], ( lb | entry[@copyOf]))" />
                     </model>
                     <model
                         predicate="@copyOf and id(substring-after(@copyOf, '#'), root($parameters?root))/sense[1]/@n"
@@ -227,6 +227,7 @@
                     <model predicate="@type=('lemma', 'lexical-unit')" behaviour="inline" />
                 </elementSpec>
                 <elementSpec ident="pron" mode="add">
+                    <model predicate="ancestor::entry[1][@type='complexForm'][parent::entry]" behaviour="omit" />
                     <model behaviour="inline" cssClass="tei-pron" />
                 </elementSpec>
                 <elementSpec ident="orth" mode="add">
@@ -429,6 +430,13 @@
                         <param name="uri" value="@target" />
                     </model>
                     <model behaviour="omit" />
+                </elementSpec>
+                <elementSpec ident="lb" mode="change">
+                    <model behaviour="block">
+                        <pb:template xmlns="" xml:space="preserve">
+                            <hr class="complex-forms-delim"/>
+                        </pb:template>    
+                    </model>
                 </elementSpec>
             </schemaSpec>
         </body>
