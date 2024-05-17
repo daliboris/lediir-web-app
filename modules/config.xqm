@@ -16,6 +16,7 @@ declare namespace repo="http://exist-db.org/xquery/repo";
 declare namespace expath="http://expath.org/ns/pkg";
 declare namespace jmx="http://exist-db.org/jmx";
 declare namespace tei="http://www.tei-c.org/ns/1.0";
+declare namespace scm="http://exist-db.org/xquery/securitymanager";
 
 (:~~
  : The version of the pb-components webcomponents library to be used by this app.
@@ -255,7 +256,7 @@ declare variable $config:css-content-class := "content";
  : domain will share their users, so a user logged into application A
  : will be able to access application B.
  :)
-declare variable $config:login-domain := "org.exist.tei-simple";
+declare variable $config:login-domain := "cz.cas.soc.eldi";
 
 (:~
  : Configuration XML for Apache FOP used to render PDF. Important here
@@ -572,7 +573,12 @@ declare function config:default-config($docUri as xs:string?) {
 declare function config:document-type($div as element()) {
     switch (namespace-uri($div))
         case "http://www.tei-c.org/ns/1.0" return
-            "tei"
+            (:
+            if($div/ancestor-or-self::tei:TEI/@type = 'lex-0') then
+				"lex0"
+            else
+            :)
+				"tei"
         case "http://docbook.org/ns/docbook" return
             "docbook"
         default return
@@ -723,7 +729,9 @@ Maximum hits available for user.
 If set to 0 all hits are available.
 Can ba caltulated, for example admins can have access to more hits then other users.
 :)
-declare variable $config:maximum-hits-limit := 0;
+declare variable $config:maximum-hits-limit := if(exists(sm:id()/scm:id/scm:real//scm:group[. = "tei"])) 
+    then 0
+    else 100;
 
 (:
 Name of field which can contain localized values.
