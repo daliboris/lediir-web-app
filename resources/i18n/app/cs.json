@@ -45,7 +45,7 @@
             "exactly": "přesně",
             "start": "na začátku",
             "end": "na konci",
-            "everywhere": "vše",
+            "everywhere": "všude",
             "area": "oblast"
         },
         "buttons": {
@@ -66,7 +66,7 @@
         },
         "areas": {
             "basic-fileds": "základní pole",
-            "whole-text": "celý text",
+            "whole-text": "vše",
             "complexForm": "komplexní výraz"
         }
     },
