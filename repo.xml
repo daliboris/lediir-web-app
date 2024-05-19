@@ -12,6 +12,12 @@
     <permissions user="redaktor" group="tei" mode="rw-r--r--" />
     <deployed />
     <changelog>
+        <change version="0.7.22">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>zobrazení popisku u komplexních forem (v rámci podřízených hesel)</li>
+                <li>oprava zobrazení komplexních forem: číslovaný význam není v samostatném řádku</li>
+            </ul>
+        </change>
         <change version="0.7.21">
             <ul xmlns="http://www.w3.org/1999/xhtml">
                 <li>aktualizované obrázky s frekvencí</li>
