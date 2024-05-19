@@ -106,6 +106,24 @@
                         </div>
                     </pb:template>
                 </pb:behaviour>
+                <pb:behaviour ident="sense-subentry-copy-n" output="web">
+                    <pb:param name="id" select="@xml:id" />
+                    <pb:param name="n" select="@n" />
+                    <pb:template xmlns="" xml:space="preserve">
+                        <span class="tei-sense-subentry" id="[[id]]">
+                            <span class="tei-sense-num">[[n]]</span>
+                            [[content]]
+                        </span>
+                    </pb:template>
+                </pb:behaviour>
+                <pb:behaviour ident="sense-subentry-copy" output="web">
+                    <pb:param name="id" select="@xml:id" />
+                    <pb:template xmlns="" xml:space="preserve">
+                        <span class="tei-sense-subentry" id="[[id]]">
+                            [[content]]
+                        </span>
+                    </pb:template>
+                </pb:behaviour>
                 <pb:behaviour ident="quote" output="web">
                     <pb:param name="lang"
                         select="if(@xml:lang) then @xml:lang else ancestor::*[@xml:lang][1]/@xml:lang" />
@@ -153,6 +171,26 @@
                         <span xml:space="preserve" class="space"> </span>
                     </pb:template>
                 </pb:behaviour>
+                <pb:behaviour ident="complexFormType-label" output="web">
+                    <pb:param name="key-prefix" as="xs:string" />
+                    <pb:template xmlns="" xml:space="preserve">
+                        <hr class="complex-forms-delim"/>
+                        <pb-popover theme="translucent">
+                            <span slot="default">
+                                <pb-i18n key="[[key-prefix]].abbr">[[content]]</pb-i18n>
+                            </span>
+                            <pb:template slot="alternate">
+                                <p>
+                                    <pb-i18n key="[[key-prefix]].expand">[[content]]</pb-i18n>
+                                </p>
+                                <p>
+                                    <pb-i18n key="[[key-prefix]].tooltip">[[content]]</pb-i18n>
+                                </p>
+                            </pb:template>
+                        </pb-popover>
+                        <span xml:space="preserve" class="space">: </span>
+                    </pb:template>
+                </pb:behaviour>
                 <rendition source="lediir.css" />
             </tagsDecl>
         </encodingDesc>
@@ -168,23 +206,23 @@
                         cssClass="tei-entry">
                         <param name="id" value="@xml:id" />
                         <param name="summary-lemma"
-                            value="(* except (sense | usg[@type='frequency'] | xr | etym | lb | entry[@copyOf]))" />
+                            value="(* except (sense | usg[@type='frequency'] | xr | etym | lbl[@type='complexForm'] | entry[@copyOf]))" />
                         <param name="summary-sense-n" value="sense[1]/@n" />
                         <param name="summary-sense"
                             value="sense[1]/(def[1]/preceding-sibling::*, def[1])" />
                         <param name="summary-frequency" value="usg[@type='frequency']" />
                         <param name="rest"
-                            value="(etym, sense, xr[not(@type=('_component-lexeme'))], ( lb | entry[@copyOf]))" />
+                            value="(etym, sense, xr[not(@type=('_component-lexeme'))], ( lbl[@type='complexForm'] | entry[@copyOf]))" />
                     </model>
                     <model predicate="not(@copyOf)" behaviour="entry" cssClass="tei-entry">
                         <param name="id" value="@xml:id" />
                         <param name="summary-lemma"
-                            value="(* except (sense | usg[@type='frequency'] | xr | etym | lb | entry[@copyOf]))" />
+                            value="(* except (sense | usg[@type='frequency'] | xr | etym | lbl[@type='complexForm'] | entry[@copyOf]))" />
                         <param name="summary-sense"
                             value="sense[1]/(def[1]/preceding-sibling::*, def[1])" />
                         <param name="summary-frequency" value="usg[@type='frequency']" />
                         <param name="rest"
-                            value="(etym, sense, xr[not(@type=('_component-lexeme'))], ( lb | entry[@copyOf]))" />
+                            value="(etym, sense, xr[not(@type=('_component-lexeme'))], ( lbl[@type='complexForm'] | entry[@copyOf]))" />
                     </model>
                     <model
                         predicate="@copyOf and id(substring-after(@copyOf, '#'), root($parameters?root))/sense[1]/@n"
@@ -216,6 +254,10 @@
                     </model>
                 </elementSpec>
                 <elementSpec ident="sense" mode="add">
+                    <model predicate="@copyOf and @n" behaviour="sense-subentry-copy-n">
+                        <param name="id" value="@xml:id" />
+                        <param name="n" value="@n" />
+                    </model>
                     <model predicate="@n" behaviour="sense">
                         <param name="id" value="@xml:id" />
                         <param name="n" value="@n" />
@@ -393,6 +435,12 @@
                 <elementSpec ident="lbl" mode="add">
                     <model predicate="parent::ref[@type='sense'] and @type='sense-number'"
                         behaviour="inline" cssClass="tei-ref-sense-number" />
+                    <model predicate="@type='complexForm'" behaviour="complexFormType-label"
+                        cssClass="tei-lbl-complexForm">
+                        <param name="key-prefix"
+                            value="concat('dictionary.', substring-after(@subtype, 'LeDIIR.taxonomy.'))" />
+                    </model>
+                    
                     <model predicate="@type = 'variant' and @ana and @xml:lang='en'" behaviour="pos"
                         cssClass="tei-lbl-variant">
                         <param name="id" value="substring-after(@ana, '#')" />
@@ -430,13 +478,6 @@
                         <param name="uri" value="@target" />
                     </model>
                     <model behaviour="omit" />
-                </elementSpec>
-                <elementSpec ident="lb" mode="change">
-                    <model behaviour="block">
-                        <pb:template xmlns="" xml:space="preserve">
-                            <hr class="complex-forms-delim"/>
-                        </pb:template>    
-                    </model>
                 </elementSpec>
             </schemaSpec>
         </body>
