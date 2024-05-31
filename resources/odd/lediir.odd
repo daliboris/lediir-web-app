@@ -58,12 +58,14 @@
                                     </h4>
                                 </summary>
                                 [[rest]]
+                                <!--
                                 <form class="lediir-comment" action="comment.html">
                                     <input type="hidden" name="id" value="[[id]]"/>
                                     <button type="submit">
                                         <iron-icon icon="editor:insert-comment"/>
                                     </button>
                                 </form>
+                                -->
                             </details>
                         </article>
                     </pb:template>
@@ -86,12 +88,14 @@
                                     </h4>
                                 </summary>
                                 [[rest]]
+                                <!--
                                 <form class="lediir-comment" action="comment.html">
                                     <input type="hidden" name="id" value="[[id]]"/>
                                     <button type="submit">
                                         <iron-icon icon="editor:insert-comment"/>
                                     </button>
                                 </form>
+                                -->
                             </details>
                         </article>
                     </pb:template>
@@ -225,32 +229,33 @@
                             value="(etym, sense, xr[not(@type=('_component-lexeme'))], ( lbl[@type='complexForm'] | entry[@copyOf]))" />
                     </model>
                     <model
-                        predicate="@copyOf and id(substring-after(@copyOf, '#'), root($parameters?root))/sense[1]/@n"
+                        predicate="@copyOf and collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/sense[1]/@n"
                         behaviour="entry-polysemy" cssClass="tei-entry subentry polysemy">
                         <param name="id" value="substring-after(@copyOf, '#')" />
                         <param name="summary-lemma"
-                            value="id(substring-after(@copyOf, '#'), root($parameters?root))/(* except (sense | usg[@type='frequency'] | xr | etym | entry[@copyOf]))" />
+                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/(* except (sense | usg[@type='frequency'] | xr | etym | entry[@copyOf]))" />
                         <param name="summary-sense"
-                            value="id(substring-after(@copyOf, '#'), root($parameters?root))/sense[1]/(def[1]/preceding-sibling::*, def[1])" />
+                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/sense[1]/(def[1]/preceding-sibling::*, def[1])" />
                         <param name="summary-sense-n"
-                            value="id(substring-after(@copyOf, '#'), root($parameters?root))/sense[1]/@n" />
+                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/sense[1]/@n" />
                         <param name="summary-frequency"
-                            value="id(substring-after(@copyOf, '#'), root($parameters?root))/usg[@type='frequency']" />
+                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/usg[@type='frequency']" />
                         <param name="rest"
-                            value="id(substring-after(@copyOf, '#'), root($parameters?root))/(etym, sense, xr[not(@type=('_component-lexeme'))], entry[@copyOf])" />
+                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/(etym, sense, xr[not(@type=('_component-lexeme'))], entry[@copyOf])" />
                     </model>
                     <model
-                        predicate="@copyOf and id(substring-after(@copyOf, '#'), root($parameters?root))"
+                        predicate="@copyOf and collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))"
                         behaviour="entry" cssClass="tei-entry subentry">
                         <param name="id" value="substring-after(@copyOf, '#')" />
                         <param name="summary-lemma"
-                            value="id(substring-after(@copyOf, '#'), root($parameters?root))/(* except (sense | usg[@type='frequency'] | xr | etym | entry[@copyOf]))" />
+                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/(* except (sense | usg[@type='frequency'] | xr | etym | entry[@copyOf]))" />
                         <param name="summary-sense"
-                            value="id(substring-after(@copyOf, '#'), root($parameters?root))/sense[1]/(def[1]/preceding-sibling::*, def[1])" />
+                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/sense[1]/(def[1]/preceding-sibling::*, def[1])" />
                         <param name="summary-frequency"
-                            value="id(substring-after(@copyOf, '#'), root($parameters?root))/usg[@type='frequency']" />
+                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/usg[@type='frequency']" />
                         <param name="rest"
-                            value="id(substring-after(@copyOf, '#'), root($parameters?root))/(etym, sense, xr[not(@type=('_component-lexeme'))], entry[@copyOf])" />
+                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))
+                            /(etym, sense, xr[not(@type=('_component-lexeme'))], entry[@copyOf])" />
                     </model>
                 </elementSpec>
                 <elementSpec ident="sense" mode="add">
@@ -266,6 +271,9 @@
                 <elementSpec ident="form" mode="add">
                     <model predicate="@type=('variant') and @subtype= ('stem', 'phrase')"
                         behaviour="omit" />
+                    <model predicate="@type=('lemma', 'lexical-unit') and parent::entry[@copyOf]" behaviour="link">
+                        <param name="uri" value="concat('api/lex/dictionaries/', substring-after(parent::entry/@copyOf, '#') => substring-before('.'), '/entries/', substring-after(parent::entry/@copyOf, '#'))" />
+                    </model>
                     <model predicate="@type=('lemma', 'lexical-unit')" behaviour="inline" />
                 </elementSpec>
                 <elementSpec ident="pron" mode="add">
