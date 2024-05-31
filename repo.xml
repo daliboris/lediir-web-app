@@ -12,6 +12,13 @@
     <permissions user="redaktor" group="tei" mode="rw-r--r--" />
     <deployed />
     <changelog>
+        <change version="0.7.23">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>oprava řazení výsledků při hledání (podle frekvence a abecedy)</li>
+                <li>komplexní tvary jako hypertextové odkazy</li>
+                <li>skrytí tlačítek pro vytvoření formuláře</li>
+            </ul>
+        </change>
         <change version="0.7.22">
             <ul xmlns="http://www.w3.org/1999/xhtml">
                 <li>zobrazení popisku u komplexních forem (v rámci podřízených hesel)</li>
