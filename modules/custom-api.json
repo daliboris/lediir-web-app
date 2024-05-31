@@ -1371,7 +1371,7 @@
             "description": "Field to sort the result",
             "schema": {
               "type": "string",
-              "default": "sortKey",
+              "default": "sortKeyWithFrequency",
               "description": "Field to sort found result."
             }
           },
@@ -5663,6 +5663,11 @@
         "default": "sortKey",
         "description": "Field to sort found result."
       },
+      "SearchSortField": {
+        "type": "string",
+        "default": "sortKeyWithFrequency",
+        "description": "Field to sort found result."
+      },
       "SimpleSearchField": {
         "type": "string",
         "enum": [
@@ -6027,6 +6032,16 @@
         "schema": {
           "type": "string",
           "default": "sortKey",
+          "description": "Field to sort found result."
+        }
+      },
+      "SearchSortFieldParameter": {
+        "name": "sort",
+        "in": "query",
+        "description": "Field to sort the result",
+        "schema": {
+          "type": "string",
+          "default": "sortKeyWithFrequency",
           "description": "Field to sort found result."
         }
       },

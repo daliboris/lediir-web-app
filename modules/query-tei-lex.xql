@@ -1192,7 +1192,7 @@ declare %public function lapi:get-exist-db-query-xml($request as map(*), $sort-f
         then ($sort-field, $lapi:default-search-sort-field)[1]
         else <sort field="{$parameters/parameter[@name='sort']/value}" />
     
-    
+    let $log := if($lapi:debug) then console:log("[lapi:get-exist-db-query-xml]" || " $sort/@field :: " || $sort/@field)  else ()
 
     let $hasQuery := not(empty($parameters/parameter[@name='query']/value[node()]))
     let $hasChapter := not(empty($parameters/parameter[@name='chapter']/value[node()]))
