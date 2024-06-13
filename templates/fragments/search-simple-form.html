@@ -1,0 +1,63 @@
+<div id="search-simple-container">
+    <pb-custom-form id="area" name="area">
+        <pb-select data-i18n="[label]search.labels.field" name="field" value="headword">
+            <paper-item value="headword"><pb-i18n key="search.areas.basic-fileds">basic fileds</pb-i18n></paper-item>
+            <paper-item value="entry"><pb-i18n key="search.areas.whole-text">whole text</pb-i18n></paper-item>
+            <paper-item value="complexForm"><pb-i18n key="search.areas.complexForm">complex form</pb-i18n></paper-item>
+        </pb-select>
+    </pb-custom-form>
+        <div id="search-simple-container-search">
+         <pb-search id="search-simple" action="${app}/search.html" 
+          source="api/lex/search/autocomplete"
+          data-template="pages:parse-params" value="${query}" 
+          redirect="redirect" subforms="#positions-simple, #area">
+         </pb-search>
+         <pb-custom-form id="positions-simple">
+          <div>
+           <label for="positionChoiceExactly">
+            <input type="radio" id="positionChoiceExactly" name="position" value="exactly" checked="checked" />
+            <pb-i18n key="search.labels.exactly">exactly</pb-i18n>
+           </label>
+           
+           <label for="contactChoiceStart">
+            <input type="radio" id="contactChoiceStart" name="position" value="start" />
+            <pb-i18n key="search.labels.start">start</pb-i18n>
+           </label>
+           
+           <label for="contactChoiceEnd">
+            <input type="radio" id="contactChoiceEnd" name="position" value="end" />
+            <pb-i18n key="search.labels.end">end</pb-i18n>
+           </label>
+           
+           <label for="contactChoiceEverywhere">
+            <input type="radio" id="contactChoiceEverywhere" name="position" value="everywhere" />
+            <pb-i18n key="search.labels.everywhere">everywhere</pb-i18n>
+           </label>
+
+
+
+
+           <label>| </label>
+           <pb-popover theme="translucent">
+            <span slot="default"><button>?</button></span>
+            <template slot="alternate">
+             <p>Otazník zastupuje 1 znak.<br/>(p?s = pas, pes, prs)</p>
+            </template>
+           </pb-popover>
+           <pb-popover theme="translucent">
+            <span slot="default"><button>*</button></span>
+            <template slot="alternate">
+             <p>Hvězdička zastupuje libovolný počet znaků.<br/>(ps* = psa, psal, psavec…)</p>
+            </template>
+           </pb-popover>
+          </div>
+          <!-- <button type="submit">
+                <paper-button slot="searchButton">
+                    <pb-i18n key="search.buttons.search">Search</pb-i18n>
+                </paper-button>
+                </button> -->
+         </pb-custom-form>
+    </div>
+    
+
+    </div>
