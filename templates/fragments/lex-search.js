@@ -37,5 +37,18 @@
     });
     const form = document.getElementById('form');
     form.addEventListener('iron-form-presubmit', formPreSubmit);
- 
+
+    
+    const inserts = document.querySelectorAll('.insert-special-character');
+    inserts.forEach (insert => {
+         insert.addEventListener('click', (event) => {
+         event.preventDefault();
+         const buttonText = insert.textContent || insert.innerText;
+         const search = insert.closest('#search-advanced');
+         if(searchAdvanced) {
+          searchAdvanced.value += buttonText;
+         }
+      });
+    });
+    
  });
