@@ -160,7 +160,11 @@
   paper-tab {
     font-size: 1.5em;
   }
+  app-toolbar {
+    background-color: unset;
+  }
   </style>
+
   <style is="custom-style">
   :root {
     /* --paper-tabs-selection-bar-color: var(--paper-light-blue-900); */
@@ -172,11 +176,11 @@
  <body>
   <pb-page data-template="pages:pb-page" api-version="1.0"  unresolved="unresolved" theme="resources/css/components.css" locales="resources/i18n/{{ns}}/{{lng}}.json">
    <app-header-layout>
-    <app-header slot="header" reveals="reveals" fixed="fixed" effects="waterfall">
+    <app-header slot="header" fixed="fixed" effects="waterfall">
      <app-toolbar data-template="lib:include" data-template-path="templates/menu.html"></app-toolbar>
      <app-toolbar>
       <pb-paginate per-page="10" range="5" subscribe="results"></pb-paginate>
-      <pb-progress indeterminate="indeterminate" bottom-item="bottom-item"></pb-progress>
+      <pb-progress indeterminate="indeterminate" bottom-item="bottom-item" subscribe="results"></pb-progress>
      </app-toolbar>
     </app-header>
     <!-- --> <!-- <pb-restricted login="login" group="tei"> -->
