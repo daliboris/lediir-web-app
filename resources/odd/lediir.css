@@ -108,15 +108,38 @@ details[open] > .lediir-comment {text-align: right; padding-bottom: 0.5em;}
     padding-right:0.5em;
 }
 
+/* https://stackoverflow.com/questions/4861224/how-to-use-css-to-surround-a-number-with-a-circle */
+
 .tei-sense-num {
+    display: inline-block;
     border-radius: 50%;
-    width: 1.2em;
-    height: 1.2em;
-    text-align: center;
+    /* border: 2px solid; */
     background-color: deepskyblue;
     border:1px solid deepskyblue;
-    padding: 2px;
-}
+    /* font-size: 32px; */
+  }
+  
+  .tei-sense-num::before,
+  .tei-sense-num::after {
+    content: '\200B';
+    display: inline-block;
+    line-height: 0px;
+    padding-top: 50%;
+    padding-bottom: 50%;
+  }
+
+  .tei-sense-num.summary {
+    padding-left: unset;
+  }
+  
+  .tei-sense-num::before {
+    padding-left: 8px;
+  }
+  
+  .tei-sense-num::after {
+    padding-right: 8px;
+  }
+
 .tei-pron {color: orange; margin-left: 1em;}
 
 .tei-orth { font-size: 2em; }
