@@ -50,7 +50,7 @@
                             <details>
                                 <summary>
                                     <h4>
-                                        <input type="checkbox"/>
+                                        <!-- <input type="checkbox" name="entry-id" value="[[id]]"/> -->
                                         <span class="tei-lemma">[[summary-lemma]]</span>
                                         <span class="tei-sense-num summary">[[summary-sense-n]]</span>
                                         <span class="tei-sense summary">[[summary-sense]]</span>
@@ -81,7 +81,7 @@
                             <details>
                                 <summary>
                                     <h4>
-                                        <input type="checkbox"/>
+                                        <!-- <input type="checkbox" name="entry-id" value="[[id]]" /> -->
                                         <span class="tei-lemma">[[summary-lemma]]</span>
                                         <span class="tei-sense summary">[[summary-sense]]</span>
                                         [[summary-frequency]]
@@ -205,58 +205,30 @@
     <text>
         <body>
             <schemaSpec start="TEI teiCorpus" ident="lediir" source="teipublisher.odd">
-                <elementSpec ident="entry" mode="add">
-                    <model predicate="not(@copyOf) and sense[1]/@n" behaviour="entry-polysemy"
-                        cssClass="tei-entry">
-                        <param name="id" value="@xml:id" />
-                        <param name="summary-lemma"
-                            value="(* except (sense | usg[@type='frequency'] | xr | etym | lbl[@type='complexForm'] | entry[@copyOf]))" />
-                        <param name="summary-sense-n" value="sense[1]/@n" />
-                        <param name="summary-sense"
-                            value="sense[1]/(def[1]/preceding-sibling::*, def[1])" />
-                        <param name="summary-frequency" value="usg[@type='frequency']" />
-                        <param name="rest"
-                            value="(etym, sense, xr[not(@type=('_component-lexeme'))], ( lbl[@type='complexForm'] | entry[@copyOf]))" />
-                    </model>
-                    <model predicate="not(@copyOf)" behaviour="entry" cssClass="tei-entry">
-                        <param name="id" value="@xml:id" />
-                        <param name="summary-lemma"
-                            value="(* except (sense | usg[@type='frequency'] | xr | etym | lbl[@type='complexForm'] | entry[@copyOf]))" />
-                        <param name="summary-sense"
-                            value="sense[1]/(def[1]/preceding-sibling::*, def[1])" />
-                        <param name="summary-frequency" value="usg[@type='frequency']" />
-                        <param name="rest"
-                            value="(etym, sense, xr[not(@type=('_component-lexeme'))], ( lbl[@type='complexForm'] | entry[@copyOf]))" />
-                    </model>
-                    <model
-                        predicate="@copyOf and collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/sense[1]/@n"
-                        behaviour="entry-polysemy" cssClass="tei-entry subentry polysemy">
-                        <param name="id" value="substring-after(@copyOf, '#')" />
-                        <param name="summary-lemma"
-                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/(* except (sense | usg[@type='frequency'] | xr | etym | entry[@copyOf]))" />
-                        <param name="summary-sense"
-                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/sense[1]/(def[1]/preceding-sibling::*, def[1])" />
-                        <param name="summary-sense-n"
-                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/sense[1]/@n" />
-                        <param name="summary-frequency"
-                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/usg[@type='frequency']" />
-                        <param name="rest"
-                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/(etym, sense, xr[not(@type=('_component-lexeme'))], entry[@copyOf])" />
-                    </model>
-                    <model
-                        predicate="@copyOf and collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))"
-                        behaviour="entry" cssClass="tei-entry subentry">
-                        <param name="id" value="substring-after(@copyOf, '#')" />
-                        <param name="summary-lemma"
-                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/(* except (sense | usg[@type='frequency'] | xr | etym | entry[@copyOf]))" />
-                        <param name="summary-sense"
-                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/sense[1]/(def[1]/preceding-sibling::*, def[1])" />
-                        <param name="summary-frequency"
-                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))/usg[@type='frequency']" />
-                        <param name="rest"
-                            value="collection('/db/apps/lediir-data/data/dictionaries/')/id(substring-after(@copyOf, '#'))
-                            /(etym, sense, xr[not(@type=('_component-lexeme'))], entry[@copyOf])" />
-                    </model>
+            <elementSpec ident="entry" mode="add">
+                <model predicate="not(@copyOf) and sense[1]/@n" behaviour="entry-polysemy"
+                cssClass="tei-entry">
+                <param name="id" value="@xml:id" />
+                <param name="summary-lemma"
+                    value="(* except (sense | usg[@type='frequency'] | xr | etym | lbl[@type='complexForm'] | entry[@copyOf]))" />
+                <param name="summary-sense-n" value="sense[1]/@n" />
+                <param name="summary-sense"
+                    value="sense[1]/(def[1]/preceding-sibling::*, def[1])" />
+                <param name="summary-frequency" value="usg[@type='frequency']" />
+                <param name="rest"
+                    value="(etym, sense, xr[not(@type=('_component-lexeme'))], ( lbl[@type='complexForm'] | entry[@copyOf]))" />
+                </model>
+                <model predicate="not(@copyOf)" behaviour="entry" cssClass="tei-entry">
+                <param name="id" value="@xml:id" />
+                <param name="summary-lemma"
+                    value="(* except (sense | usg[@type='frequency'] | xr | etym | lbl[@type='complexForm'] | entry[@copyOf]))" />
+                <param name="summary-sense"
+                    value="sense[1]/(def[1]/preceding-sibling::*, def[1])" />
+                <param name="summary-frequency" value="usg[@type='frequency']" />
+                <param name="rest"
+                    value="(etym, sense, xr[not(@type=('_component-lexeme'))], ( lbl[@type='complexForm'] | entry[@copyOf]))" />
+                </model>
+                <model predicate="@copyOf" behaviour="inline" cssClass="subentry" />
                 </elementSpec>
                 <elementSpec ident="sense" mode="add">
                     <model predicate="@copyOf and @n" behaviour="sense-subentry-copy-n">
@@ -486,6 +458,10 @@
                         <param name="uri" value="@target" />
                     </model>
                     <model behaviour="omit" />
+                </elementSpec>
+                <elementSpec ident="metamark" mode="add">
+                    <model predicate="@function='equivalentDelimiter'" behaviour="inline" cssClass="equivalent-delimiter"/>
+                    <model behaviour="inline" />
                 </elementSpec>
             </schemaSpec>
         </body>
