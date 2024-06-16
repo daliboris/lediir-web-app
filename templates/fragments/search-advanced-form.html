@@ -5,7 +5,7 @@
          <template>
             <div class="search-advanced-container">
              <pb-custom-form id="area-advanced-form">
-              <pb-select data-i18n="[label]search.labels.field" name="field" value="lemma" aria-disabled="false" dir="null">
+              <pb-select data-i18n="[label]search.labels.field" name="field" value="headword" aria-disabled="false" dir="null">
                     <paper-item value="headword">
                         <pb-i18n key="search.areas.basic-fileds">basic fileds</pb-i18n>
                     </paper-item>
@@ -18,25 +18,19 @@
                     <paper-item value="partOfSpeechAll" data-i18n="[label]search.fields.partOfSpeech">
                      <pb-i18n key="search.fields.partOfSpeech">part-of-speech</pb-i18n>
                     </paper-item>
-                    <paper-item value="definition-cs">
-                        <pb-i18n key="search.fields.definition">definition (cs)</pb-i18n>
+                    <paper-item value="definition">
+                        <pb-i18n key="search.fields.definition">definition</pb-i18n>
                     </paper-item>
-                    <paper-item value="definition-en">
-                        <pb-i18n key="search.fields.definition">definition (en)</pb-i18n>
-                    </paper-item>
-                    <paper-item value="reversal-cs">
-                        <pb-i18n key="search.fields.reversal-cs">reversal (cs)</pb-i18n>
-                    </paper-item>
-                    <paper-item value="reversal-en">
-                        <pb-i18n key="search.fields.reversal-en">reversal (en)</pb-i18n>
-                    </paper-item>
-                    <paper-item value="complexForm">
-                        <pb-i18n key="search.areas.complexForm">complex form</pb-i18n>
+                    <paper-item value="reversal-cz">
+                        <pb-i18n key="search.fields.reversal">reversal</pb-i18n>
                     </paper-item>
                     <paper-item value="domain">
                         <pb-i18n key="search.fields.domain">domain</pb-i18n>
                     </paper-item>
-                    <paper-item value="all">
+                    <paper-item value="complexForm">
+                        <pb-i18n key="search.areas.complexForm">complex form</pb-i18n>
+                    </paper-item>
+                    <paper-item value="entry-content">
                      <pb-i18n key="search.fields.anything">anything</pb-i18n>
                     </paper-item>
                   </pb-select>
@@ -78,13 +72,13 @@
 
                     <label>| </label>
                 <pb-popover theme="translucent">
-                    <span slot="default"><button>?</button></span>
+                    <span slot="default"><button id="insertQuestionMark" class="insert-special-character">?</button></span>
                     <template slot="alternate">
                         <p>Otazník zastupuje 1 znak.<br/>(p?s = pas, pes, prs)</p>
                     </template>
                 </pb-popover>
                 <pb-popover theme="translucent">
-                    <span slot="default"><button>*</button></span>
+                    <span slot="default"><button id="insertAsterisk" class="insert-special-character">*</button></span>
                     <template slot="alternate">
                         <p>Hvězdička zastupuje libovolný počet znaků.<br/>(psa* = psa, psal, psavec…)</p>
                     </template>
