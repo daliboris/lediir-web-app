@@ -65,6 +65,9 @@ details[open] > summary .summary {display: none;}
 .tei-entry, .tei-sense, .tei-note, .tei-etym { display: block; }
 
 .tei-entry {margin: 2em;}
+
+.subentry {display: inline;}
+
 .tei-sense, .tei-etym { margin-top: 0.5em; margin-bottom: 1em; margin-left: 1.5em;}
 .tei-def {font-style: italic; font-size: larger; font-weight: bold; }
 
@@ -80,7 +83,7 @@ details[open] > summary .summary {display: none;}
 details[open] > summary .summary {display: none;}
 
 
-details > summary .tei-frequency 
+details > summary .tei-frequency
 {
     display: inline;
     border-radius: 5px;
@@ -92,6 +95,11 @@ details > summary .tei-frequency
 details:not([open]) > summary .tei-frequency 
 {
     display: inline; /* none ? */
+}
+
+.subentry .tei-frequency {
+    display: inline;
+    vertical-align: middle;
 }
 
 details[open] > .lediir-comment {text-align: right; padding-bottom: 0.5em;}
