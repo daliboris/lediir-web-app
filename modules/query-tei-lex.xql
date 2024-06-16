@@ -990,6 +990,8 @@ declare function lapi:autocomplete($doc as xs:string?, $fields as xs:string+, $q
             case "objectLanguage"
             case "targetLanguage"
             case "definition"
+            case "definition-en"
+            case "definition-cs"
             case "example"
             case "translation"
             case "headword"
@@ -998,8 +1000,13 @@ declare function lapi:autocomplete($doc as xs:string?, $fields as xs:string+, $q
             case "styleAll"
             case "domain" 
             case "reversal" 
+            case "reversal-cs"
+            case "reversal-en"
             case "polysemy"
-            case "lemma" return
+            case "lemma" 
+            case "complexForm"
+            case "entry-content"
+            return
                 if ($doc) then
                     doc($config:data-default || "/LeDIIR-" || $doc || ".xml")/ft:index-keys-for-field($field, $lower-case-q,
                     $f, $max-items)
