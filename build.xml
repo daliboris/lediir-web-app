@@ -7,8 +7,8 @@
     <property name="build.dir" value="build" />
     <property name="scripts.dir" value="${basedir}/node_modules/@daliboris/pb-components/dist" />
     <target name="clean">
-        <echo message="Deleting 'resources/scripts' subdirectory (excluding browse.js, facets.js)" />
-        <delete dir="resources/scripts" includes="*.js *.map" excludes="browse.js facets.js" />
+        <echo message="Deleting 'resources/scripts' subdirectory (excluding browse.js, facets.js, comments.js)" />
+        <delete dir="resources/scripts" includes="*.js *.map" excludes="browse.js facets.js comments.js" />
         <echo message="Deleting 'images/leaflet' subdirectory" />
         <delete dir="resources/images/leaflet" />
         <delete dir="resources/images/openseadragon" />
@@ -82,7 +82,7 @@
     <target name="xar">
         <mkdir dir="${build.dir}" />
         <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" 
-            excludes="${build.dir} ${build.dir}/** node_modules/** *.code-workspace .existdb.json *build.properties *.xstrc *local*" />
+            excludes="${build.dir} ${build.dir}/** node_modules/** *.code-workspace *.vs/** *build.properties *.xstrc *local*" />
         <copy file="${build.dir}/${project.app}-${project.version}.xar" overwrite="true" tofile="${build.dir}/${project.app}.xar"/>
     </target>
     <target name="xar-complete" depends="clean,npm.install,xar" />
