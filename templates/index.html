@@ -288,7 +288,9 @@
                 <!-- --> <!-- <pb-restricted login="login" group="tei"> -->
                 <main>
                     <section>
-                        <h1 class="tp-title" data-template="config:app-title"/>
+                        <h1 class="tp-title">
+                            <pb-i18n key="lediir.title">Electronic Lexical Database of Indo-Iranian Languages</pb-i18n>: <pb-i18n key="lediir.subtitle">Persian-Czech Module</pb-i18n>
+                        </h1>
                     </section>
                     <section class="panels">
                         <paper-card class="doclist" data-i18n="[heading]headings.dictionaries" heading="Dictionaries">
@@ -369,17 +371,6 @@
     </pb-page>
     <div class="splash"/>
     <script src="resources/scripts/browse.js"/>
-    <script>
-        /*
-        document.addEventListener('DOMContentLoaded', function () {
-            pbEvents.subscribe('pb-login', null, function(ev) {
-                if (ev.detail.userChanged) {
-                    document.location.reload();
-                }
-            }); 
-        });
-        */
-    </script>
 </body>
 
 </html>
