@@ -1,6 +1,7 @@
 {
     "lediir": {
-        "title": "Electronic Lexical Database of Indo-Iranian Languages"
+        "title": "Electronic Lexical Database of Indo-Iranian Languages",
+        "subtitle" : "Persian-Czech Module"
     },
     "menu": {
         "search": "Search",
@@ -15,7 +16,8 @@
         "help": "Help",
         "news": "News",
         "aboutLanguage": "About Langauge",
-        "FACS": "Persian-Czech Dictionary"
+        "FACS": "Persian-Czech Dictionary",
+        "contacts" : "Contacts"
     },
     "settings": {
         "abbreviations": "Abbreviations\/full text",
@@ -52,7 +54,7 @@
             "search": "Search"
         },
         "fields": {
-            "lemma": "Headrwod",
+            "lemma": "Headword",
             "partOfSpeech": "Part-of-speech",
             "pronunciation": "Pronunciation",
             "domain": "Domain",

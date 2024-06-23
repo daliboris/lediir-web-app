@@ -1,21 +1,23 @@
 {
     "lediir": {
-        "title": "Elektronická lexikální databáze indoíránských jazyků"
+        "title": "Elektronická lexikální databáze indoíránských jazyků",
+        "subtitle": "persko-český modul"
     },
     "menu": {
         "search": "Hledání",
-        "about": "O projektu",
+        "about": "O\u00a0projektu",
         "browse": "Procházení",
         "contents": "Obsah"
     },
     "headings": {
         "dictionaries": "Slovníky",
         "settings": "Nastavení",
-        "howToCite": "Jak citovat",
+        "howToCite": "Jak\u00a0citovat",
         "help": "Nápověda",
         "news": "Aktuality",
         "aboutLanguage": "O jazyce",
-        "FACS": "Persko-český slovník"
+        "FACS": "Persko-český slovník",
+        "contacts" : "Kontatky"
     },
     "settings": {
         "abbreviations": "zkratky\/plný text",

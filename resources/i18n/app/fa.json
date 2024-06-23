@@ -1,6 +1,7 @@
 {
     "lediir": {
-        "title": "[Electronic Lexical Database of Indo-Iranian Languages]"
+        "title": "[Electronic Lexical Database of Indo-Iranian Languages]",
+        "subtitle" : "[Persian-Czech Module]"
     },
     "menu": {
         "search": "جستجو",
@@ -15,7 +16,8 @@
         "help": "کمک",
         "news": "اخبار",
         "aboutLanguage": "درباره زبان",
-        "FACS": "فرهنگ لغت چکی - فارسی"
+        "FACS": "فرهنگ لغت چکی - فارسی",
+        "contacts" : "[Contacts]"
     },
     "settings": {
         "abbreviations": "اختصارات\/متن کامل",
