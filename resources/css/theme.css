@@ -3,7 +3,7 @@
 /* Due to a safari issue, relative paths to background images won't work as variables, so we list them here */
 
 .logo {
-    background-image: url("../images/tei-publisher-logo-contrast-color.svg");
+    background-image: url("../images/eldi-logo.svg");
 }
 
 .splash {
@@ -418,4 +418,24 @@ pb-drawer {
 
 .gitlab img {
     max-height: var(--pb-logo-image-height);
+}
+
+footer .container {
+    display: grid;
+    grid-template-columns: 2fr 1fr 6fr;
+    gap: 1rem;
+}
+footer .container ul {
+    list-style-type: none;
+    margin-block-start: unset;
+    display: flex;
+}
+footer .container .logos {
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+footer .container .navigation {
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: wrap;
 }

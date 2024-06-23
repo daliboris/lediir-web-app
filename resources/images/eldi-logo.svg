@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="140" height="60">
+ <style type="text/css">
+  .logo-text {
+   stroke: none; 
+   stroke-width: 1; 
+   stroke-dasharray: none; 
+   stroke-linecap: butt; 
+   stroke-dashoffset: 0; 
+   stroke-linejoin: miter; 
+   stroke-miterlimit: 4; 
+   fill: rgb(120,158,53); 
+   fill-rule: nonzero; 
+   opacity: 1; 
+   white-space: pre; 
+   font-family: Arial, "Gill Sans", sans-serif;
+   font-size: 50px;
+   font-style: normal;
+   font-weight: 600;
+   }
+ </style>
+
+<defs>
+</defs>
+<g>
+		<text xml:space="preserve"  class="logo-text"><tspan x="15" y="50">ELDI</tspan></text>
+</g>
+</svg>
