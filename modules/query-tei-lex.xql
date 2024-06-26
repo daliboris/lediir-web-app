@@ -1202,8 +1202,9 @@ declare %public function lapi:get-exist-db-query-xml($request as map(*), $sort-f
     let $log := if($lapi:debug) then console:log("[lapi:get-exist-db-query-xml]" || " $sort/@field :: " || $sort/@field)  else ()
 
     let $hasQuery := not(empty($parameters/parameter[@name='query']/value[node()]))
+    let $hasAdvancedQuery := not(empty($parameters/group/parameter[@name='query-advanced']/value[node()]))
     let $hasChapter := not(empty($parameters/parameter[@name='chapter']/value[node()]))
-    let $lucene := if($hasChapter and $hasQuery) then
+    let $lucene := if($hasChapter and $hasQuery and not($hasAdvancedQuery)) then
             (
             lapi:get-lucene-query($parameters/parameter[@name=('query', 'field', 'position')])
             , lapi:get-lucene-query-for-chapter($parameters/parameter[@name=('chapter')])
