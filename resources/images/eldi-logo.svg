@@ -10,7 +10,7 @@
    stroke-dashoffset: 0; 
    stroke-linejoin: miter; 
    stroke-miterlimit: 4; 
-   fill: rgb(120,158,53); 
+   fill: rgb(48, 111, 179); 
    fill-rule: nonzero; 
    opacity: 1; 
    white-space: pre; 

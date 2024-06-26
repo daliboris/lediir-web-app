@@ -12,6 +12,12 @@
     <permissions user="redaktor" group="tei" mode="rw-r--r--" />
     <deployed />
     <changelog>
+        <change version="0.8.0">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>povolen přístup pro anonymní (nepříhlášené) uživatele</li>
+                <li>není možné nahrávat data přes webový formulář</li>
+            </ul>
+        </change>
         <change version="0.7.24">
             <ul xmlns="http://www.w3.org/1999/xhtml">
                 <li>optimalizace generování kódu HTML</li>
