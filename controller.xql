@@ -12,6 +12,7 @@ declare variable $exist:prefix external;
 declare variable $exist:root external;
 
 declare variable $allowOrigin := local:allowOriginDynamic(request:get-header("Origin"));
+declare variable $loginRequired := false();
 
 declare function local:allowOriginDynamic($origin as xs:string?) {
     let $origin := replace($origin, "^(\w+://[^/]+).*$", "$1")
@@ -74,13 +75,13 @@ else if (matches($exist:resource, "\.(png|jpg|jpeg|gif|tif|tiff|txt|mei)$", "s")
         <forward url="{$exist:controller}/data/{$exist:path}"/>
     </dispatch>
 (: if the user is not logged in and access the HTML file he is redirected to login page :)
-else if (not(sm:is-authenticated()) and matches($exist:path, "\.(html|htm)$") and not($exist:path eq "/login.html")) then
+else if ($loginRequired and not(sm:is-authenticated()) and matches($exist:path, "\.(html|htm)$") and not($exist:path eq "/login.html")) then
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
         <redirect url="login.html" />
     </dispatch>
 
 (: if the user is logged in and access the login.html file he is redirected to main page :)
-else if (sm:is-authenticated() and ($exist:path eq "/login.html")) then
+else if ($loginRequired and sm:is-authenticated() and ($exist:path eq "/login.html")) then
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
         <redirect url="index.html" />
     </dispatch>
